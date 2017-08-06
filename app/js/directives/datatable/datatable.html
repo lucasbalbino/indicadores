@@ -1,0 +1,11 @@
+<table datatable dt-options="dtOptions" dt-instance="dtInstanceCallback"
+       dt-columns="dtColumns" dt-column-defs="dtColumnDefs"
+       class="table table-striped" style="width: 100%">
+
+
+    <tfoot ng-if="hasFooter">
+        <tr>
+            <td ng-repeat="id in columns"></td>
+        </tr>
+    </tfoot>
+</table>

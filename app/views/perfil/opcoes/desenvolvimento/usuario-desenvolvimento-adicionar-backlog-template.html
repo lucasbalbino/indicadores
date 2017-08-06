@@ -1,0 +1,35 @@
+<script type="text/ng-template" id="ModalAdicionarBacklog.html">
+
+    <div class="modal-header">
+        <h3 class="modal-title">Adicionar Backlog Desenvolvimento</h3>
+    </div>
+
+    <form name="form" novalidate>
+        <div class="modal-body">
+            <label>Data Final</label>
+            <input class="form-control" type="date" ng-model="backlog.dataFinal" name="uData" required>
+            <div ng-show="form.$submitted || form.uData.$touched">
+                <span class="danger" ng-show="form.uData.$error.required">Digite a data final</span>
+            </div>
+
+            <label>Quantidade</label>
+            <input class="form-control" type="number" ng-model="backlog.quantidade" name="uQuantidade" required>
+            <div ng-show="form.$submitted || form.uQuantidade.$touched">
+                <span class="danger" ng-show="form.uQuantidade.$error.required">Digite a quantidade</span>
+                <span class="danger" ng-show="(backlog.quantidade < 0)">Digite uma quantidade válida</span>
+            </div>
+
+            <label>Versão</label>
+            <input class="form-control" type="text" ng-model="backlog.versao" name="uVersao" required>
+            <div ng-show="form.$submitted || form.uVersao.$touched">
+                <span class="danger" ng-show="form.uVersao.$error.required">Digite a versão</span>
+                <span class="danger" ng-show="!form.uVersao.$error.required && (backlog.versao.split('\.').length!=3)">Versão incorreta</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input ng-disabled="!form.$valid || (backlog.quantidade < 0) || (backlog.versao.split('\.').length!=3)" type="submit" class="btn btn-success" ng-click="adicionarBacklog()" value="Adicionar"/>
+            <input type="button" class="btn btn-danger" ng-click="cancel()" value="Cancelar"/>
+        </div>
+    </form>
+
+</script>

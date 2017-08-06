@@ -1,0 +1,37 @@
+<div class="profile-body">
+    <div class="col-lg-12">
+        <uib-tabset flat="true" justified="true">
+            <uib-tab heading="Desenvolvimento" ng-if="($root.usuario.permissoes.includes('dev'))">
+
+                <div data-ng-include=" 'views/perfil/opcoes/desenvolvimento/perfil-opcoes-desenvolvimento.html' "></div>
+
+            </uib-tab>
+            <!--<uib-tab heading="Suporte" ng-if="($root.usuario.permissoes.includes('suporte'))">-->
+
+                <!--<div data-ng-include=" 'views/perfil/opcoes/suporte/perfil-opcoes-suporte.html' "></div>-->
+
+            <!--</uib-tab>-->
+            <!--<uib-tab heading="Integração Contínua" ng-if="($root.usuario.permissoes.includes('integracao-continua'))">-->
+
+                <!--<div data-ng-include=" 'views/perfil/opcoes/integracao-continua/perfil-opcoes-integracao-continua.html' "></div>-->
+
+            <!--</uib-tab>-->
+            <uib-tab heading="Comercial" ng-if="($root.usuario.permissoes.includes('com'))">
+
+                <div data-ng-include=" 'views/perfil/opcoes/comercial/perfil-opcoes-comercial.html' "></div>
+
+            </uib-tab>
+            <!--<uib-tab heading="Financeiro" ng-if="($root.usuario.permissoes.includes('financeiro'))">-->
+
+                <!--<div data-ng-include=" 'views/perfil/opcoes/financeiro/perfil-opcoes-financeiro.html' "></div>-->
+
+            <!--</uib-tab>-->
+            <uib-tab heading="Usuários" ng-if="($root.usuario.grupos.includes('administradores-indicadores'))">
+
+                <div data-ng-include=" 'views/perfil/opcoes/perfil-opcoes-usuarios.html' "></div>
+
+            </uib-tab>
+
+        </uib-tabset>
+    </div>
+</div>

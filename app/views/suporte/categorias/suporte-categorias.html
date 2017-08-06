@@ -1,0 +1,39 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<h5 class="row-title"><i class="fa fa-fire"></i>Incidentes</h5>
+
+<div class="row">
+
+    <div ng-controller="SupCategoriasIncidentesCtrl">
+        <indicadores-databox label="Incidentes com Maior Quantidade de Chamados"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <div id="chamados-por-categoria-incidentes" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+</div>
+
+<h5 class="row-title"><i class="fa fa-stack-exchange"></i>Requisições</h5>
+
+<div class="row">
+
+    <div ng-controller="SupCategoriasRequisicoesCtrl">
+        <indicadores-databox label="Requisições com Maior Quantidade de Chamados"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <div id="chamados-por-categoria-requisicoes" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<h5 class="row-title"><i class="fa fa-pencil-square-o"></i>Mudanças</h5>
+
+<div class="row">
+
+    <div ng-controller="SupCategoriasMudancasCtrl">
+        <indicadores-databox label="Mudanças com Maior Quantidade de Chamados"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <div id="chamados-por-categoria-mudancas" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+<div class="profile-header row">
+    <div ng-controller="UsuInicializarPerfilCtrl">
+        <div class="col-lg-3 col-md-4 col-sm-12 text-center">
+            <img data-ng-src="data:image/png;base64,{{$root.usuario.avatar}}" err-src="images/avatar_default.png" alt="{{$root.usuario.id}}" class="header-avatar" />
+        </div>
+        <div class="col-lg-7 col-md-8 col-sm-12 profile-info">
+            <div class="header-fullname">{{$root.usuario.nome}}</div>
+                <span class="btn btn-follow btn-success" ng-if="($root.usuario.grupos.includes('administradores-indicadores'))">
+                    Administrador do Indicadores
+                </span>
+            <div class="header-information">
+                Usuário: {{$root.usuario.usuario}}<br>
+                E-mail: {{$root.usuario.email}}<br>
+                Permissões: {{paginas}}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12 profile-stats">
+        <div class="row">
+            <div ng-controller="UsuEditarPerfilCtrl">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 stats-col">
+                    <button class="btn btn-default" ng-click="open('','ModalEditarPerfil.html','sm', $root.usuario)">Editar Perfil</button>
+                </div>
+            </div>
+            <div ng-controller="UsuAlterarFotoCtrl">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 stats-col">
+                    <button class="btn btn-default" ng-click="open('','ModalAlterarFoto.html','lg', $root.usuario)">Alterar Foto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

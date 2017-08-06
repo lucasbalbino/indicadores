@@ -1,0 +1,83 @@
+﻿<div class="navbar-inner">
+    <div class="navbar-container">
+        <!-- Navbar Barnd -->
+        <div class="navbar-header pull-left">
+            <a href="javascript:;" class="navbar-brand">
+                <small>
+                    <img id="logotipo" title="Indicadores" src="images/logo.png" alt="Oobj Indicadores" />
+                </small>
+            </a>
+        </div>
+        <!-- /Navbar Barnd -->
+        <!-- Sidebar Collapse -->
+        <div title="Encolher/Expandir Menus" class="sidebar-collapse"></div>
+        <!-- /Sidebar Collapse -->
+        <!-- Account Area and Settings --->
+        <div ng-controller="UsuInicializarPerfilCtrl">
+            <div class="navbar-header pull-right">
+                <div class="navbar-account">
+                    <ul class="account-area">
+                        <li>
+                            <a class="login-area dropdown-toggle" title="Perfil de Usuário" data-toggle="dropdown">
+                                <div class="avatar">
+                                    <img data-ng-src="data:image/png;base64,{{$root.usuario.avatar}}" err-src="images/avatar_default.png">
+                                </div>
+                                <section>
+                                    <h2><span class="profile"><span>{{$root.usuario.nome}}</span></span></h2>
+                                </section>
+                            </a>
+                            <!--Login Area Dropdown-->
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                <li class="username"><a>{{$root.usuario.nome}}</a></li>
+                                <li class="email"><a>{{$root.usuario.email}}</a></li>
+                                <!--Avatar Area-->
+                                <li>
+                                    <div class="avatar-area">
+                                        <img data-ng-src="data:image/png;base64,{{$root.usuario.avatar}}" err-src="images/avatar_default.png" class="avatar">
+                                        <!--<span class="caption">Alterar Foto</span>-->
+                                    </div>
+                                </li>
+                                <!--Avatar Area-->
+                                <li class="edit">
+                                    <a ui-sref="usuario.perfil" class="pull-left">Perfil</a>
+                                    <a ui-sref="usuario.perfil" class="pull-right">Opções</a>
+                                </li>
+                                <!--/Theme Selector Area-->
+                                <li class="dropdown-footer">
+                                    <a href="javascript:;" ng-click="sair()">
+                                        Sair
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--/Login Area Dropdown-->
+                        </li>
+                        <!-- /Account Area -->
+                        <!--Note: notice that setting div must start right after account area list.
+                        no space must be between these elements-->
+                        <!-- Settings -->
+                    </ul><div class="setting">
+                    </div><div class="setting-container">
+                        <label>
+                            <input type="checkbox" id="checkbox_fixednavbar" ng-model="settings.fixed.navbar">
+                            <span class="text">Barra superior fixa</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="checkbox_fixedsidebar" ng-model="settings.fixed.sidebar">
+                            <span class="text">Barra lateral fixa</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="checkbox_fixedbreadcrumbs" ng-model="settings.fixed.breadcrumbs">
+                            <span class="text">Caminho do site fixo</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="checkbox_fixedheader" ng-model="settings.fixed.header">
+                            <span class="text">Título fixo</span>
+                        </label>
+                    </div>
+                    <!-- Settings -->
+                </div>
+            </div>
+        </div>
+        <!-- /Account Area and Settings -->
+    </div>
+</div>

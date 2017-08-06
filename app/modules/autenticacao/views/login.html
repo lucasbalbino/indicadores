@@ -1,0 +1,26 @@
+<div ng-controller="LoginController" class="container">
+    <div class="card card-container">
+        <img id="profile-img" data-ng-src="data:image/png;base64,{{avatar}}"
+             err-src="images/avatar_default.png" class="profile-img-card">
+        <p id="profile-name" class="profile-name-card"></p>
+        <span ng-show="error" class="help-block">Usuário ou Senha Inválidos!</span>
+        <form class="form-signin" name="form" role="form">
+            <div class="form-group">
+                <input type="text" id="usuario" name="usuario" class="form-control" ng-model="usuario"
+                       placeholder="Usuário" ng-blur="buscarAvatar()" required autofocus>
+                <span ng-show="form.usuario.$dirty && form.usuario.$error.required" class="help-block">O nome de usu&aacute;rio &eacute;
+                    obrigat&oacute;rio!</span>
+            </div>
+            <div class="form-group">
+                <input type="password" id="senha" name="senha" class="form-control" ng-model="senha"
+                       placeholder="Senha" required>
+                <span ng-show="form.senha.$dirty && form.senha.$error.required" class="help-block">A senha é obrigat&oacute;ria!</span>
+            </div>
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || dataLoading"
+                        class="btn btn-lg btn-block btn-signin" ng-click="login()">Entrar
+                </button>
+            </div>
+        </form><!-- /form -->
+    </div><!-- /card-container -->
+</div><!-- /container -->

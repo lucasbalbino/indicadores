@@ -1,0 +1,37 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="FinContratosCanceladosCtrl">
+        <indicadores-databox label="Contratos Cancelados por Mês"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns"
+                                   columns-defs="columnsDefs" has-footer="true"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinContratosTitulosEmAbertoCtrl">
+        <indicadores-databox label="Títulos em Aberto dos Clientes (Clientes Inadimplentes)"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                   type="full" order="order"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinContratosTotalTitulosPorClienteCtrl">
+        <indicadores-databox label="Total de Títulos em Aberto por Cliente"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                   type="full" order="order"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>

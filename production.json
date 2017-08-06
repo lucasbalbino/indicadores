@@ -1,0 +1,5 @@
+{
+  "VERSION": "1.0.0",
+  "ENV": "production",
+  "API_ENDPOINT": "http://backend/indicadores-api"
+}

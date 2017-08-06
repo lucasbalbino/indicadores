@@ -1,48 +1,223 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My AngularJS App</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-    <link rel="stylesheet" href="app.css">
-    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-</head>
-<body>
-<ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
-</ul>
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" ng-app="app" ng-controller="AppCtrl">
 
-<!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
+    <!-- Head -->
+    <head>
+        <meta charset="utf-8" />
+        <title page-title></title>
 
-<div ng-view></div>
+        <meta name="description" content="Indicadores" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-<div>Angular seed app: v<span app-version></span></div>
+        <!-- build:css css/styles.min.css -->
+        <link rel="stylesheet" href="js/directives/notification-modal/notification.modal.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../bower_components/angular/angular-csp.css">
+        <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.min.css">
+        <link rel="stylesheet" href="../bower_components/animate.css/animate.min.css">
+        <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="../bower_components/bootstrap-select/dist/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css"/>
+        <link rel="stylesheet" href="../bower_components/ng-img-crop/compile/minified/ng-img-crop.css">
+        <link rel="stylesheet" href="../bower_components/amcharts/dist/amcharts/plugins/export/export.css">
+        <link rel="stylesheet" href="../bower_components/datatables.net-dt/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="../bower_components/datatables.net-buttons-dt/css/buttons.dataTables.min.css">
 
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
--->
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="app.js"></script>
-<script src="view1/view1.js"></script>
-<script src="view2/view2.js"></script>
-<script src="components/version/version.js"></script>
-<script src="components/version/version-directive.js"></script>
-<script src="components/version/interpolate-filter.js"></script>
-</body>
+        <link href="css/style.css" rel="stylesheet" />
+        <!-- /build -->
+
+    </head>
+    <!-- /Head -->
+
+    <!-- Body -->
+    <body ng-app="app" ng-cloak>
+        <div ui-view></div>
+
+        <!-- build:js js/all.min.js -->
+        <script src="../bower_components/jquery/dist/jquery.js"></script>
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-locale-pt-br/angular-locale_pt-br.js"></script>
+        <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="../bower_components/angular-touch/angular-touch.min.js"></script>
+        <script src="../bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <script src="../bower_components/angular-ui-select/dist/select.min.js"></script>
+        <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="../bower_components/moment/min/moment-with-locales.js"></script>
+        <script src="../bower_components/moment-range/dist/moment-range.min.js"></script>
+        <script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="../bower_components/angular-daterangepicker/js/angular-daterangepicker.min.js"></script>
+        <script src="../bower_components/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="../bower_components/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="../bower_components/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="../bower_components/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script src="../bower_components/angular-datatables/dist/angular-datatables.min.js"></script>
+        <script src="../bower_components/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
+        <script src="../bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/amcharts.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/serial.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/pie.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/gauge.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/themes/light.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/lang/pt.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/plugins/responsive/responsive.js"></script>
+        <script src="../bower_components/amcharts/dist/amcharts/plugins/export/export.js"></script>
+        <script src="../bower_components/ammap3/ammap/ammap.js"></script>
+        <script src="../bower_components/ammap3/ammap/maps/js/brazilLow.js"></script>
+        <script src="../bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+        <script src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
+        <script src="../bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+        <script src="../bower_components/ng-img-crop/compile/minified/ng-img-crop.js"></script>
+        <script src="../bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <script src="../bower_components/pdfmake/build/pdfmake.js"></script>
+        <script src="../bower_components/pdfmake/build/vfs_fonts.js"></script>
+        <script src="../bower_components/ngstorage/ngStorage.min.js"></script>
+
+        <!-- App Config e Scripts de Roteamento -->
+        <script src="js/app.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/config.router.js"></script>
+        <script src="js/main.js"></script>
+
+        <!-- Constantes -->
+        <script src="js/constants/indicadores.environment.const.js"></script>
+
+        <!-- Diretivas -->
+        <script src="js/directives/loading.js"></script>
+        <script src="js/directives/skin.js"></script>
+        <script src="js/directives/sidebar.js"></script>
+        <script src="js/directives/header.js"></script>
+        <script src="js/directives/navbar.js"></script>
+        <script src="js/directives/widget.js"></script>
+        <script src="js/directives/errSrc.js"></script>
+
+        <script src="js/directives/agora.js"></script>
+        <script src="js/directives/dropdown/dropdown.js"></script>
+        <script src="js/directives/stats/stats-desenvolvimento.js"></script>
+        <script src="js/directives/stats/stats-suporte.js"></script>
+        <script src="js/directives/stats/stats-integracao-continua.js"></script>
+        <script src="js/directives/databox/databox.js"></script>
+        <script src="js/directives/databoxtime/databoxtime.js"></script>
+        <script src="js/directives/datatable/datatable.js"></script>
+        <script src="js/directives/chart/chart.js"></script>
+        <script src="js/directives/daterangepicker/daterangepicker.js"></script>
+        <script src="js/directives/notification-modal/modal.util.js"></script>
+        <script src="js/directives/notification-modal/notification.modal.controller.js"></script>
+
+        <script src="js/controllers/daterangepicker.js"></script>
+        <script src="js/controllers/datetime-moment.js"></script>
+        <script src="js/controllers/brazilian-currency.js"></script>
+        <script src="js/controllers/utilities.js"></script>
+        <script src="js/controllers/indicadores-utils.js"></script>
+
+		<!-- Modulos -->
+		<script src="modules/autenticacao/controllers.js"></script>
+		<script src="modules/autenticacao/services.js"></script>
+        <script src="modules/versao/controllers.js"></script>
+        <script src="modules/mes/controllers.js"></script>
+
+        <!-- Rotas e Telas -->
+        <script src="views/integracao-continua/builds/integracao-continua-builds.route.js"></script>
+        <script src="views/integracao-continua/builds/integracao-continua-builds-analise.js"></script>
+        <script src="views/integracao-continua/builds/integracao-continua-builds-ultimos-status.js"></script>
+        <script src="views/comercial/clientes/comercial-clientes.route.js"></script>
+        <script src="views/comercial/clientes/comercial-clientes-chamados-por-tipo.js"></script>
+        <script src="views/comercial/clientes/comercial-clientes-ficha-tecnica.js"></script>
+        <script src="views/comercial/clientes/comercial-clientes-filtro.js"></script>
+        <script src="views/comercial/clientes/comercial-clientes-ultimos-chamados.js"></script>
+        <script src="views/comercial/oportunidades/comercial-oportunidades.route.js"></script>
+        <script src="views/comercial/oportunidades/comercial-oportunidades-no-mes.js"></script>
+        <script src="views/comercial/oportunidades/comercial-oportunidades-por-gerente.js"></script>
+        <script src="views/desenvolvimento/atividades/desenvolvimento-atividades.route.js"></script>
+        <script src="views/desenvolvimento/atividades/desenvolvimento-atividades-nao-liberadas.js"></script>
+        <script src="views/desenvolvimento/atividades/desenvolvimento-atividades-por-origem.js"></script>
+        <script src="views/desenvolvimento/atividades/desenvolvimento-atividades-por-projeto.js"></script>
+        <script src="views/desenvolvimento/atividades/desenvolvimento-atividades-por-tipo.js"></script>
+        <script src="views/desenvolvimento/colaboradores/desenvolvimento-colaboradores.route.js"></script>
+        <script src="views/desenvolvimento/colaboradores/desenvolvimento-colaboradores-desenvolvidas.js"></script>
+        <script src="views/desenvolvimento/colaboradores/desenvolvimento-colaboradores-testadas.js"></script>
+        <script src="views/desenvolvimento/evolucao/desenvolvimento-evolucao.route.js"></script>
+        <script src="views/desenvolvimento/evolucao/desenvolvimento-evolucao-abertas-encerradas.js"></script>
+        <script src="views/desenvolvimento/evolucao/desenvolvimento-evolucao-atividades-por-situacao.js"></script>
+        <script src="views/desenvolvimento/evolucao/desenvolvimento-evolucao-backlog.js"></script>
+        <script src="views/desenvolvimento/evolucao/desenvolvimento-evolucao-numeros.js"></script>
+        <script src="views/desenvolvimento/suporte/desenvolvimento-suporte.route.js"></script>
+        <script src="views/desenvolvimento/suporte/desenvolvimento-suporte.js"></script>
+        <script src="views/financeiro/clientes/financeiro-clientes.route.js"></script>
+        <script src="views/financeiro/clientes/financeiro-clientes-evolucao-receita-cliente.js"></script>
+        <script src="views/financeiro/clientes/financeiro-clientes-ficha-tecnica.js"></script>
+        <script src="views/financeiro/clientes/financeiro-clientes-filtro.js"></script>
+        <script src="views/financeiro/clientes/financeiro-clientes-ultimos-faturamentos.js"></script>
+        <script src="views/financeiro/contratos/financeiro-contratos.route.js"></script>
+        <script src="views/financeiro/contratos/financeiro-contratos-cancelados-por-mes.js"></script>
+        <script src="views/financeiro/contratos/financeiro-contratos-titulos-em-aberto.js"></script>
+        <script src="views/financeiro/contratos/financeiro-contratos-total-titulos-por-cliente.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao.route.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao-crescimento-acumulado-anual.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao-receita-acumulada.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao-receita-anual-crescimento.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao-receita-mensal-nos-anos.js"></script>
+        <script src="views/financeiro/evolucao/financeiro-evolucao-receita-por-mes.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento.route.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento-clientes.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento-evolucao-responsavel.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento-mensal-por-responsavel.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento-mensal-por-tipo.js"></script>
+        <script src="views/financeiro/faturamento/financeiro-faturamento-responsavel.js"></script>
+        <script src="views/perfil/perfil.route.js"></script>
+        <script src="views/perfil/opcoes/desenvolvimento/usuario-desenvolvimento-adicionar-backlog.js"></script>
+        <script src="views/perfil/opcoes/comercial/usuario-comercial-definir-metas.controller.js"></script>
+        <script src="views/perfil/opcoes/comercial/usuario-comercial-definir-metas.service.js"></script>
+        <script src="views/perfil/usuario/usuario-alterar-foto.js"></script>
+        <script src="views/perfil/usuario/usuario-editar-perfil.js"></script>
+        <script src="views/perfil/usuario/usuario-inicializar-perfil.js"></script>
+        <script src="views/perfil/usuario/usuario-listar-usuarios.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao.route.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chamados.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chamados-por-colaborador.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chamados-quantidade.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chat.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chat-por-colaborador.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-chat-quantidade.js"></script>
+        <script src="views/suporte/avaliacao/suporte-avaliacao-resumo.js"></script>
+        <script src="views/suporte/categorias/suporte-categorias.route.js"></script>
+        <script src="views/suporte/categorias/suporte-categorias-incidentes.js"></script>
+        <script src="views/suporte/categorias/suporte-categorias-mudancas.js"></script>
+        <script src="views/suporte/categorias/suporte-categorias-requisicoes.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados.route.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-clientes.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-por-estado.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-por-origem.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-por-prioridade.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-por-tipo.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-suspensos-motivo.js"></script>
+        <script src="views/suporte/chamados/suporte-chamados-cancelados.js"></script>
+        <script src="views/suporte/clientes/suporte-clientes.route.js"></script>
+        <script src="views/suporte/colaboradores/suporte-colaboradores.route.js"></script>
+        <script src="views/suporte/colaboradores/suporte-colaboradores.js"></script>
+        <script src="views/suporte/desenvolvimento/suporte-desenvolvimento.route.js"></script>
+        <script src="views/suporte/evolucao/suporte-evolucao.route.js"></script>
+        <script src="views/suporte/evolucao/suporte-evolucao-abertos-encerrados.js"></script>
+        <script src="views/suporte/evolucao/suporte-evolucao-chamados-meses.js"></script>
+        <script src="views/suporte/evolucao/suporte-evolucao-colaboradores.js"></script>
+        <script src="views/suporte/evolucao/suporte-evolucao-numeros.js"></script>
+        <script src="views/suporte/implantacoes/suporte-implantacoes.route.js"></script>
+        <script src="views/suporte/implantacoes/suporte-aquisicoes-por-categoria.js"></script>
+        <script src="views/suporte/implantacoes/suporte-implantacoes-em-atendimento.js"></script>
+        <script src="views/suporte/implantacoes/suporte-implantacoes-encerradas.js"></script>
+        <script src="views/suporte/implantacoes/suporte-implantacoes-por-categoria.js"></script>
+        <script src="views/suporte/implantacoes/suporte-implantacoes-resumo.js"></script>
+        <script src="views/suporte/implantacoes/suporte-solicitacoes-com-cobranca.js"></script>
+        <script src="views/suporte/implantacoes/suporte-total-solicitacoes-com-cobranca.js"></script>
+        <!-- /build -->
+
+    </body>
+    <!--  /Body -->
 </html>

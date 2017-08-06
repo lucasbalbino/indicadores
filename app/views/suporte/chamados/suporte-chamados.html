@@ -1,0 +1,66 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="SupChamadosPorTipoCtrl">
+        <indicadores-databox label="Total de Chamados Por Tipo"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-por-tipo-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="SupChamadosPorOrigemCtrl">
+        <indicadores-databox label="Total de Chamados Por Origem"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-por-origem-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+<div class="row">
+
+    <div ng-controller="SupChamadosSuspensosMotivoCtrl">
+        <indicadores-databox label="Motivos de Chamados Suspensos"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-suspensos-motivo" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="SupChamadosCanceladosCtrl">
+        <indicadores-databox label="Chamados Cancelados x Encerrados"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-cancelados-encerrados" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+<div class="row">
+
+    <div ng-controller="SupChamadosPorEstadoCtrl">
+        <indicadores-databox label="Total de Chamados Por Estado"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-por-estado-map" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="SupChamadosPorPrioridadeCtrl">
+        <indicadores-databox label="Total de Chamados Por Prioridade"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="chamados-por-prioridade-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+<div class="row">
+
+    <div ng-controller="SupChamadosClientesCtrl">
+        <indicadores-databox label="Chamados Abertos por Cliente" class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-dropdown label="Origem" item="$root.origem" itens="origens" acao="alteraOrigem(id)"></indicadores-dropdown>
+            <div ng-if="loaded">
+                <indicadores-datatable ajax="query" columns="columns" type="lite"
+                                   has-footer="true" order="order" length="15"></indicadores-datatable>
+            </div>
+        </indicadores-databox>
+    </div>
+
+</div>

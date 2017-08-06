@@ -1,0 +1,64 @@
+<script type="text/ng-template" id="ModalDefinirMetas.html">
+
+    <div class="modal-header">
+        <h3 class="modal-title">Definir Metas</h3>
+    </div>
+
+    <form name="form" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <label>Nome do Gerente</label>
+                </div>
+                <div class="col-md-5">
+                    <label>Meta</label>
+                </div>
+
+                <div ng-repeat="dados in $root.metasGerentes">
+                    <div class="col-md-7">
+                        <input class="form-control" type="text" ng-model="dados.gerente" name="uGerente{{$index}}"
+                               ng-minlength="3" required>
+
+                        <div ng-show="form.$submitted || form['uGerente'+$index].$touched">
+                            <span class="danger" ng-show="form['uGerente'+$index].$error.required">Digite o nome do Gerente</span>
+                            <span class="danger" ng-show="form['uGerente'+$index].$error.minlength">O nome deve conter pelo menos 3 letras</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control" type="number" min="0.01" step="0.01"
+                               ng-model="dados.meta" name="uMeta{{$index}}" required>
+
+                        <div ng-show="(form.$submitted || form['uMeta'+$index].$touched)">
+                            <span class="danger"
+                                  ng-show="form['uMeta'+$index].$error.required">Digite o valor da meta</span>
+                            <span class="danger"
+                                  ng-show="form['uMeta'+$index].$error.number">Insira um valor válido</span>
+                            <span class="danger" ng-show="form['uMeta'+$index].$error.min">O valor deve ser maior que zero!</span>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <span class="btn btn-default" ng-click="removeGerente($index)">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-12" ng-show="($root.metasGerentes.length == 0)">
+                    <span class="zero-results">
+                        <h4>Nenhuma meta encontrada.</h4>
+                    </span>
+                </div>
+
+                <div class="col-md-12">
+                    <input class="add btn btn-default" ng-click="addGerente()" value="Adicionar Gerente/Meta"/>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input ng-disabled="!form.$valid || ($root.metasGerentes.length == 0)" type="submit"
+                   class="btn btn-success" ng-click="definirMetas()" value="Salvar"/>
+            <input type="button" class="btn btn-danger" ng-click="cancel()" value="Cancelar"/>
+        </div>
+    </form>
+
+</script>

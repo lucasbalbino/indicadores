@@ -1,0 +1,23 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+
+            <div ng-controller="SupColaboradoresCtrl">
+                <indicadores-databox label="Chamados Abertos Por Colaborador"
+                                     class="col-xs-12 col-md-12 col-lg-12">
+                    <div id="dashboard-resolvidas-chart-realtime" class="chart chart-xl no-margin"></div>
+
+                    <div>
+                        <br/>
+                        * Não inclui chamados internos.
+                        <br/>
+                        * Não inclui chamados atendidos no plantão.
+                    </div>
+                </indicadores-databox>
+            </div>
+
+        </div>
+    </div>
+</div>

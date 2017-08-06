@@ -1,0 +1,89 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="FinEvolucaoReceitaPorMesCtrl">
+        <indicadores-databox label="Evolução da Receita nos Meses" class="col-xs-12 col-md-12 col-lg-12">
+
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        Ano Anterior <b>{{anoAnterior.nome}}</b>: {{anoAnterior.total}}
+						<span class="badge badge-{{anoAnterior.porcentagem.color}}">
+							<i class="fa {{anoAnterior.porcentagem.icon}}"></i> {{anoAnterior.porcentagem.value}}%
+						</span>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        Mês Anterior <b>{{mesAnterior.nome}}</b>: {{mesAnterior.total}}
+						<span class="badge badge-{{mesAnterior.porcentagem.color}}">
+							<i class="fa {{mesAnterior.porcentagem.icon}}"></i> {{mesAnterior.porcentagem.value}}%
+						</span>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        Faturamento em <b>{{mesAtual.nome}}</b>: {{mesAtual.total}}
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="evolucao-receita-por-mes" class="chart chart-xxl no-margin"></div>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <!--<div ng-controller="FinEvolucaoReceitaAcumuladaCtrl">-->
+    <!--<indicadores-databox label="Receita Mensal Acumulada (últimos 12 meses)" class="col-xs-5 col-md-5 col-lg-5">-->
+    <!--<indicadores-datatable ajax="query" columns="columns" type="lite"-->
+    <!--columns-defs="columnsDefs" order="order" length="12"></indicadores-datatable>-->
+    <!--</indicadores-databox>-->
+    <!--</div>-->
+    <div ng-controller="FinEvolucaoCrescimentoAcumuladoAnualCtrl">
+        <indicadores-databox label="Crescimento Acumulado Anual" class="col-md-5 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-4 col-xs-12">
+                    Crescimento Total:
+                        <span class="badge badge-{{crescimentoTotal.color}}">
+                            <i class="fa {{crescimentoTotal.icon}}"></i> {{crescimentoTotal.value}}%
+                        </span>
+                </div>
+                <div class="col-md-6 col-sm-4 col-xs-12">
+                    Setup:
+                        <span class="badge badge-{{crescimentoSetup.color}}">
+                            <i class="fa {{crescimentoSetup.icon}}"></i> {{crescimentoSetup.value}}%
+                        </span>
+                </div>
+                <div class="col-md-6 col-sm-4 col-xs-12">
+                    Mensalidade:
+                        <span class="badge badge-{{crescimentoMensalidade.color}}">
+                            <i class="fa {{crescimentoMensalidade.icon}}"></i> {{crescimentoMensalidade.value}}%
+                        </span>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="dashboard-crescimento-acumulado" class="chart chart-xxl no-margin"></div>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="FinEvolucaoReceitaAnualCrescimentoCtrl">
+        <indicadores-databox label="Receita x Crescimento" class="col-md-7 col-sm-12 col-xs-12">
+            <div id="dashboard-receita-crescimento" class="chart chart-xxl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinEvolucaoReceitaMensalNosAnosCtrl">
+        <indicadores-databox label="Evolução da Receita Mensal nos Anos" class="col-md-12 col-sm-12 col-xs-12">
+            <div id="dashboard-mensal-nos-anos" class="chart chart-xxl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>

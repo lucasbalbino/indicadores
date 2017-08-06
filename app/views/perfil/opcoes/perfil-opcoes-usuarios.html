@@ -1,0 +1,26 @@
+<div class="row">
+    <div ng-controller="UsuListarUsuariosCtrl">
+        <div ng-repeat="usuario in usuarios">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <div class="databox databox-xlg databox-halved databox-shadowed">
+                    <div class="databox-top padding-20">
+                        <div ng-controller="UsuAlterarFotoCtrl">
+                            <a class="databox-text-profile lightcarbon no-margin pull-right" ng-click="open('','ModalAlterarFoto.html','lg', usuario)">Alterar Foto</a>
+                        </div>
+                        <span class="databox-text-profile lightcarbon no-margin pull-right">&nbsp|&nbsp</span>
+                        <div ng-controller="UsuEditarPerfilCtrl">
+                            <a class="databox-text-profile lightcarbon no-margin pull-right" ng-click="open('','ModalEditarPerfil.html','sm', usuario)">Editar</a>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-xs-4">
+                            <img data-ng-src="data:image/png;base64,{{usuario.avatar}}" err-src="images/avatar_default.png" style="width:75px; height:75px;" class="image-circular bordered-3 bordered-{{($root.usuario.grupos.includes('administradores-indicadores') ? 'success' : 'info')}}" />
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left padding-20">
+                            <span class="databox-header-profile carbon no-margin">{{usuario.nome}}</span>
+                            <span class="databox-text-profile lightcarbon no-margin"> {{usuario.email}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿<div ng-controller="MesController">
+    <indicadores-databox-time>
+        <div class="select-month">
+            <label class="control-label">Mês</label>
+
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup='MMMM / yyyy' ng-click="open($event)"
+                       ng-model="$root.mesLiteral" ng-change="mudarMes()" is-open="opened"
+                       datepicker-options="dateOptions"
+                       ng-required="true" show-button-bar="false" my-date/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="open($event)">
+                    <i class="fa fa-calendar"></i>
+                </button>
+			</span>
+            </p>
+        </div>
+    </indicadores-databox-time>
+</div>

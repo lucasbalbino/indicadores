@@ -1,0 +1,32 @@
+<script type="text/ng-template" id="ModalEditarPerfil.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Editar Perfil</h3>
+    </div>
+    <form name="form" novalidate>
+        <div class="modal-body">
+            <div ng-controller="UsuAlterarFotoCtrl">
+                <div class="add-image text-center">
+                    <img data-ng-src="data:image/png;base64,{{dados.avatar}}" err-src="images/avatar_default.png" alt="{{dados.nome}} {{dados.sobrenome}}" class="header-avatar" /><br><br>
+                    <button class="btn btn-default" ng-click="cancel(); open('','ModalAlterarFoto.html', 'lg', dados)">Alterar Foto</button>
+                </div>
+            </div>
+
+            <label>Nome</label>
+            <input class="form-control" type="text" ng-model="dados.nome" name="uNome" required>
+            <div ng-show="form.$submitted || form.uNome.$touched">
+                <span class="danger" ng-show="form.uNome.$error.required">Digite o nome</span>
+            </div>
+
+            <label>Email</label>
+            <input class="form-control" type="email" ng-model="dados.email" name="uEmail" required>
+            <div ng-show="form.$submitted || form.uEmail.$touched">
+                <span class="danger" ng-show="form.uEmail.$error.required">Digite o email</span>
+                <span class="danger" ng-show="form.uEmail.$error.email">Email inválido</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input ng-disabled="!form.$valid" type="submit" class="btn btn-success" ng-click="editarPerfil()" value="Enviar"/>
+            <input type="button" class="btn btn-danger" ng-click="cancel()" value="Cancelar"/>
+        </div>
+    </form>
+</script>

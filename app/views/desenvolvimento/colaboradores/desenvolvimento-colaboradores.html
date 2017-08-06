@@ -1,0 +1,24 @@
+<div data-ng-include=" 'modules/versao/views/versao.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="DevColaboradoresDesenvolvidasCtrl">
+        <indicadores-databox label="Atividades Desenvolvidas Por Colaborador"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <div id="resolvidas-por-colaborador-chart" class="chart chart-lg no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+<div class="row">
+
+    <div ng-if="!($root.projeto == 'Noov')">
+        <div ng-controller="DevColaboradoresTestadasCtrl">
+            <indicadores-databox label="Atividades Testadas Por Colaborador"
+                                 class="col-md-12 col-sm-12 col-xs-12">
+                <div id="testadas-por-colaborador-chart" class="chart chart-lg no-margin"></div>
+            </indicadores-databox>
+        </div>
+    </div>
+
+</div>

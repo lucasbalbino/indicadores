@@ -1,0 +1,30 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="ComOportunidadesPorGerenteCtrl">
+        <indicadores-databox label="Metas dos Gerentes de Conta" class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div id="ops-por-colaborador0" class="chart chart-xxl no-margin"></div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="chart in $root.metasGerentes">
+                    <div id="ops-por-colaborador{{$index + 1}}" class="chart chart-xl no-margin"></div>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="ComOportunidadesNoMesCtrl">
+        <indicadores-databox label="Oportunidades do Mês"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns" type="full"
+                                   columns-defs="columnsDefs" order="order"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>

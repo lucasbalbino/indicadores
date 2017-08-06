@@ -1,0 +1,83 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="SupAvaliacaoResumoCtrl">
+        <indicadores-databox label="Resumo" class="col-xs-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <h2><span class="{{avaliacoes.emojiColor}}"><i class="{{avaliacoes.emoji}}"></i></span>
+                        {{avaliacoes.valor}}% de chamados avaliados como Ótimo ou Bom em {{avaliacoes.mes}}
+                        <span class="badge badge-{{avaliacoes.porcentagem.color}}">
+                            <i class="fa {{avaliacoes.porcentagem.icon}}"></i> {{avaliacoes.porcentagem.value}}% em relação ao mês anterior ({{avaliacoes.mesAnteriorValor}}%)
+                        </span>
+                    </h2>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<h5 class="row-title"><i class="fa fa-list-alt"></i>Avaliações de Chamados</h5>
+
+<div class="row">
+
+    <div ng-controller="SupAvaliacaoQuantidadeCtrl">
+        <indicadores-databox label="Quantidade de Chamados Avaliados"
+                             class="col-xs-12 col-md-6 col-lg-6">
+            <div id="avaliacao-quantidade-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="SupAvaliacaoChamadosCtrl">
+        <indicadores-databox label="Avaliação dos Chamados"
+                             class="col-xs-12 col-md-6 col-lg-6">
+            <div id="avaliacao-chamados-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="SupAvaliacaoChamadosPorColaboradorCtrl">
+        <indicadores-databox label="Avaliações de Chamados por Colaborador" class="col-xs-12 col-md-12">
+            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                   type="lite" has-footer="true" order="order" length="100"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+
+<h5 class="row-title"><i class="fa fa-comment"></i>Avaliações de Chat Online</h5>
+
+<div class="row">
+
+    <div ng-controller="SupChatQuantidadeCtrl">
+        <indicadores-databox label="Quantidade de Chats Avaliados"
+                             class="col-xs-12 col-md-6 col-lg-6">
+            <div id="chat-quantidade-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="SupAvaliacaoChatCtrl">
+        <indicadores-databox label="Avaliação dos Chat Online"
+                             class="col-xs-12 col-md-6 col-lg-6">
+            <div id="avaliacao-chat-chart" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="SupAvaliacaoChatPorColaboradorCtrl">
+        <indicadores-databox label="Avaliações de Chats por Colaborador" class="col-xs-12 col-md-12">
+            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                   type="lite" has-footer="true" order="order" length="100"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>

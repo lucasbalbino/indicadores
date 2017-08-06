@@ -1,0 +1,55 @@
+<div data-ng-include=" 'modules/mes/views/mes.html' "></div>
+
+<div class="row">
+
+    <div ng-controller="FinFaturamentoMensalPorTipoCtrl">
+        <indicadores-databox label="Faturamento Setup x Mensalidade"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="faturamento-por-tipo" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+    <div ng-controller="FinFaturamentoMensalPorResponsavelCtrl">
+        <indicadores-databox label="Faturamento por Responsável"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <div id="faturamento-por-responsavel" class="chart chart-xl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinFaturamentoClientesCtrl">
+        <indicadores-databox label="Faturamento Mensal por Cliente"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns" type="full"
+                                   columns-defs="columnsDefs" order="order"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinFaturamentoResponsavelCtrl">
+        <indicadores-databox label="Faturamento Mensal por Responsável"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-datatable ajax="query" columns="columns" type="full"
+                                   columns-defs="columnsDefs" order="order"></indicadores-datatable>
+        </indicadores-databox>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div ng-controller="FinFaturamentoEvolucaoResponsavelCtrl">
+        <indicadores-databox label="Gráfico de Evolução na Receita do Responsável"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-dropdown label="Receita" item="receita" itens="receitas" acao="alteraForma(id)"></indicadores-dropdown>
+            <div id="evolucao-receita-responsavel" class="chart chart-xxxl no-margin"></div>
+        </indicadores-databox>
+    </div>
+
+</div>
