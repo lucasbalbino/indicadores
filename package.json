@@ -1,7 +1,7 @@
 {
   "name": "indicadores-web",
   "version": "1.0.0",
-  "description": "Front-End do Projeto de Indicadores da Oobj",
+  "description": "Projeto de Indicadores de departamentos de uma empresa",
   "main": "Gruntfile.js",
   "dependencies": {},
   "devDependencies": {

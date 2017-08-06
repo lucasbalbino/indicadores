@@ -12,7 +12,7 @@
             url: '/perfil',
             templateUrl: 'views/perfil/perfil.html',
             ncyBreadcrumb: {
-                label: 'Oobj Indicadores / Perfil',
+                label: 'Indicadores / Perfil',
                 description: ''
             }
         });
