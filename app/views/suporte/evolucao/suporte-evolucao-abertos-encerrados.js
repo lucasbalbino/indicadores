@@ -3,11 +3,10 @@
 
     app.controller('SupEvolucaoAbertosEncerradosCtrl', SupEvolucaoAbertosEncerradosCtrl);
 
-    SupEvolucaoAbertosEncerradosCtrl.$inject = ['$scope', '$rootScope', '$http', 'ENV']
-
-    function SupEvolucaoAbertosEncerradosCtrl($scope, $rootScope, $http, ENV) {
-        var dadosChamadosAbertosEncerrados = [];
-        var gridChamadosAbertosEncerrados = [];
+    /** @ngInject */
+    function SupEvolucaoAbertosEncerradosCtrl($scope, $rootScope, SuporteEvolucaoService) {
+        var dadosChamadosAbertosEncerrados;
+        var gridChamadosAbertosEncerrados;
 
         chamadosAbertosEncerrados();
 
@@ -17,21 +16,19 @@
 
             var mes = moment($rootScope.mes);
 
-            $http.get(ENV.API_ENDPOINT + '/chamadosAbertosEncerrados', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteEvolucaoService.getChamadosAbertosEncerrados(dataInicial, dataFinal).then(
                 function (response) {
                     gridChamadosAbertosEncerrados = response.data;
                     loadDataChamadosAbertosEncerrados();
                     graficoChamadosAbertosEncerrados().init();
                 }, function (response) {
-                    console.log("JSON do gráfico chamadosAbertosEncerrados incorreto");
+                    console.log("JSON do gráfico chamadosAbertosEncerrados incorreto: " + response);
                 }
             );
-        };
+        }
 
         var loadDataChamadosAbertosEncerrados = function () {
             var mes = moment($rootScope.mes);
@@ -55,7 +52,7 @@
                     dadosChamadosAbertosEncerrados.push({"data": m.format("DD/MM/YYYY"),"encerrados":0,"abertos":0});
                 }
             });
-        }
+        };
 
         function graficoChamadosAbertosEncerrados() {
             return {

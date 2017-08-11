@@ -1,11 +1,10 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('SupAvaliacaoResumoCtrl', SupAvaliacaoResumoCtrl);
 
-    SupAvaliacaoResumoCtrl.$inject = ['$scope', '$rootScope', '$http', 'ENV']
-
-    function SupAvaliacaoResumoCtrl($scope, $rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupAvaliacaoResumoCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var mes = moment($rootScope.mes);
 
         $scope.avaliacoes = {
@@ -13,32 +12,27 @@
             valor: 0
         };
 
-        avaliacoesResumo(function() {
+        avaliacoesResumo(function () {
+            var dataInicial = mes.subtract(2, 'month').startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
 
-            $http.get(ENV.API_ENDPOINT + '/avaliacaoChamadosPorColaborador', {
-                params: {
-                    dataInicial: mes.subtract(2, 'month').startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            SuporteAvaliacaoService.getAvaliacaoChamadosPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     var dados = response.data;
                     $scope.avaliacoes.mesAnteriorValor = 0;
 
-                    for(var i=0; i<dados.length; i++) {
+                    for (var i = 0; i < dados.length; i++) {
                         $scope.avaliacoes.mesAnteriorValor += dados[i].otimo + dados[i].bom;
                     }
 
-                    $http.get(ENV.API_ENDPOINT + '/avaliacaoChamadosQuantidade', {
-                        params: {
-                            dataInicial: mes.subtract(1, 'month').startOf('month').format('DD/MM/YYYY'),
-                            dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                        }
-                    }).then(
+                    var dataInicial = mes.subtract(1, 'month').startOf('month').format('DD/MM/YYYY');
+                    var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+                    SuporteAvaliacaoService.getAvaliacaoChamadosQuantidade(dataInicial, dataFinal).then(
                         function (response) {
                             dados = response.data;
-                            for(var i=0; i<dados.length; i++) {
-                                if (dados[i].label == "Avaliados") {
+                            for (var i = 0; i < dados.length; i++) {
+                                if (dados[i].label === "Avaliados") {
                                     $scope.avaliacoes.mesAnteriorValor = ($scope.avaliacoes.mesAnteriorValor / dados[i].value) * 100;
                                     $scope.avaliacoes.mesAnteriorValor = $scope.avaliacoes.mesAnteriorValor.toFixed(2);
 
@@ -55,29 +49,25 @@
         });
 
         function avaliacoesResumo(callback) {
-            $http.get(ENV.API_ENDPOINT + '/avaliacaoChamadosPorColaborador', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteAvaliacaoService.getAvaliacaoChamadosPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     var dados = response.data;
 
-                    for(var i=0; i<dados.length; i++) {
+                    for (var i = 0; i < dados.length; i++) {
                         $scope.avaliacoes.valor += dados[i].otimo + dados[i].bom;
                     }
 
-                    $http.get(ENV.API_ENDPOINT + '/avaliacaoChamadosQuantidade', {
-                        params: {
-                            dataInicial: mes.subtract(1, 'month').startOf('month').format('DD/MM/YYYY'),
-                            dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                        }
-                    }).then(
+                    var dataInicial = mes.subtract(1, 'month').startOf('month').format('DD/MM/YYYY');
+                    var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+                    SuporteAvaliacaoService.getAvaliacaoChamadosQuantidade(dataInicial, dataFinal).then(
                         function (response) {
                             dados = response.data;
-                            for(var i=0; i<dados.length; i++) {
-                                if (dados[i].label == "Avaliados") {
+                            for (var i = 0; i < dados.length; i++) {
+                                if (dados[i].label === "Avaliados") {
                                     $scope.avaliacoes.valor = ($scope.avaliacoes.valor / dados[i].value) * 100;
                                     $scope.avaliacoes.valor = $scope.avaliacoes.valor.toFixed(2);
                                 }
@@ -90,11 +80,11 @@
         }
 
         function setEmojiColor() {
-            if($scope.avaliacoes.valor >= 97) {
+            if ($scope.avaliacoes.valor >= 97) {
                 $scope.avaliacoes.emoji = "fa fa-smile-o";
                 $scope.avaliacoes.emojiColor = "success";
             }
-            else if($scope.avaliacoes.valor > 95 && $scope.avaliacoes.valor < 97) {
+            else if ($scope.avaliacoes.valor > 95 && $scope.avaliacoes.valor < 97) {
                 $scope.avaliacoes.emoji = "fa fa-meh-o";
                 $scope.avaliacoes.emojiColor = "warning";
             }

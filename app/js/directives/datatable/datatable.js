@@ -16,12 +16,9 @@
                     order: '=?',
                     length: '@?'
                 },
-                controller: function ($scope, $rootScope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, $resource) {
-                    function newPromise() {
-                        return $resource($scope.ajax.url, $scope.ajax.data).query().$promise;
-                    }
+                controller: function ($scope, $rootScope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
-                    $scope.dtOptions = DTOptionsBuilder.fromFnPromise(newPromise)
+                    $scope.dtOptions = DTOptionsBuilder.fromFnPromise($scope.ajax)
                         .withLanguage({
                             "sEmptyTable": "Nenhum registro encontrado",
                             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -108,9 +105,8 @@
                     };
 
                     $rootScope.reloadDataTable = function (newData) {
-                        $scope.ajax = newData;
                         $scope.dtInstance.rerender();
-                        $scope.dtInstance.changeData(newPromise);
+                        $scope.dtInstance.changeData($scope.ajax);
                     };
 
                     if ($scope.hasFooter) {

@@ -1,21 +1,17 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('SupAvaliacaoChatPorColaboradorCtrl', SupAvaliacaoChatPorColaboradorCtrl);
 
-    SupAvaliacaoChatPorColaboradorCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function SupAvaliacaoChatPorColaboradorCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function SupAvaliacaoChatPorColaboradorCtrl($rootScope, $scope, SuporteAvaliacaoService) {
 
         var mes = moment($rootScope.mes);
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/avaliacaoChatPorColaborador',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-            }
-        };
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+        $scope.query = SuporteAvaliacaoService.getAvaliacaoChatPorColaboradorTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'colaborador', titulo: 'Colaborador', size: "50%"},
@@ -26,14 +22,14 @@
             {id: 'total', titulo: 'Total', size: "10%", class: "text-center", total: true}
         ];
 
-        $scope.columnsDefs = [ {
+        $scope.columnsDefs = [{
             "targets": 5,
-            "render": function ( data ) {
-                return '<strong>'+data+'</strong>';
+            "render": function (data) {
+                return '<strong>' + data + '</strong>';
             }
-        } ];
+        }];
 
-        $scope.order = [[ 5, "desc" ]];
+        $scope.order = [[5, "desc"]];
 
     }
 })();

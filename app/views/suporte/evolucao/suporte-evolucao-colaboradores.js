@@ -3,9 +3,8 @@
 
     app.controller('SupEvolucaoColaboradoresCtrl', SupEvolucaoColaboradoresCtrl);
 
-    SupEvolucaoColaboradoresCtrl.$inject = ['$rootScope', '$scope', '$http', 'ENV']
-
-    function SupEvolucaoColaboradoresCtrl($rootScope, $scope, $http, ENV) {
+    /** @ngInject */
+    function SupEvolucaoColaboradoresCtrl($rootScope, $scope, SuporteEvolucaoService) {
         var dadosChamadosPorColaborador = [];
         var legendaChamadosPorColaborador = [];
 
@@ -27,14 +26,11 @@
             dadosChamadosPorColaborador = [];
             legendaChamadosPorColaborador = [];
 
+            var dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
             var dataFinal = moment($rootScope.date.endDate);
+            dataFinal = dataFinal.add(1, 'days').format('DD/MM/YYYY');
 
-            $http.get(ENV.API_ENDPOINT + '/chamadosPorColaborador', {
-                params: {
-                    dataInicial: $rootScope.date.startDate.format('DD/MM/YYYY'),
-                    dataFinal: dataFinal.add(1, 'days').format('DD/MM/YYYY')
-                }
-            }).then(
+            SuporteEvolucaoService.getChamadosPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     dadosChamadosPorColaborador = response.data;
                     graficoChamadosPorColaborador().init();
