@@ -3,8 +3,7 @@
 
     app.controller('SupChamadosPorOrigemCtrl', SupChamadosPorOrigemCtrl);
 
-    SupChamadosPorOrigemCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
+    /** @ngInject */
     function SupChamadosPorOrigemCtrl($rootScope, $http, ENV) {
         var dadosChamadosPorOrigem = [];
         var mes = moment($rootScope.mes);

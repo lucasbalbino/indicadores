@@ -1,20 +1,15 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('ComClientesUltimosChamadosCtrl', ComClientesUltimosChamadosCtrl);
 
-    ComClientesUltimosChamadosCtrl.$inject = ['$scope', '$rootScope', 'ENV']
-
-    function ComClientesUltimosChamadosCtrl($scope, $rootScope, ENV) {
-        if($rootScope.idCliente == null || $rootScope.idCliente == undefined)
+    /** @ngInject */
+    function ComClientesUltimosChamadosCtrl($scope, $rootScope, ComercialClientesService) {
+        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
             $rootScope.idCliente = 0;
+        }
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/ultimosChamados',
-            data: {
-                idCliente: $rootScope.idCliente
-            }
-        };
+        $scope.query = ComercialClientesService.getUltimosChamadosTable($rootScope.idCliente);
 
         $scope.columns = [
             {id: 'chamado', titulo: 'Chamado', size: "10%", class: "text-center"},
@@ -26,17 +21,16 @@
             {id: 'responsavel', titulo: 'Atendente', size: "10%", class: "text-center"}
         ];
 
-        $scope.columnsDefs = [ {
+        $scope.columnsDefs = [{
             "targets": 0,
-            "render": function ( data ) {
+            "render": function (data) {
                 return '<div class="tabela-dev-suporte">' +
-                    '<a target="_blank" href="http://LINK?dados='+data+'">'+data+'</a>'
-                    +'</div>';
+                    '<a target="_blank" href="http://LINK?dados=' + data + '">' + data + '</a>' + '</div>';
             }
-        },{
-            "targets": [ '_all' ],
-            "render": function ( data ) {
-                if(data != null) {
+        }, {
+            "targets": ['_all'],
+            "render": function (data) {
+                if (data !== null) {
                     return '<div class="tabela-dev-suporte">' + data + '</div>';
                 } else {
                     return '';
@@ -44,6 +38,6 @@
             }
         }];
 
-        $scope.order = [[ 0, "desc" ]];
+        $scope.order = [[0, "desc"]];
     }
 })();

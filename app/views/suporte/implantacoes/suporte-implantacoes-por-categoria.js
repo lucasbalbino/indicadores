@@ -3,21 +3,18 @@
 
     app.controller('SupImplantacoesPorCategoriaCtrl', SupImplantacoesPorCategoriaCtrl);
 
-    SupImplantacoesPorCategoriaCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupImplantacoesPorCategoriaCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupImplantacoesPorCategoriaCtrl($rootScope, SuporteImplantacoesService) {
         var dadosImplantacoesPorCategoria = [];
         var mes = moment($rootScope.mes);
 
         implantacoesPorCategoria();
 
         function implantacoesPorCategoria() {
-            $http.get(ENV.API_ENDPOINT + '/implantacoesPorCategoria', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteImplantacoesService.getImplantacoesPorCategoria(dataInicial, dataFinal).then(
                 function (response) {
                     dadosImplantacoesPorCategoria = response.data;
                     graficoImplantacoesPorCategoria().init();

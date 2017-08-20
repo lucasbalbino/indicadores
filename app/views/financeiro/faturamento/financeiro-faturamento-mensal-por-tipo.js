@@ -3,9 +3,8 @@
 
     app.controller('FinFaturamentoMensalPorTipoCtrl', FinFaturamentoMensalPorTipoCtrl);
 
-    FinFaturamentoMensalPorTipoCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function FinFaturamentoMensalPorTipoCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function FinFaturamentoMensalPorTipoCtrl($rootScope, FinanceiroFaturamentoService) {
         var dadosReceitaMensal = [];
         var gridReceitaMensal = [];
         var mes = moment($rootScope.mes);
@@ -13,16 +12,14 @@
         faturamentoSetupMensalidade();
 
         function faturamentoSetupMensalidade() {
-            $http.get(ENV.API_ENDPOINT + '/faturamentoOobjPorMes', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.endOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
+
+            FinanceiroFaturamentoService.getFaturamentoPorMes(dataInicial, dataFinal).then(
                 function (response) {
                     gridReceitaMensal = response.data;
 
-                    if(gridReceitaMensal.length == 1) {
+                    if(gridReceitaMensal.length === 1) {
                         dadosReceitaMensal.push({
                             label: "Setup",
                             value: gridReceitaMensal[0].setup

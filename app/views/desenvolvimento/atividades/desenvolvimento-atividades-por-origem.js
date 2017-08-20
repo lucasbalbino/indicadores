@@ -3,32 +3,25 @@
 
     app.controller('DevAtividadesPorOrigemCtrl', DevAtividadesPorOrigemCtrl);
 
-    DevAtividadesPorOrigemCtrl.$inject = ['$rootScope', '$http', '$q', 'ENV'];
-
-    function DevAtividadesPorOrigemCtrl($rootScope, $http, $q, ENV) {
+    /** @ngInject */
+    function DevAtividadesPorOrigemCtrl($rootScope, DesenvolvimentoAtividadesService) {
         var dadosAtividadesPorOrigem = [];
 
-        this.atividadesPorOrigem = function(versao) {
-            var deferred = $q.defer();
-            $http.get(ENV.API_ENDPOINT + '/atividadesEncerradasPorOrigem', {
-                params: {
-                    versao: versao
-                }
-            }).then(function (response) {
+        atividadesPorOrigem($rootScope.versao);
+
+        function atividadesPorOrigem(versao) {
+            DesenvolvimentoAtividadesService.getAtividadesEncerradasPorOrigem(versao).then(
+                function (response) {
                     dadosAtividadesPorOrigem = response.data;
-                    deferred.resolve(graficoAtividadesPorOrigem().init());
-                }
-            ).catch(function (e) {
-                    deferred.reject(e);
+                    graficoAtividadesPorOrigem().init();
                 }
             );
-            return deferred.promise;
-        };
+        }
 
         function graficoAtividadesPorOrigem() {
             return {
                 init: function () {
-                    return AmCharts.makeChart( "atividades-por-origem-chart", {
+                    return AmCharts.makeChart("atividades-por-origem-chart", {
                         "type": "pie",
                         "theme": "light",
                         "colors": $rootScope.colors,
@@ -41,8 +34,8 @@
                         "responsive": {
                             "enabled": true
                         },
-                        "balloon":{
-                            "fixedPosition":true
+                        "balloon": {
+                            "fixedPosition": true
                         },
                         "export": {
                             "enabled": true

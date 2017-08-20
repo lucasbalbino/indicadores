@@ -3,8 +3,7 @@
 
     app.controller('SupChamadosPorEstadoCtrl', SupChamadosPorEstadoCtrl);
 
-    SupChamadosPorEstadoCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
+    /** @ngInject */
     function SupChamadosPorEstadoCtrl($rootScope, $http, ENV) {
         var dadosChamadosPorEstado = [];
         var mes = moment($rootScope.mes);

@@ -3,21 +3,18 @@
 
     app.controller('SupChamadosCanceladosCtrl', SupChamadosCanceladosCtrl);
 
-    SupChamadosCanceladosCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupChamadosCanceladosCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupChamadosCanceladosCtrl($rootScope, SuporteChamadosService) {
         var dadosChamadosCancelados = [];
         var mes = moment($rootScope.mes);
 
         chamadosCancelados();
 
         function chamadosCancelados() {
-            $http.get(ENV.API_ENDPOINT + '/chamadosEncerradosECancelados', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteChamadosService.getChamadosEncerradosECancelados(dataInicial, dataFinal).then(
                 function (response) {
                     dadosChamadosCancelados = response.data;
                     graficoCancelados().init();

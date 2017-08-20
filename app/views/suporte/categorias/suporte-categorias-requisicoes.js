@@ -3,9 +3,8 @@
 
     app.controller('SupCategoriasRequisicoesCtrl', SupCategoriasRequisicoesCtrl);
 
-    SupCategoriasRequisicoesCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupCategoriasRequisicoesCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupCategoriasRequisicoesCtrl($rootScope, SuporteCategoriasService) {
         var dadosChamadosPorCategoria = [];
         var TIPO_REQUISICOES = 33;
 
@@ -14,13 +13,10 @@
         chamadosPorCategoria();
 
         function chamadosPorCategoria() {
-            $http.get(ENV.API_ENDPOINT + '/chamadosPorCategoria', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY'),
-                    tipo: TIPO_REQUISICOES
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteCategoriasService.getChamadosPorCategoria(dataInicial, dataFinal, TIPO_REQUISICOES).then(
                 function (response) {
                     dadosChamadosPorCategoria = response.data;
                     graficoChamadosPorCategoria().init();

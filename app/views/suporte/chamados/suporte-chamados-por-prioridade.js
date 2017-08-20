@@ -3,8 +3,7 @@
 
     app.controller('SupChamadosPorPrioridadeCtrl', SupChamadosPorPrioridadeCtrl);
 
-    SupChamadosPorPrioridadeCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
+    /** @ngInject */
     function SupChamadosPorPrioridadeCtrl($rootScope, $http, ENV) {
         var dadosChamadosPorPrioridade = [];
         var mes = moment($rootScope.mes);

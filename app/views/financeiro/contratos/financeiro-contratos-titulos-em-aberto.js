@@ -3,15 +3,12 @@
 
     app.controller('FinContratosTitulosEmAbertoCtrl', FinContratosTitulosEmAbertoCtrl);
 
-    FinContratosTitulosEmAbertoCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function FinContratosTitulosEmAbertoCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function FinContratosTitulosEmAbertoCtrl($rootScope, $scope, FinanceiroContratosService) {
 
         var mes = moment($rootScope.mes);
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/titulosAbertosClientes'
-        };
+        $scope.query = FinanceiroContratosService.getTitulosAbertosClientesTable();
 
         $scope.columns = [
             {id: 'cliente', titulo: 'Cliente', size: '60%'},

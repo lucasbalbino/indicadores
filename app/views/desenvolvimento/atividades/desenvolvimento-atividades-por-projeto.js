@@ -3,27 +3,20 @@
 
     app.controller('DevAtividadesPorProjetoCtrl', DevAtividadesPorProjetoCtrl);
 
-    DevAtividadesPorProjetoCtrl.$inject = ['$rootScope', '$http', '$q', 'ENV'];
-
-    function DevAtividadesPorProjetoCtrl($rootScope, $http, $q, ENV) {
+    /** @ngInject */
+    function DevAtividadesPorProjetoCtrl($rootScope, DesenvolvimentoAtividadesService) {
         var dadosAtividadesPorProjeto = [];
 
-        this.atividadesPorProjeto = function(versao) {
-            var deferred = $q.defer();
-            $http.get(ENV.API_ENDPOINT + '/atividadesPorProjeto', {
-                params: {
-                    versao: versao
-                }
-            }).then(function (response) {
+        atividadesPorProjeto($rootScope.versao);
+
+        function atividadesPorProjeto(versao) {
+            DesenvolvimentoAtividadesService.getAtividadesPorProjeto(versao).then(
+                function (response) {
                     dadosAtividadesPorProjeto = response.data;
-                    deferred.resolve(graficoAtividadesPorProjeto().init());
-                }
-            ).catch(function (e) {
-                    deferred.reject(e);
+                    graficoAtividadesPorProjeto().init();
                 }
             );
-            return deferred.promise;
-        };
+        }
 
         function graficoAtividadesPorProjeto() {
             return {

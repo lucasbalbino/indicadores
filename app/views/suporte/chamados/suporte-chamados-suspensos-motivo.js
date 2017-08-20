@@ -3,8 +3,7 @@
 
     app.controller('SupChamadosSuspensosMotivoCtrl', SupChamadosSuspensosMotivoCtrl);
 
-    SupChamadosSuspensosMotivoCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
+    /** @ngInject */
     function SupChamadosSuspensosMotivoCtrl($rootScope, $http, ENV) {
         var dadosChamadosSuspensos = [];
         var mes = moment($rootScope.mes);

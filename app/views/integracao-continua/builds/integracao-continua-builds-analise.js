@@ -3,24 +3,20 @@
 
     app.controller('CiBuildsAnaliseCtrl', CiBuildsAnaliseCtrl);
 
-    CiBuildsAnaliseCtrl.$inject = ['$rootScope', '$scope', 'ENV']
+    /** @ngInject */
+    function CiBuildsAnaliseCtrl($rootScope, $scope, IntegracaoContinuaBuildsService) {
 
-    function CiBuildsAnaliseCtrl($rootScope, $scope, ENV) {
-
-        if($rootScope.date == undefined) {
+        if($rootScope.date === undefined) {
             $rootScope.date = {
                 startDate: moment().startOf('month'),
                 endDate: moment().endOf('month')
-            }
+            };
         }
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/relatorioEntreAsDatas',
-            data: {
-                dataInicial: $rootScope.date.startDate.format('DD/MM/YYYY'),
-                dataFinal: $rootScope.date.endDate.format('DD/MM/YYYY')
-            }
-        };
+        var dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
+        var dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
+
+        $scope.query = IntegracaoContinuaBuildsService.getRelatorioEntreAsDatasTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'job', titulo: 'Job', size: '50%'},

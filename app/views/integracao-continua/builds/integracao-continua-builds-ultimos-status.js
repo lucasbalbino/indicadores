@@ -3,12 +3,14 @@
 
     app.controller('CiBuildsUltimosStatusCtrl', CiBuildsUltimosStatusCtrl);
 
-    CiBuildsUltimosStatusCtrl.$inject = ['$scope', '$http', 'ENV']
+    /** @ngInject */
+    function CiBuildsUltimosStatusCtrl($scope, IntegracaoContinuaBuildsService) {
 
-    function CiBuildsUltimosStatusCtrl($scope, $http, ENV) {
         $scope.statusUltimosBuilds = function() {
+
             $scope.moment = moment().format('HH:ss');
-            $http.get(ENV.API_ENDPOINT + '/statusUltimosBuild').then(function (response) {
+
+            IntegracaoContinuaBuildsService.getStatusUltimosBuild().then(function (response) {
                     $scope.dados = response.data;
                 }
             );

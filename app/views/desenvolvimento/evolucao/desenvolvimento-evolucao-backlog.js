@@ -3,9 +3,8 @@
 
     app.controller('DevEvolucaoBacklogCtrl', DevEvolucaoBacklogCtrl);
 
-    DevEvolucaoBacklogCtrl.$inject = ['$rootScope', '$http', '$timeout', 'ENV']
-
-    function DevEvolucaoBacklogCtrl($rootScope, $http, $timeout, ENV) {
+    /** @ngInject */
+    function DevEvolucaoBacklogCtrl($rootScope, $timeout, DesenvolvimentoEvolucaoService) {
         var dadosEvolucaoBacklog = [];
 
         $timeout(function () {
@@ -15,7 +14,7 @@
         function evolucaoBacklog() {
             dadosEvolucaoBacklog = [];
 
-            $http.get(ENV.API_ENDPOINT + '/evolucaoBacklogDesenvolvimento').then(
+            DesenvolvimentoEvolucaoService.getEvolucaoBacklogDesenvolvimento().then(
                 function (response) {
                     dadosEvolucaoBacklog = response.data;
                     graficoEvolucaoBacklog().init();

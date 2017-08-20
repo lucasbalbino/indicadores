@@ -3,8 +3,7 @@
 
     app.controller('SupChamadosPorTipoCtrl', SupChamadosPorTipoCtrl);
 
-    SupChamadosPorTipoCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
+    /** @ngInject */
     function SupChamadosPorTipoCtrl($rootScope, $http, ENV) {
         var dadosChamadosPorTipo = [];
         var mes = moment($rootScope.mes);

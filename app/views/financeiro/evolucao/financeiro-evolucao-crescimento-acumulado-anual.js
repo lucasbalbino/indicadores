@@ -3,9 +3,8 @@
 
     app.controller('FinEvolucaoCrescimentoAcumuladoAnualCtrl', FinEvolucaoCrescimentoAcumuladoAnualCtrl);
 
-    FinEvolucaoCrescimentoAcumuladoAnualCtrl.$inject = ['$rootScope', '$scope', '$http', 'ENV']
-
-    function FinEvolucaoCrescimentoAcumuladoAnualCtrl($rootScope, $scope, $http, ENV) {
+    /** @ngInject */
+    function FinEvolucaoCrescimentoAcumuladoAnualCtrl($rootScope, $scope, FinanceiroEvolucaoService) {
         var gridReceita = [];
         var dadosReceita = [];
 
@@ -14,14 +13,14 @@
         receitaAcumuladaMes();
 
         function receitaAcumuladaMes() {
-            $http.get(ENV.API_ENDPOINT + '/crescimentoAnual', {
-                params: {
-                    dataFinalAnoAtual: mes.endOf('month').format('DD/MM/YYYY'),
-                    dataFinalAnoAnterior: mes.subtract(1, 'year').endOf('month').format('DD/MM/YYYY'),
-                    dataInicialAnoAnterior: mes.startOf('year').format('DD/MM/YYYY'),
-                    dataInicialAnoAtual: mes.add(1, 'year').startOf('year').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataFinalAnoAtual = mes.endOf('month').format('DD/MM/YYYY');
+            var dataFinalAnoAnterior = mes.subtract(1, 'year').endOf('month').format('DD/MM/YYYY');
+            var dataInicialAnoAnterior = mes.startOf('year').format('DD/MM/YYYY');
+            var dataInicialAnoAtual = mes.add(1, 'year').startOf('year').format('DD/MM/YYYY');
+
+            FinanceiroEvolucaoService.getCrescimentoAnual(
+                dataInicialAnoAnterior, dataFinalAnoAnterior, dataInicialAnoAtual, dataFinalAnoAtual
+            ).then(
                 function (response) {
                     gridReceita = response.data;
 
@@ -39,7 +38,7 @@
                         setup: gridReceita[first].setup.toFixed(2),
                         total: gridReceita[first].total.toFixed(2),
                         mes: 'Janeiro-' + moment(gridReceita[first].data, "DD/MM/YYYY").locale('pt-br').format("MMMM/YYYY")
-                    },{
+                    }, {
                         mensalidade: gridReceita[last].mensalidade.toFixed(2),
                         setup: gridReceita[last].setup.toFixed(2),
                         total: gridReceita[last].total.toFixed(2),
@@ -70,8 +69,8 @@
                         }],
                         "graphs": [{
                             "balloonFunction": function (graphDataItem, graph) {
-                                return "<b>Mensalidade</b><br><span style='font-size:14px'>" + graphDataItem.dataContext.mes + ": <b>"
-                                    + currency(graphDataItem.dataContext.mensalidade) + "</b></span>";
+                                return "<b>Mensalidade</b><br><span style='font-size:14px'>" + graphDataItem.dataContext.mes + ": <b>" +
+                                    currency(graphDataItem.dataContext.mensalidade) + "</b></span>";
                             },
                             "labelText": "[[value]]",
                             "title": "Mensalidade",
@@ -86,8 +85,8 @@
                             "showAllValueLabels": true
                         }, {
                             "balloonFunction": function (graphDataItem, graph) {
-                                return "<b>Setup</b><br><span style='font-size:14px'>" + graphDataItem.dataContext.mes + ": <b>"
-                                    + currency(graphDataItem.dataContext.setup) + "</b></span>";
+                                return "<b>Setup</b><br><span style='font-size:14px'>" + graphDataItem.dataContext.mes + ": <b>" +
+                                    currency(graphDataItem.dataContext.setup) + "</b></span>";
                             },
                             "labelText": "[[value]]",
                             "title": "Setup",
@@ -129,8 +128,9 @@
                                 var g = chart.graphs[x];
                                 if (dp[g.valueField]) {
                                     dp.totalText += parseFloat(dp[g.valueField]);
-                                    if (dp[g.valueField] > 0)
+                                    if (dp[g.valueField] > 0) {
                                         dp.total += parseFloat(dp[g.valueField]);
+                                    }
                                 }
                             }
                             dp.totalText = currency(dp.totalText.toFixed(2));

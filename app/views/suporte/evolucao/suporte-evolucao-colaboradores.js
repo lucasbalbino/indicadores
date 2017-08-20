@@ -4,7 +4,7 @@
     app.controller('SupEvolucaoColaboradoresCtrl', SupEvolucaoColaboradoresCtrl);
 
     /** @ngInject */
-    function SupEvolucaoColaboradoresCtrl($rootScope, $scope, SuporteEvolucaoService) {
+    function SupEvolucaoColaboradoresCtrl($rootScope, $scope, SuporteColaboradoresService) {
         var dadosChamadosPorColaborador = [];
         var legendaChamadosPorColaborador = [];
 
@@ -30,7 +30,7 @@
             var dataFinal = moment($rootScope.date.endDate);
             dataFinal = dataFinal.add(1, 'days').format('DD/MM/YYYY');
 
-            SuporteEvolucaoService.getChamadosPorColaborador(dataInicial, dataFinal).then(
+            SuporteColaboradoresService.getChamadosPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     dadosChamadosPorColaborador = response.data;
                     graficoChamadosPorColaborador().init();

@@ -6,18 +6,12 @@
 
     app.controller('DevAtividadesNaoLiberadasCtrl', DevAtividadesNaoLiberadasCtrl);
 
-    DevAtividadesNaoLiberadasCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'ENV'];
-
-    function DevAtividadesNaoLiberadasCtrl($scope, $rootScope, $timeout, ENV) {
+    /** @ngInject */
+    function DevAtividadesNaoLiberadasCtrl($scope, $rootScope, $timeout, DesenvolvimentoAtividadesService) {
         $scope.loaded = false;
 
         $timeout(function () {
-            $scope.query = {
-                url: ENV.API_ENDPOINT + '/atividadesNaoLiberadas',
-                data: {
-                    versao: $rootScope.versao
-                }
-            };
+            $scope.query = DesenvolvimentoAtividadesService.getAtividadesNaoLiberadasTable($rootScope.versao);
             $scope.loaded = true;
         }, 1500);
 

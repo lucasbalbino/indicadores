@@ -3,19 +3,14 @@
 
     app.controller('FinFaturamentoClientesCtrl', FinFaturamentoClientesCtrl);
 
-    FinFaturamentoClientesCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function FinFaturamentoClientesCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function FinFaturamentoClientesCtrl($rootScope, $scope, FinanceiroFaturamentoService) {
 
         var mes = moment($rootScope.mes);
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/faturamentoPorCliente',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.endOf('month').format('DD/MM/YYYY')
-            }
-        };
+        $scope.query = FinanceiroFaturamentoService.getFaturamentoPorClienteTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'cliente', titulo: 'Cliente', size: '40%'},
@@ -29,7 +24,7 @@
             targets: [2, 3],
             type: 'brazilian-currency',
             render: function (data) {
-                return (data == 0) ? '' : currency(data.toFixed(2));
+                return (data === 0) ? '' : currency(data.toFixed(2));
             }
         },{
             targets: 4,

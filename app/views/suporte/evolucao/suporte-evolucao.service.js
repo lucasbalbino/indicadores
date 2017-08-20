@@ -8,7 +8,6 @@
         return {
             getChamadosAbertosEncerrados: getChamadosAbertosEncerrados,
             getChamadosPorTipo: getChamadosPorTipo,
-            getChamadosPorColaborador: getChamadosPorColaborador,
             getChamadosPorSituacao: getChamadosPorSituacao
         };
 
@@ -22,20 +21,12 @@
             });
         }
 
-        function getChamadosPorTipo(dataInicial, dataFinal) {
+        function getChamadosPorTipo(dataInicial, dataFinal, idCliente) {
             return $http.get(ENV.API_ENDPOINT + '/chamadosPorTipo', {
                 params: {
                     dataInicial: dataInicial,
-                    dataFinal: dataFinal
-                }
-            });
-        }
-
-        function getChamadosPorColaborador(dataInicial, dataFinal) {
-            return $http.get(ENV.API_ENDPOINT + '/chamadosPorColaborador', {
-                params: {
-                    dataInicial: dataInicial,
-                    dataFinal: dataFinal
+                    dataFinal: dataFinal,
+                    idCliente: idCliente
                 }
             });
         }
