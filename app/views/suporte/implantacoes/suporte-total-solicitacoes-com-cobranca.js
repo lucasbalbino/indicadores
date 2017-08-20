@@ -22,26 +22,29 @@
             var setaValoresChamados = function (n, callback2) {
                 dadosTemp = 0;
 
-                totalSolicitacoesComCobranca(mes.startOf('month').format('DD/MM/YYYY'), mes.endOf('month').format('DD/MM/YYYY'), function () {
-                    var total = 0;
+                totalSolicitacoesComCobranca(
+                    mes.startOf('month').format('DD/MM/YYYY'),
+                    mes.endOf('month').format('DD/MM/YYYY'),
+                    function () {
+                        var total = 0;
 
-                    for (var i = 0; i < dadosTemp.length; i++) {
-                        if (dadosTemp[i].valor) {
-                            total += dadosTemp[i].valor;
+                        for (var i = 0; i < dadosTemp.length; i++) {
+                            if (dadosTemp[i].valor) {
+                                total += dadosTemp[i].valor;
+                            }
                         }
-                    }
 
-                    totais.push({
-                        mes: mes.locale('pt-br').format("MMMM / YYYY"),
-                        valor: total.toFixed(2)
+                        totais.push({
+                            mes: mes.locale('pt-br').format("MMMM / YYYY"),
+                            valor: total.toFixed(2)
+                        });
+
+                        mes = mes.subtract(1, 'month');
+
+                        if (n < QTD_MESES) {
+                            setaValoresChamados(n + 1, callback2);
+                        }
                     });
-
-                    mes = mes.subtract(1, 'month');
-
-                    if (n < QTD_MESES) {
-                        setaValoresChamados(n + 1, callback2);
-                    }
-                });
 
                 if (n === QTD_MESES) {
                     callback2();
@@ -54,7 +57,7 @@
         }
 
         function totalSolicitacoesComCobranca(dataInicial, dataFinal, callback) {
-            SuporteImplantacoesService.getValoresCamposAdicionaisTable(dataInicial, dataFinal, 1).then(
+            SuporteImplantacoesService.getValoresCamposAdicionais(dataInicial, dataFinal, 1).then(
                 function (response) {
                     dadosTemp = response.data;
                     callback();

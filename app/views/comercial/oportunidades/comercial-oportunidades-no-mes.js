@@ -4,7 +4,7 @@
     app.controller('ComOportunidadesNoMesCtrl', ComOportunidadesNoMesCtrl);
 
     /** @ngInject */
-    function ComOportunidadesNoMesCtrl($rootScope, ComercialOportunidadesService) {
+    function ComOportunidadesNoMesCtrl($scope, $rootScope, ComercialOportunidadesService) {
 
         var mes = moment($rootScope.mes);
         var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
@@ -27,7 +27,7 @@
             targets: [4, 5],
             type: 'brazilian-currency',
             render: function (data) {
-                return (data === 0) ? '' : '<div class="tabela-dev-suporte">' + currency(data.toFixed(2)) + '</div>';
+                return (data === 0) ? '' : '<div class="tabela-dev-suporte">' + currency(data) + '</div>';
             }
         }, {
             "targets": 0,

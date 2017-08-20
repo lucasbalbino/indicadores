@@ -4,7 +4,7 @@
     app.controller('ComOportunidadesPorGerenteCtrl', ComOportunidadesPorGerenteCtrl);
 
     /** @ngInject */
-    function ComOportunidadesPorGerenteCtrl($rootScope, ComercialOportunidadesService) {
+    function ComOportunidadesPorGerenteCtrl($rootScope, $timeout, ComercialOportunidadesService) {
         $rootScope.metasGerentes = [];
         var gridOPsPorGerente = [];
         var dadosOPsPorGerente = [];

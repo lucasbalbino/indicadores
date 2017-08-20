@@ -10,6 +10,7 @@
             getImplantacoesEmAtendimentoTable: getImplantacoesEmAtendimentoTable,
             getImplantacoesEncerradasTable: getImplantacoesEncerradasTable,
             getImplantacoesPorCategoria: getImplantacoesPorCategoria,
+            getValoresCamposAdicionais: getValoresCamposAdicionais,
             getValoresCamposAdicionaisTable: getValoresCamposAdicionaisTable
         };
 
@@ -39,6 +40,16 @@
                 params: {
                     dataInicial: dataInicial,
                     dataFinal: dataFinal
+                }
+            });
+        }
+
+        function getValoresCamposAdicionais(dataInicial, dataFinal, tipoInformacao) {
+            return $http.get(ENV.API_ENDPOINT + '/valoresCamposAdicionais', {
+                params: {
+                    dataInicial: dataInicial,
+                    dataFinal: dataFinal,
+                    tipoInformacao: tipoInformacao
                 }
             });
         }
