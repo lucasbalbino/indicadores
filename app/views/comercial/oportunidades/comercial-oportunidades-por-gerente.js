@@ -3,9 +3,8 @@
 
     app.controller('ComOportunidadesPorGerenteCtrl', ComOportunidadesPorGerenteCtrl);
 
-    ComOportunidadesPorGerenteCtrl.$inject = ['$scope', '$rootScope', '$http', '$timeout', 'ENV']
-
-    function ComOportunidadesPorGerenteCtrl($scope, $rootScope, $http, $timeout, ENV) {
+    /** @ngInject */
+    function ComOportunidadesPorGerenteCtrl($rootScope, $timeout, ComercialOportunidadesService) {
         $rootScope.metasGerentes = [];
         var gridOPsPorGerente = [];
         var dadosOPsPorGerente = [];
@@ -17,7 +16,7 @@
         });
 
         function getMetasGerentes(callback) {
-            $http.get(ENV.API_ENDPOINT + '/allMetas').then(
+            ComercialOportunidadesService.getAllMetas().then(
                 function (response) {
                     $rootScope.metasGerentes = response.data;
                     callback();
@@ -26,12 +25,10 @@
         }
 
         function opsPorGerente() {
-            $http.get(ENV.API_ENDPOINT + '/opsPorGerente', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            ComercialOportunidadesService.getOpsPorGerente(dataInicial, dataFinal).then(
                 function (response) {
                     gridOPsPorGerente = response.data;
 
@@ -60,7 +57,7 @@
                 };
 
                 for (var j = 0; j < gridOPsPorGerente.length; j++) {
-                    if ($rootScope.metasGerentes[i].gerente == gridOPsPorGerente[j].gerente) {
+                    if ($rootScope.metasGerentes[i].gerente === gridOPsPorGerente[j].gerente) {
                         temp.mensalidade = gridOPsPorGerente[j].mensalidade;
                         total.mensalidade += gridOPsPorGerente[j].mensalidade;
 

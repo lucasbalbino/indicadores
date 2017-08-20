@@ -6,21 +6,16 @@
 
     app.controller('DevColaboradoresDesenvolvidasCtrl', DevColaboradoresDesenvolvidasCtrl);
 
-    DevColaboradoresDesenvolvidasCtrl.$inject = ['$rootScope', '$http', '$timeout', 'ENV']
-
-    function DevColaboradoresDesenvolvidasCtrl($rootScope, $http, $timeout, ENV) {
+    /** @ngInject */
+    function DevColaboradoresDesenvolvidasCtrl($rootScope, $timeout, DesenvolvimentoColaboradoresService) {
         var atividadesResolvidasPorColaborador = [];
 
         $timeout(function () {
-            resolvidasPorColaborador();
+            resolvidasPorColaborador($rootScope.versao);
         }, 1500);
 
-        function resolvidasPorColaborador() {
-            $http.get(ENV.API_ENDPOINT + '/resolvidasPorColaborador', {
-                params: {
-                    versao: $rootScope.versao
-                }
-            }).then(
+        function resolvidasPorColaborador(versao) {
+            DesenvolvimentoColaboradoresService.getResolvidasPorColaborador(versao).then(
                 function (response) {
                     atividadesResolvidasPorColaborador = response.data;
                     graficoAtividadesResolvidasPorColaborador().init();

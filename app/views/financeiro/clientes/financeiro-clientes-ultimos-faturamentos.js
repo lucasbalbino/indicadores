@@ -1,22 +1,18 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('FinClientesUltimosFaturamentosCtrl', FinClientesUltimosFaturamentosCtrl);
 
-    FinClientesUltimosFaturamentosCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function FinClientesUltimosFaturamentosCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function FinClientesUltimosFaturamentosCtrl($rootScope, $scope, FinanceiroClientesService) {
 
         var mes = moment($rootScope.mes);
 
-        if($rootScope.idCliente == null || $rootScope.idCliente == undefined) $rootScope.idCliente = 0;
+        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
+            $rootScope.idCliente = 0;
+        }
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/ultimosFaturamentoPorCliente',
-            data: {
-                idCliente: $rootScope.idCliente
-            }
-        };
+        $scope.query = FinanceiroClientesService.getUltimosFaturamentoPorClienteTable($rootScope.idCliente);
 
         $scope.columns = [
             {id: 'faturamento', titulo: 'Faturamento', size: '65%'},
@@ -30,14 +26,14 @@
             render: function (data) {
                 return '<div class="tabela-dev-suporte">' + data + '</div>';
             }
-        },{
+        }, {
             targets: 1,
             type: 'brazilian-currency',
             render: function (data) {
-                return (data == 0) ? '' : currency(data.toFixed(2));
+                return (data === 0) ? '' : currency(data.toFixed(2));
             }
         }];
 
-        $scope.order = [[ 3, "desc" ]];
+        $scope.order = [[3, "desc"]];
     }
 })();

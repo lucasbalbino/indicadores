@@ -6,21 +6,16 @@
 
     app.controller('DevColaboradoresTestadasCtrl', DevColaboradoresTestadasCtrl);
 
-    DevColaboradoresTestadasCtrl.$inject = ['$rootScope', '$http', '$timeout', 'ENV']
-
-    function DevColaboradoresTestadasCtrl($rootScope, $http, $timeout, ENV) {
+    /** @ngInject */
+    function DevColaboradoresTestadasCtrl($rootScope, $timeout, DesenvolvimentoColaboradoresService) {
         var atividadesTestadasPorColaborador = [];
 
         $timeout(function () {
-            testadasPorColaborador();
+            testadasPorColaborador($rootScope.versao);
         }, 1500);
 
-        function testadasPorColaborador() {
-            $http.get(ENV.API_ENDPOINT + '/testadasPorColaborador', {
-                params: {
-                    versao: $rootScope.versao
-                }
-            }).then(
+        function testadasPorColaborador(versao) {
+            DesenvolvimentoColaboradoresService.getTestadasPorColaborador(versao).then(
                 function (response) {
                     atividadesTestadasPorColaborador = response.data;
                     graficoAtividadesTestadasPorColaborador().init();

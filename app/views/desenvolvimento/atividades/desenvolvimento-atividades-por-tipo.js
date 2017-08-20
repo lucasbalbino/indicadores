@@ -3,28 +3,20 @@
 
     app.controller('DevAtividadesPorTipoCtrl', DevAtividadesPorTipoCtrl);
 
-    DevAtividadesPorTipoCtrl.$inject = ['$rootScope', '$http', '$q', 'ENV'];
-
-    function DevAtividadesPorTipoCtrl($rootScope, $http, $q, ENV) {
+    /** @ngInject */
+    function DevAtividadesPorTipoCtrl($rootScope, DesenvolvimentoAtividadesService) {
         var dadosAtividadesPorTipo = [];
 
-        this.atividadesPorTipo = function(versao) {
-            var deferred = $q.defer();
+        atividadesPorTipo($rootScope.versao);
 
-            $http.get(ENV.API_ENDPOINT + '/atividadesPorTipo', {
-                params: {
-                    versao: versao
-                }
-            }).then(function (response) {
+        function atividadesPorTipo(versao) {
+            DesenvolvimentoAtividadesService.getAtividadesPorTipo(versao).then(
+                function (response) {
                     dadosAtividadesPorTipo = response.data;
-                    deferred.resolve(graficoAtividadesPorTipo().init());
-                }
-            ).catch(function (e) {
-                    deferred.reject(e);
+                    graficoAtividadesPorTipo().init();
                 }
             );
-            return deferred.promise;
-        };
+        }
 
         function graficoAtividadesPorTipo() {
             return {

@@ -3,19 +3,14 @@
 
     app.controller('FinContratosTotalTitulosPorClienteCtrl', FinContratosTotalTitulosPorClienteCtrl);
 
-    FinContratosTotalTitulosPorClienteCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function FinContratosTotalTitulosPorClienteCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function FinContratosTotalTitulosPorClienteCtrl($rootScope, $scope, FinanceiroContratosService) {
 
         var mes = moment($rootScope.mes);
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/totalEmAbertoPorCliente',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.endOf('month').format('DD/MM/YYYY')
-            }
-        };
+        $scope.query = FinanceiroContratosService.getTotalEmAbertoPorClienteTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'cliente', titulo: 'Cliente', size: '70%'},

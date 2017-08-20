@@ -3,9 +3,8 @@
 
     app.controller('SupAvaliacaoChatCtrl', SupAvaliacaoChatCtrl);
 
-    SupAvaliacaoChatCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupAvaliacaoChatCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupAvaliacaoChatCtrl($rootScope, SuporteAvaliacaoService) {
         var gridAvaliacaoChat = [];
         var dadosAvaliacaoChat = [];
 
@@ -14,12 +13,10 @@
         avaliacaoChamados();
 
         function avaliacaoChamados() {
-            $http.get(ENV.API_ENDPOINT + '/avaliacaoChatPorColaborador', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteAvaliacaoService.getAvaliacaoChatPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     gridAvaliacaoChat = response.data;
                     loadDataAvaliacaoChat();
@@ -40,25 +37,25 @@
 
             // BOM
             valor = 0;
-            for(var i=0; i<dados.length; i++) {
+            for(i=0; i<dados.length; i++) {
                 valor += dados[i].bom;
             }
             dadosAvaliacaoChat.push({label: "Bom", value: valor});
 
             // REGULAR
             valor = 0;
-            for(var i=0; i<dados.length; i++) {
+            for(i=0; i<dados.length; i++) {
                 valor += dados[i].regular;
             }
             dadosAvaliacaoChat.push({label: "Regular", value: valor});
 
             // RUIM
             valor = 0;
-            for(var i=0; i<dados.length; i++) {
+            for(i=0; i<dados.length; i++) {
                 valor += dados[i].ruim;
             }
             dadosAvaliacaoChat.push({label: "Ruim", value: valor});
-        }
+        };
 
         function graficoAvaliacaoChat() {
             return {

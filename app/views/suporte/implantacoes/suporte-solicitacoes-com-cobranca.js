@@ -3,20 +3,14 @@
 
     app.controller('SupSolicitacoesComCobrancaCtrl', SupSolicitacoesComCobrancaCtrl);
 
-    SupSolicitacoesComCobrancaCtrl.$inject = ['$scope', '$rootScope', 'ENV']
-
-    function SupSolicitacoesComCobrancaCtrl($scope, $rootScope, ENV) {
+    /** @ngInject */
+    function SupSolicitacoesComCobrancaCtrl($scope, $rootScope, SuporteImplantacoesService) {
 
         var mes = moment($rootScope.mes);
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/valoresCamposAdicionais',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY'),
-                tipoInformacao: 1
-            }
-        };
+        $scope.query = SuporteImplantacoesService.getValoresCamposAdicionaisTable(dataInicial, dataFinal, 1);
 
         $scope.columns = [
             {id: 'chamado', titulo: 'Chamado', size: "10%", class: "text-center"},
@@ -29,14 +23,13 @@
             "targets": 0,
             "render": function ( data ) {
                 return '<div class="tabela-dev-suporte">' +
-                    '<a target="_blank" href="http://LINK?dados='+data+'">'+data+'</a>'
-                    +'</div>';
+                    '<a target="_blank" href="http://LINK?dados='+data+'">'+data+'</a>' +'</div>';
             }
         },{
             "targets": 3,
             "type": "brazilian-currency",
             "render": function ( data ) {
-                if(data != null) {
+                if(data !== null) {
                     return '<div class="tabela-dev-suporte">' + currency(data) + '</div>';
                 } else {
                     return '';
@@ -45,7 +38,7 @@
         },{
             "targets": [ '_all' ],
             "render": function ( data ) {
-                if(data != null) {
+                if(data !== null) {
                     return '<div class="tabela-dev-suporte">' + data + '</div>';
                 } else {
                     return '';

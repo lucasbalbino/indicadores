@@ -3,21 +3,18 @@
 
     app.controller('SupAvaliacaoQuantidadeCtrl', SupAvaliacaoQuantidadeCtrl);
 
-    SupAvaliacaoQuantidadeCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupAvaliacaoQuantidadeCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupAvaliacaoQuantidadeCtrl($rootScope, SuporteAvaliacaoService) {
         var dadosAvaliacaoQuantidade = [];
         var mes = moment($rootScope.mes);
 
         avaliacaoQuantidade();
 
         function avaliacaoQuantidade() {
-            $http.get(ENV.API_ENDPOINT + '/avaliacaoChamadosQuantidade', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteAvaliacaoService.getAvaliacaoChamadosQuantidade(dataInicial, dataFinal).then(
                 function (response) {
                     dadosAvaliacaoQuantidade = response.data;
                     graficoAvaliacaoQuantidade().init();

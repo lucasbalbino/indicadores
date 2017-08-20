@@ -3,9 +3,8 @@
 
     app.controller('SupCategoriasMudancasCtrl', SupCategoriasMudancasCtrl);
 
-    SupCategoriasMudancasCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupCategoriasMudancasCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupCategoriasMudancasCtrl($rootScope, SuporteCategoriasService) {
         var dadosChamadosPorCategoria = [];
         var TIPO_MUDANCAS = 39;
 
@@ -14,13 +13,10 @@
         chamadosPorCategoria();
 
         function chamadosPorCategoria() {
-            $http.get(ENV.API_ENDPOINT + '/chamadosPorCategoria', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY'),
-                    tipo: TIPO_MUDANCAS
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteCategoriasService.getChamadosPorCategoria(dataInicial, dataFinal, TIPO_MUDANCAS).then(
                 function (response) {
                     dadosChamadosPorCategoria = response.data;
                     graficoChamadosPorCategoria().init();

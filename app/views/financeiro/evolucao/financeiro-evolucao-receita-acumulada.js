@@ -1,21 +1,17 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('FinEvolucaoReceitaAcumuladaCtrl', FinEvolucaoReceitaAcumuladaCtrl);
 
-    FinEvolucaoReceitaAcumuladaCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function FinEvolucaoReceitaAcumuladaCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function FinEvolucaoReceitaAcumuladaCtrl($rootScope, $scope, FinanceiroEvolucaoService) {
         var QTD_MESES = 12;
         var mes = moment($rootScope.mes);
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/receitaMensalAcumulada',
-            data: {
-                dataInicial: mes.subtract(QTD_MESES-1, 'month').startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.add(QTD_MESES-1, 'month').endOf('month').format('DD/MM/YYYY')
-            }
-        };
+        var dataInicial = mes.subtract(QTD_MESES - 1, 'month').startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.add(QTD_MESES - 1, 'month').endOf('month').format('DD/MM/YYYY');
+
+        $scope.query = FinanceiroEvolucaoService.getReceitaMensalAcumuladaTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'mes', titulo: 'Mês', size: '30%'},
@@ -28,20 +24,20 @@
             render: function (data) {
                 return moment(data, 'YYYY-MM').locale('pt-br').format("MMM/YYYY");
             }
-        },{
+        }, {
             targets: 1,
             type: 'brazilian-currency',
             render: function (data) {
                 return currency(data.toFixed(2));
             }
-        },{
+        }, {
             targets: 2,
             type: 'brazilian-currency',
             render: function (data) {
-                return '<strong>' + currency(data.toFixed(2)); + '</strong>';
+                return '<strong>' + currency(data.toFixed(2)) + '</strong>';
             }
         }];
 
-        $scope.order = [[ 0, "asc" ]];
+        $scope.order = [[0, "asc"]];
     }
 })();

@@ -3,21 +3,18 @@
 
     app.controller('SupChatQuantidadeCtrl', SupChatQuantidadeCtrl);
 
-    SupChatQuantidadeCtrl.$inject = ['$rootScope', '$http', 'ENV']
-
-    function SupChatQuantidadeCtrl($rootScope, $http, ENV) {
+    /** @ngInject */
+    function SupChatQuantidadeCtrl($rootScope, SuporteAvaliacaoService) {
         var dadosChatQuantidade = [];
         var mes = moment($rootScope.mes);
 
         chatQuantidade();
 
         function chatQuantidade() {
-            $http.get(ENV.API_ENDPOINT + '/avaliacaoChatQuantidade', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteAvaliacaoService.getAvaliacaoChatQuantidade(dataInicial, dataFinal).then(
                 function (response) {
                     dadosChatQuantidade = response.data;
                     trataChatQuantidade();
@@ -29,10 +26,10 @@
         function trataChatQuantidade() {
             var valor = 0;
             for(var i=0; i<dadosChatQuantidade.length; i++) {
-                if(dadosChatQuantidade[i].label == "Avaliados") {
+                if(dadosChatQuantidade[i].label === "Avaliados") {
                     valor = dadosChatQuantidade[i].label;
                 }
-                if(dadosChatQuantidade[i].label == "Total") {
+                if(dadosChatQuantidade[i].label === "Total") {
                     dadosChatQuantidade[i].value = valor - dadosChatQuantidade[i].value;
                     dadosChatQuantidade[i].label = "Não Avaliados";
                 }

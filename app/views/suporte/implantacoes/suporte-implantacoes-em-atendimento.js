@@ -3,13 +3,10 @@
 
     app.controller('SupImplantacoesEmAtendimentoCtrl', SupImplantacoesEmAtendimentoCtrl);
 
-    SupImplantacoesEmAtendimentoCtrl.$inject = ['$scope', 'ENV']
+    /** @ngInject */
+    function SupImplantacoesEmAtendimentoCtrl($scope, SuporteImplantacoesService) {
 
-    function SupImplantacoesEmAtendimentoCtrl($scope, ENV) {
-
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/implantacoesEmAtendimento'
-        };
+        $scope.query = SuporteImplantacoesService.getImplantacoesEmAtendimentoTable();
 
         $scope.columns = [
             {id: 'chamado', titulo: 'Chamado', size: "7%", class: "text-center"},
@@ -38,7 +35,7 @@
         }, {
             "targets": ['_all'],
             "render": function (data) {
-                if (data != null) {
+                if (data !== null) {
                     return '<div class="tabela-dev-suporte">' + data + '</div>';
                 } else {
                     return '';

@@ -3,19 +3,14 @@
 
     app.controller('ComOportunidadesNoMesCtrl', ComOportunidadesNoMesCtrl);
 
-    ComOportunidadesNoMesCtrl.$inject = ['$rootScope', '$scope', 'ENV']
-
-    function ComOportunidadesNoMesCtrl($rootScope, $scope, ENV) {
+    /** @ngInject */
+    function ComOportunidadesNoMesCtrl($scope, $rootScope, ComercialOportunidadesService) {
 
         var mes = moment($rootScope.mes);
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/opsPorMes',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.endOf('month').format('DD/MM/YYYY')
-            }
-        };
+        $scope.query = ComercialOportunidadesService.getOpsPorMesTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'op', titulo: 'OP', size: '5%'},
@@ -32,19 +27,18 @@
             targets: [4, 5],
             type: 'brazilian-currency',
             render: function (data) {
-                return (data == 0) ? '' : '<div class="tabela-dev-suporte">' + currency(data.toFixed(2)) + '</div>';
+                return (data === 0) ? '' : '<div class="tabela-dev-suporte">' + currency(data) + '</div>';
             }
         }, {
             "targets": 0,
-            "render": function ( data ) {
+            "render": function (data) {
                 return '<div class="tabela-dev-suporte">' +
-                    '<a target="_blank" href="http://LINK?dados=">'+data+'</a>'
-                    +'</div>';
+                    '<a target="_blank" href="http://LINK?dados=">' + data + '</a>' + '</div>';
             }
-        },{
-            "targets": [ '_all' ],
-            "render": function ( data ) {
-                if(data != null) {
+        }, {
+            "targets": ['_all'],
+            "render": function (data) {
+                if (data !== null) {
                     return '<div class="tabela-dev-suporte">' + data + '</div>';
                 } else {
                     return '';

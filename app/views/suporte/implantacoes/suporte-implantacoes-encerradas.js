@@ -1,21 +1,16 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('SupImplantacoesEncerradasCtrl', SupImplantacoesEncerradasCtrl);
 
-    SupImplantacoesEncerradasCtrl.$inject = ['$scope', '$rootScope', 'ENV']
-
-    function SupImplantacoesEncerradasCtrl($scope, $rootScope, ENV) {
+    /** @ngInject */
+    function SupImplantacoesEncerradasCtrl($scope, $rootScope, SuporteImplantacoesService) {
 
         var mes = moment($rootScope.mes);
+        var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+        var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
 
-        $scope.query = {
-            url: ENV.API_ENDPOINT + '/implantacoesEncerradas',
-            data: {
-                dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-            }
-        };
+        $scope.query = SuporteImplantacoesService.getImplantacoesEncerradasTable(dataInicial, dataFinal);
 
         $scope.columns = [
             {id: 'chamado', titulo: 'Chamado', size: "7%", class: "text-center"},
@@ -27,24 +22,22 @@
             {id: 'responsavel', titulo: 'Responsável', size: "15%"}
         ];
 
-        $scope.columnsDefs = [ {
+        $scope.columnsDefs = [{
             "targets": 0,
-            "render": function ( data ) {
+            "render": function (data) {
                 return '<div class="tabela-dev-suporte">' +
-                    '<a target="_blank" href="http://LINK?dados='+data+'">'+data+'</a>'
-                    +'</div>';
+                    '<a target="_blank" href="http://LINK?dados=' + data + '">' + data + '</a>' + '</div>';
             }
-        },{
+        }, {
             "targets": 1,
-            "render": function ( data ) {
+            "render": function (data) {
                 return '<div class="tabela-dev-suporte">' +
-                    '<a target="_blank" href="http://LINK?dados=">'+data+'</a>'
-                    +'</div>';
+                    '<a target="_blank" href="http://LINK?dados=">' + data + '</a>' + '</div>';
             }
-        },{
-            "targets": [ '_all' ],
-            "render": function ( data ) {
-                if(data != null) {
+        }, {
+            "targets": ['_all'],
+            "render": function (data) {
+                if (data !== null) {
                     return '<div class="tabela-dev-suporte">' + data + '</div>';
                 } else {
                     return '';

@@ -3,9 +3,8 @@
 
     app.controller('FinEvolucaoReceitaMensalNosAnosCtrl', FinEvolucaoReceitaMensalNosAnosCtrl);
 
-    FinEvolucaoReceitaMensalNosAnosCtrl.$inject = ['$rootScope', '$scope', '$http', 'ENV']
-
-    function FinEvolucaoReceitaMensalNosAnosCtrl($rootScope, $scope, $http, ENV) {
+    /** @ngInject */
+    function FinEvolucaoReceitaMensalNosAnosCtrl($rootScope, $scope, FinanceiroEvolucaoService) {
         var MESES = 12;
         var ANOS = 3;
 
@@ -19,18 +18,16 @@
         receitaMensalNosAnos();
 
         function receitaMensalNosAnos() {
-            $http.get(ENV.API_ENDPOINT + '/receitaMensalNosAnos', {
-                params: {
-                    dataFinal: mes.endOf('month').endOf('year').format('DD/MM/YYYY'),
-                    dataInicial: mes.subtract(2, 'year').startOf('month').startOf('year').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataFinal = mes.endOf('month').endOf('year').format('DD/MM/YYYY');
+            var dataInicial = mes.subtract(2, 'year').startOf('month').startOf('year').format('DD/MM/YYYY');
+
+            FinanceiroEvolucaoService.getReceitaMensalNosAnos(dataInicial, dataFinal).then(
                 function (response) {
                     var temp = response.data;
 
                     for (var i = 0; i < MESES; i++) {
                         for (var j = 0; j < temp.length; j++) {
-                            if (parseInt(temp[j].mes) == i + 1) {
+                            if (parseInt(temp[j].mes) === i + 1) {
                                 gridReceita[i] = {};
 
                                 gridReceita[i].mes = moment(temp[j].mes, 'MM').locale('pt-br').format("MMMM");
@@ -124,7 +121,9 @@
             var newStack = false;
 
             for (var k = 0; k < ANOS; k++) {
-                if(k!=0) newStack = true;
+                if (k !== 0) {
+                    newStack = true;
+                }
 
                 graph.push({
                     "valueAxis": "columns",
