@@ -4,7 +4,7 @@
     app.controller('SupAvaliacaoQuantidadeCtrl', SupAvaliacaoQuantidadeCtrl);
 
     /** @ngInject */
-    function SupAvaliacaoQuantidadeCtrl($rootScope, SuporteAvaliacaoService) {
+    function SupAvaliacaoQuantidadeCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var dadosAvaliacaoQuantidade = [];
         var mes = moment($rootScope.mes);
 
@@ -17,7 +17,8 @@
             SuporteAvaliacaoService.getAvaliacaoChamadosQuantidade(dataInicial, dataFinal).then(
                 function (response) {
                     dadosAvaliacaoQuantidade = response.data;
-                    graficoAvaliacaoQuantidade().init();
+                    $scope.dadosAvaliacaoQuantidade = dadosAvaliacaoQuantidade;
+                    // graficoAvaliacaoQuantidade().init();
                 }
             );
         }

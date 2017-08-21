@@ -4,16 +4,10 @@
 
     <div ng-controller="SupAvaliacaoResumoCtrl">
         <indicadores-databox label="Resumo" class="col-xs-12 col-md-12 col-lg-12">
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <h2><span class="{{avaliacoes.emojiColor}}"><i class="{{avaliacoes.emoji}}"></i></span>
-                        {{avaliacoes.valor}}% de chamados avaliados como Ótimo ou Bom em {{avaliacoes.mes}}
-                        <span class="badge badge-{{avaliacoes.porcentagem.color}}">
-                            <i class="fa {{avaliacoes.porcentagem.icon}}"></i> {{avaliacoes.porcentagem.value}}% em relação ao mês anterior ({{avaliacoes.mesAnteriorValor}}%)
-                        </span>
-                    </h2>
-                </div>
-            </div>
+            <indicadores-summary emoji="avaliacoes.emoji" percentage="avaliacoes.porcentagem"
+                                 value="avaliacoes.mesAnteriorValor">
+                {{avaliacoes.valor}}% de chamados avaliados como Ótimo ou Bom em {{avaliacoes.mes}}
+            </indicadores-summary>
         </indicadores-databox>
     </div>
 
@@ -26,7 +20,10 @@
     <div ng-controller="SupAvaliacaoQuantidadeCtrl">
         <indicadores-databox label="Quantidade de Chamados Avaliados"
                              class="col-xs-12 col-md-6 col-lg-6">
-            <div id="avaliacao-quantidade-chart" class="chart chart-xl no-margin"></div>
+            {{dadosAvaliacaoQuantidade}}
+            <indicadores-chart id="avaliacao-quantidade-chart" class="chart chart-xl no-margin"
+                               type="pie" data="dadosAvaliacaoQuantidade"
+                               ng-if="dadosAvaliacaoQuantidade"></indicadores-chart>
         </indicadores-databox>
     </div>
 
