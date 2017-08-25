@@ -1,11 +1,11 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('SupChatQuantidadeCtrl', SupChatQuantidadeCtrl);
 
     /** @ngInject */
-    function SupChatQuantidadeCtrl($rootScope, SuporteAvaliacaoService) {
-        var dadosChatQuantidade = [];
+    function SupChatQuantidadeCtrl($scope, $rootScope, SuporteAvaliacaoService) {
+        $scope.dadosChatQuantidade = [];
         var mes = moment($rootScope.mes);
 
         chatQuantidade();
@@ -16,51 +16,25 @@
 
             SuporteAvaliacaoService.getAvaliacaoChatQuantidade(dataInicial, dataFinal).then(
                 function (response) {
-                    dadosChatQuantidade = response.data;
-                    trataChatQuantidade();
-                    graficoChatQuantidade().init();
+                    var dados = response.data;
+                    $scope.dadosChatQuantidade = trataChatQuantidade(dados);
                 }
             );
         }
 
-        function trataChatQuantidade() {
+        function trataChatQuantidade(dados) {
             var valor = 0;
-            for(var i=0; i<dadosChatQuantidade.length; i++) {
-                if(dadosChatQuantidade[i].label === "Avaliados") {
-                    valor = dadosChatQuantidade[i].label;
+            for (var i = 0; i < dados.length; i++) {
+                if (dados[i].label === "Avaliados") {
+                    valor = dados[i].label;
                 }
-                if(dadosChatQuantidade[i].label === "Total") {
-                    dadosChatQuantidade[i].value = valor - dadosChatQuantidade[i].value;
-                    dadosChatQuantidade[i].label = "Não Avaliados";
+                if (dados[i].label === "Total") {
+                    dados[i].value = valor - dados[i].value;
+                    dados[i].label = "Não Avaliados";
                 }
             }
-        }
 
-        function graficoChatQuantidade() {
-            return {
-                init: function () {
-					AmCharts.makeChart( "chat-quantidade-chart", {
-						"type": "pie",
-						"theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-						"dataProvider": dadosChatQuantidade,
-						"valueField": "value",
-						"titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-						"responsive": {
-							"enabled": true
-						},
-						"balloon":{
-						   "fixedPosition":true
-						},
-						"export": {
-							"enabled": true
-						}
-					});
-                }
-            };
+            return dados;
         }
     }
 })();

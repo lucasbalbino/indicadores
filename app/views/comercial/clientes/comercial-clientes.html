@@ -9,8 +9,11 @@
                         <div class="col-md-11 col-sm-11 col-xs-11">
                             <div class="input-group">
 
-                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(0)" allow-clear ng-model="cliente.selected" theme="bootstrap">
-                                    <ui-select-match id="select-match" placeholder="Selecione ou pesquise o cliente...">{{$select.selected.nome}}</ui-select-match>
+                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(0)" allow-clear
+                                           ng-model="cliente.selected" theme="bootstrap">
+                                    <ui-select-match id="select-match" placeholder="Selecione ou pesquise o cliente...">
+                                        {{$select.selected.nome}}
+                                    </ui-select-match>
                                     <ui-select-choices repeat="item in clientes | filter: $select.search">
                                         <div ng-bind-html="item.nome | highlight: $select.search"></div>
                                     </ui-select-choices>
@@ -76,9 +79,10 @@
                                      class="col-md-12 col-sm-12 col-xs-12">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div id="dashboard-chamados-por-tipo" class="chart chart-xl no-margin"></div>
-                            <br>
-                            <span id="legenda-chamados-por-tipo"></span>
+                            <indicadores-chart chart-id="dashboard-chamados-por-tipo"
+                                               chart-class="chart chart-xl no-margin"
+                                               type="column" source="dadosChamadosPorTipo"
+                                               options="chartOptions"></indicadores-chart>
                         </div>
                     </div>
                 </indicadores-databox>

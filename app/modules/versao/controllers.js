@@ -43,7 +43,7 @@ angular.module('Versao')
 
             $scope.alteraProjeto = function (id) {
                 $rootScope.projeto = id;
-                $rootScope.versao = null;
+                $rootScope.versao = undefined;
 
                 $state.reload();
             };

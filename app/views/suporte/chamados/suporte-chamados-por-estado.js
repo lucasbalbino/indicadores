@@ -4,19 +4,17 @@
     app.controller('SupChamadosPorEstadoCtrl', SupChamadosPorEstadoCtrl);
 
     /** @ngInject */
-    function SupChamadosPorEstadoCtrl($rootScope, $http, ENV) {
+    function SupChamadosPorEstadoCtrl($rootScope, SuporteChamadosService) {
         var dadosChamadosPorEstado = [];
         var mes = moment($rootScope.mes);
 
         chamadosPorEstado();
 
         function chamadosPorEstado() {
-            $http.get(ENV.API_ENDPOINT + '/chamadosPorUF', {
-                params: {
-                    dataInicial: mes.startOf('month').format('DD/MM/YYYY'),
-                    dataFinal: mes.add(1, 'month').startOf('month').format('DD/MM/YYYY')
-                }
-            }).then(
+            var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
+            var dataFinal = mes.add(1, 'month').startOf('month').format('DD/MM/YYYY');
+
+            SuporteChamadosService.getChamadosPorUF(dataInicial, dataFinal).then(
                 function (response) {
                     dadosChamadosPorEstado = response.data;
                     graficoChamadosPorEstado().init();

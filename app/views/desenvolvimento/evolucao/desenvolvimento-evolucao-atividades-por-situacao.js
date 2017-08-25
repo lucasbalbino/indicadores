@@ -4,10 +4,8 @@
     app.controller('DevEvolucaoAtividadesPorSituacaoCtrl', DevEvolucaoAtividadesPorSituacaoCtrl);
 
     /** @ngInject */
-    function DevEvolucaoAtividadesPorSituacaoCtrl($rootScope, $timeout, DesenvolvimentoEvolucaoService) {
+    function DevEvolucaoAtividadesPorSituacaoCtrl($scope, $rootScope, $timeout, DesenvolvimentoEvolucaoService) {
         var gridAtividadesPorSituacao = [];
-        var dadosAtividadesPorSituacao = [];
-        var legendaAtividadesPorSituacao = [];
 
         $timeout(function () {
             atividadesPorSituacao();
@@ -15,19 +13,18 @@
 
         function atividadesPorSituacao() {
             gridAtividadesPorSituacao = [];
-            dadosAtividadesPorSituacao = [];
-            legendaAtividadesPorSituacao = [];
+            var dadosAtividadesPorSituacao = [];
 
             DesenvolvimentoEvolucaoService.getAtividadesPorSituacao($rootScope.versao).then(
                 function (response) {
                     gridAtividadesPorSituacao = response.data;
-                    loadDataAtividadesPorSituacao();
+                    dadosAtividadesPorSituacao = loadDataAtividadesPorSituacao();
 
                     // Se a Sprint ainda não foi encerrada, gera o gráfico de Atividades
-                    if (dadosAtividadesPorSituacao !== '') {
-                        graficoAtividadesPorSituacao().init();
+                    if (dadosAtividadesPorSituacao.length !== 0) {
+                        $scope.dadosAtividadesPorSituacao = dadosAtividadesPorSituacao;
                     } else {
-                        $("#atividades-por-situacao-chart").html("Sprint Encerrada");
+                        $("#sprint-encerrada").removeClass("hidden");
                     }
                 }, function (response) {
                     console.log("JSON do Gráfico Atividades Por Situacao incorreto");
@@ -35,40 +32,8 @@
             );
         }
 
-        function graficoAtividadesPorSituacao() {
-            return {
-                init: function () {
-                    AmCharts.makeChart("atividades-por-situacao-chart", {
-                        "type": "serial",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "dataProvider": dadosAtividadesPorSituacao,
-                        "graphs": [{
-                            "balloonText": "[[value]]",
-                            "labelText": "[[value]]",
-                            "fillAlphas": 0.8,
-                            "lineAlpha": 0.2,
-                            "type": "column",
-                            "valueField": "value"
-                        }],
-                        "chartCursor": {
-                            "categoryBalloonEnabled": false,
-                            "cursorAlpha": 0,
-                            "zoomable": false
-                        },
-                        "categoryAxis": {
-                            "autoWrap": true
-                        },
-                        "startDuration": 1,
-                        "categoryField": "label"
-                    });
-                }
-            };
-        }
-
         function loadDataAtividadesPorSituacao() {
-
+            var dadosAtividadesPorSituacao = [];
             var dados = gridAtividadesPorSituacao;
 
             // Atividades abertas (em ordem do Kanban)
@@ -144,6 +109,8 @@
                     dadosAtividadesPorSituacao.push(dados[i]);
                 }
             }
+
+            return dadosAtividadesPorSituacao;
 
         }
     }

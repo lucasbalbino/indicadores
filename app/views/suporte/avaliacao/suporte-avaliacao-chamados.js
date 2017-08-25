@@ -4,9 +4,9 @@
     app.controller('SupAvaliacaoChamadosCtrl', SupAvaliacaoChamadosCtrl);
 
     /** @ngInject */
-    function SupAvaliacaoChamadosCtrl($rootScope, SuporteAvaliacaoService) {
+    function SupAvaliacaoChamadosCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var gridAvaliacaoChamados = [];
-        var dadosAvaliacaoChamados = [];
+        $scope.dadosAvaliacaoChamados = [];
 
         var mes = moment($rootScope.mes);
 
@@ -19,13 +19,13 @@
             SuporteAvaliacaoService.getAvaliacaoChamadosPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     gridAvaliacaoChamados = response.data;
-                    loadDataAvaliacaoChamados();
-                    graficoAvaliacaoChamados().init();
+                    $scope.dadosAvaliacaoChamados = loadDataAvaliacaoChamados();
                 }
             );
         }
 
-        var loadDataAvaliacaoChamados = function () {
+        function loadDataAvaliacaoChamados() {
+            var dadosAvaliacaoChamados = [];
             var dados = gridAvaliacaoChamados;
             var valor = 0;
 
@@ -55,33 +55,8 @@
                 valor += dados[i].ruim;
             }
             dadosAvaliacaoChamados.push({label: "Ruim", value: valor});
-        };
 
-        function graficoAvaliacaoChamados() {
-            return {
-                init: function () {
-                    AmCharts.makeChart("avaliacao-chamados-chart", {
-                        "type": "pie",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "dataProvider": dadosAvaliacaoChamados,
-                        "valueField": "value",
-                        "titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-                        "responsive": {
-                            "enabled": true
-                        },
-                        "balloon": {
-                            "fixedPosition": true
-                        },
-                        "export": {
-                            "enabled": true
-                        }
-                    });
-                }
-            };
+            return dadosAvaliacaoChamados;
         }
     }
 })();

@@ -17,14 +17,16 @@
     <div ng-controller="SupAquisicoesPorCategoriaCtrl">
         <indicadores-databox label="Aquisições por Categoria"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="aquisicoes-por-categoria-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="aquisicoes-por-categoria-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAquisicoesPorCategoria"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupImplantacoesPorCategoriaCtrl">
         <indicadores-databox label="Implantações por Categoria"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="implantacoes-por-categoria-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="implantacoes-por-categoria-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosImplantacoesPorCategoria"></indicadores-chart>
         </indicadores-databox>
     </div>
 

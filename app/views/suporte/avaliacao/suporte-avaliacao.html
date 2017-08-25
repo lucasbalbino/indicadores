@@ -20,17 +20,16 @@
     <div ng-controller="SupAvaliacaoQuantidadeCtrl">
         <indicadores-databox label="Quantidade de Chamados Avaliados"
                              class="col-xs-12 col-md-6 col-lg-6">
-            {{dadosAvaliacaoQuantidade}}
-            <indicadores-chart id="avaliacao-quantidade-chart" class="chart chart-xl no-margin"
-                               type="pie" data="dadosAvaliacaoQuantidade"
-                               ng-if="dadosAvaliacaoQuantidade"></indicadores-chart>
+            <indicadores-chart chart-id="avaliacao-quantidade-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAvaliacaoQuantidade"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupAvaliacaoChamadosCtrl">
         <indicadores-databox label="Avaliação dos Chamados"
                              class="col-xs-12 col-md-6 col-lg-6">
-            <div id="avaliacao-chamados-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="avaliacao-chamados-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAvaliacaoChamados"></indicadores-chart>
         </indicadores-databox>
     </div>
 
@@ -55,14 +54,16 @@
     <div ng-controller="SupChatQuantidadeCtrl">
         <indicadores-databox label="Quantidade de Chats Avaliados"
                              class="col-xs-12 col-md-6 col-lg-6">
-            <div id="chat-quantidade-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chat-quantidade-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosChatQuantidade"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupAvaliacaoChatCtrl">
         <indicadores-databox label="Avaliação dos Chat Online"
                              class="col-xs-12 col-md-6 col-lg-6">
-            <div id="avaliacao-chat-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="avaliacao-chat-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAvaliacaoChat"></indicadores-chart>
         </indicadores-databox>
     </div>
 

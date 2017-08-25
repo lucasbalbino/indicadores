@@ -4,8 +4,8 @@
     app.controller('SupAquisicoesPorCategoriaCtrl', SupAquisicoesPorCategoriaCtrl);
 
     /** @ngInject */
-    function SupAquisicoesPorCategoriaCtrl($rootScope, SuporteImplantacoesService) {
-        var dadosAquisicoesPorCategoria = [];
+    function SupAquisicoesPorCategoriaCtrl($scope, $rootScope, SuporteImplantacoesService) {
+        $scope.dadosAquisicoesPorCategoria = [];
         var mes = moment($rootScope.mes);
 
         aquisicoesPorCategoria();
@@ -16,37 +16,9 @@
 
             SuporteImplantacoesService.getAquisicoesPorCategoria(dataInicial, dataFinal).then(
                 function (response) {
-                    dadosAquisicoesPorCategoria = response.data;
-                    graficoAquisicoesPorCategoria().init();
+                    $scope.dadosAquisicoesPorCategoria = response.data;
                 }
             );
-        }
-
-        function graficoAquisicoesPorCategoria() {
-            return {
-                init: function () {
-					AmCharts.makeChart( "aquisicoes-por-categoria-chart", {
-						"type": "pie",
-						"theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-						"dataProvider": dadosAquisicoesPorCategoria,
-						"valueField": "value",
-						"titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-						"responsive": {
-							"enabled": true
-						},
-						"balloon":{
-						   "fixedPosition":true
-						},
-						"export": {
-							"enabled": true
-						}
-					});
-                }
-            };
         }
     }
 })();

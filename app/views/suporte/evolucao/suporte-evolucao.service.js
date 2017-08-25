@@ -7,7 +7,6 @@
     function SuporteEvolucaoService($http, ENV) {
         return {
             getChamadosAbertosEncerrados: getChamadosAbertosEncerrados,
-            getChamadosPorTipo: getChamadosPorTipo,
             getChamadosPorSituacao: getChamadosPorSituacao
         };
 
@@ -17,16 +16,6 @@
                 params: {
                     dataInicial: dataInicial,
                     dataFinal: dataFinal
-                }
-            });
-        }
-
-        function getChamadosPorTipo(dataInicial, dataFinal, idCliente) {
-            return $http.get(ENV.API_ENDPOINT + '/chamadosPorTipo', {
-                params: {
-                    dataInicial: dataInicial,
-                    dataFinal: dataFinal,
-                    idCliente: idCliente
                 }
             });
         }

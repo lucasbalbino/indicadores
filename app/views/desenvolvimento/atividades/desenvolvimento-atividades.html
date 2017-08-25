@@ -4,31 +4,30 @@
 
     <div ng-controller="DevAtividadesPorTipoCtrl">
         <indicadores-databox label="Total de Atividades Por Tipo"
-                             ng-class="(!($root.projeto == 'Noov') ? 'col-md-6 col-sm-12 col-xs-12' : 'col-md-12 col-sm-12 col-xs-12')">
-            <div id="atividades-por-tipo-chart" class="chart chart-xl no-margin"></div>
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <indicadores-chart chart-id="atividades-por-tipo-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAtividadesPorTipo"></indicadores-chart>
         </indicadores-databox>
     </div>
 
-    <div ng-if="!($root.projeto == 'Noov')">
-        <div ng-controller="DevAtividadesPorProjetoCtrl">
-            <indicadores-databox label="Total de Atividades Por Projeto"
-                                 class="col-md-6 col-sm-12 col-xs-12">
-                <div id="atividades-por-projeto-chart" class="chart chart-xl no-margin"></div>
-            </indicadores-databox>
-        </div>
+    <div ng-controller="DevAtividadesPorProjetoCtrl">
+        <indicadores-databox label="Total de Atividades Por Projeto"
+                             class="col-md-6 col-sm-12 col-xs-12">
+            <indicadores-chart chart-id="atividades-por-projeto-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAtividadesPorProjeto"></indicadores-chart>
+        </indicadores-databox>
     </div>
 
 </div>
 
 <div class="row">
 
-    <div ng-if="!($root.projeto == 'Noov')">
-        <div ng-controller="DevAtividadesPorOrigemCtrl">
-            <indicadores-databox label="Total de Atividades Encerradas Por Origem"
-                                 class="col-md-12 col-sm-12 col-xs-12">
-                <div id="atividades-por-origem-chart" class="chart chart-xl no-margin"></div>
-            </indicadores-databox>
-        </div>
+    <div ng-controller="DevAtividadesPorOrigemCtrl">
+        <indicadores-databox label="Total de Atividades Encerradas Por Origem"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-chart chart-id="atividades-por-origem-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAtividadesPorOrigem"></indicadores-chart>
+        </indicadores-databox>
     </div>
 
 </div>

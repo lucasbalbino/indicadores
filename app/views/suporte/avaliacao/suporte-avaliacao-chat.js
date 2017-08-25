@@ -4,9 +4,9 @@
     app.controller('SupAvaliacaoChatCtrl', SupAvaliacaoChatCtrl);
 
     /** @ngInject */
-    function SupAvaliacaoChatCtrl($rootScope, SuporteAvaliacaoService) {
+    function SupAvaliacaoChatCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var gridAvaliacaoChat = [];
-        var dadosAvaliacaoChat = [];
+        $scope.dadosAvaliacaoChat = [];
 
         var mes = moment($rootScope.mes);
 
@@ -19,13 +19,13 @@
             SuporteAvaliacaoService.getAvaliacaoChatPorColaborador(dataInicial, dataFinal).then(
                 function (response) {
                     gridAvaliacaoChat = response.data;
-                    loadDataAvaliacaoChat();
-                    graficoAvaliacaoChat().init();
+                    $scope.dadosAvaliacaoChat = loadDataAvaliacaoChat();
                 }
             );
         }
 
-        var loadDataAvaliacaoChat = function() {
+        function loadDataAvaliacaoChat() {
+            var dadosAvaliacaoChat = [];
             var dados = gridAvaliacaoChat;
             var valor = 0;
 
@@ -55,33 +55,8 @@
                 valor += dados[i].ruim;
             }
             dadosAvaliacaoChat.push({label: "Ruim", value: valor});
-        };
 
-        function graficoAvaliacaoChat() {
-            return {
-                init: function () {
-					AmCharts.makeChart( "avaliacao-chat-chart", {
-						"type": "pie",
-						"theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-						"dataProvider": dadosAvaliacaoChat,
-						"valueField": "value",
-						"titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-						"responsive": {
-							"enabled": true
-						},
-						"balloon":{
-						   "fixedPosition":true
-						},
-						"export": {
-							"enabled": true
-						}
-					});
-                }
-            };
+            return dadosAvaliacaoChat;
         }
     }
 })();

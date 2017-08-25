@@ -5,14 +5,16 @@
     <div ng-controller="SupChamadosPorTipoCtrl">
         <indicadores-databox label="Total de Chamados Por Tipo"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-por-tipo-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-tipo-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosChamadosPorTipo"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupChamadosPorOrigemCtrl">
         <indicadores-databox label="Total de Chamados Por Origem"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-por-origem-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-origem-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosChamadosPorOrigem"></indicadores-chart>
         </indicadores-databox>
     </div>
 
@@ -22,14 +24,16 @@
     <div ng-controller="SupChamadosSuspensosMotivoCtrl">
         <indicadores-databox label="Motivos de Chamados Suspensos"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-suspensos-motivo" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-suspensos-motivo" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosChamadosSuspensos"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupChamadosCanceladosCtrl">
         <indicadores-databox label="Chamados Cancelados x Encerrados"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-cancelados-encerrados" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-cancelados-encerrados" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosChamadosCancelados"></indicadores-chart>
         </indicadores-databox>
     </div>
 
@@ -46,7 +50,8 @@
     <div ng-controller="SupChamadosPorPrioridadeCtrl">
         <indicadores-databox label="Total de Chamados Por Prioridade"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-por-prioridade-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-prioridade-chart" chart-class="chart chart-xl no-margin"
+                               type="column" source="dadosChamadosPorPrioridade"></indicadores-chart>
         </indicadores-databox>
     </div>
 

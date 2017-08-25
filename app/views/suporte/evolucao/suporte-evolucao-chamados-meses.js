@@ -4,16 +4,42 @@
     app.controller('SupEvolucaoChamadosMesesCtrl', SupEvolucaoChamadosMesesCtrl);
 
     /** @ngInject */
-    function SupEvolucaoChamadosMesesCtrl($scope, $rootScope, SuporteEvolucaoService) {
+    function SupEvolucaoChamadosMesesCtrl($scope, $rootScope, SuporteChamadosService) {
         var QTD_MESES = 13;
 
         var dadosTemp = [];
-        var dadosChamadosPorTipo = [];
+        $scope.dadosChamadosPorTipo = [];
         var gridChamadosPorTipo = [];
 
+        $scope.chartOptions = {
+            total: true,
+            balloonText: "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
+            graphs: [
+                {
+                    title: "Incidentes",
+                    valueField: "incidentes"
+                },
+                {
+                    title: "Requisições",
+                    valueField: "requisicoes"
+                },
+                {
+                    title: "Mudanças",
+                    valueField: "mudancas"
+                },
+                {
+                    title: "Outros",
+                    valueField: "outros"
+                }
+            ],
+            categoryField: "mes",
+            valueAxes: [{
+                "stackType": "regular"
+            }]
+        };
+
         carregaChamadosPorTipo(function () {
-            loadDataChamadosPorTipo();
-            graficoChamadosPorTipo().init();
+            $scope.dadosChamadosPorTipo = loadDataChamadosPorTipo();
             carregaEstatisticas();
         });
 
@@ -48,7 +74,7 @@
         }
 
         function chamadosPorTipo(dataInicial, dataFinal, callback) {
-            SuporteEvolucaoService.getChamadosPorTipo(dataInicial, dataFinal).then(
+            SuporteChamadosService.getChamadosPorTipo(dataInicial, dataFinal).then(
                 function (response) {
                     dadosTemp = response.data;
                     callback();
@@ -57,6 +83,7 @@
         }
 
         function loadDataChamadosPorTipo() {
+            var dadosChamadosPorTipo = [];
             var data = gridChamadosPorTipo;
 
             var dado = {};
@@ -80,95 +107,8 @@
                 }
                 dadosChamadosPorTipo.push(dado);
             }
-        }
 
-        function graficoChamadosPorTipo() {
-            return {
-                init: function () {
-                    $scope.chart = AmCharts.makeChart("dashboard-evolucao-chamados", {
-                        "type": "serial",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "dataProvider": dadosChamadosPorTipo,
-                        "valueAxes": [{
-                            "stackType": "regular"
-                        }],
-                        "graphs": [{
-                            "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                            "labelText": "[[value]]",
-                            "title": "Incidentes",
-                            "valueField": "incidentes",
-                            "type": "column",
-                            "lineAlpha": 0.2,
-                            "fillAlphas": 0.8
-                        }, {
-                            "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                            "labelText": "[[value]]",
-                            "title": "Requisições",
-                            "valueField": "requisicoes",
-                            "type": "column",
-                            "lineAlpha": 0.2,
-                            "fillAlphas": 0.8
-                        }, {
-                            "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                            "labelText": "[[value]]",
-                            "title": "Mudanças",
-                            "valueField": "mudancas",
-                            "type": "column",
-                            "lineAlpha": 0.2,
-                            "fillAlphas": 0.8
-                        }, {
-                            "balloonText": "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
-                            "labelText": "[[value]]",
-                            "title": "Outros",
-                            "valueField": "outros",
-                            "type": "column",
-                            "lineAlpha": 0.2,
-                            "fillAlphas": 0.8
-                        }],
-                        "startDuration": 1,
-                        "categoryField": "mes",
-                        "export": {
-                            "enabled": true
-                        },
-                        "legend": {}
-
-                    });
-
-                    addTotal($scope.chart);
-
-                    function addTotal(chart) {
-                        // iterate through data
-                        for (var i = 0; i < chart.dataProvider.length; i++) {
-                            var dp = chart.dataProvider[i];
-                            dp.total = 0;
-                            dp.totalText = 0;
-                            for (var x = 0; x < chart.graphs.length; x++) {
-                                var g = chart.graphs[x];
-                                if (dp[g.valueField]) {
-                                    dp.totalText += dp[g.valueField];
-                                    if (dp[g.valueField] > 0) {
-                                        dp.total += dp[g.valueField];
-                                    }
-                                }
-                            }
-                        }
-
-                        // add additional graph
-                        var graph = new AmCharts.AmGraph();
-                        graph.valueField = "total";
-                        graph.title = "Total";
-                        graph.labelText = "[[totalText]]";
-                        //graph.visibleInLegend = false;
-                        graph.showBalloon = false;
-                        graph.lineAlpha = 0;
-                        graph.fontSize = 9;
-                        chart.addGraph(graph);
-                    }
-                }
-            };
-
+            return dadosChamadosPorTipo;
         }
 
         function carregaEstatisticas() {

@@ -4,46 +4,23 @@
     app.controller('DevAtividadesPorProjetoCtrl', DevAtividadesPorProjetoCtrl);
 
     /** @ngInject */
-    function DevAtividadesPorProjetoCtrl($rootScope, DesenvolvimentoAtividadesService) {
-        var dadosAtividadesPorProjeto = [];
+    function DevAtividadesPorProjetoCtrl($scope, $rootScope, DesenvolvimentoAtividadesService) {
+        $scope.dadosAtividadesPorProjeto = [];
 
-        atividadesPorProjeto($rootScope.versao);
+        var watcher = $rootScope.$watch('versao', function () {
+            if ($rootScope.versao === undefined) {
+                return;
+            }
+            watcher();
+            atividadesPorProjeto($rootScope.versao);
+        });
 
         function atividadesPorProjeto(versao) {
             DesenvolvimentoAtividadesService.getAtividadesPorProjeto(versao).then(
                 function (response) {
-                    dadosAtividadesPorProjeto = response.data;
-                    graficoAtividadesPorProjeto().init();
+                    $scope.dadosAtividadesPorProjeto = response.data;
                 }
             );
-        }
-
-        function graficoAtividadesPorProjeto() {
-            return {
-                init: function () {
-                    return AmCharts.makeChart( "atividades-por-projeto-chart", {
-                        "type": "pie",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "dataProvider": dadosAtividadesPorProjeto,
-                        "valueField": "value",
-                        "titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-                        "responsive": {
-                            "enabled": true
-                        },
-                        "balloon":{
-                            "fixedPosition":true
-                        },
-                        "export": {
-                            "enabled": true
-                        },
-                        "startDuration": 0
-                    });
-                }
-            };
         }
     }
 })();

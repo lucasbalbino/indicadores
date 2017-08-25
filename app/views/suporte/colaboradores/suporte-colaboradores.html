@@ -7,7 +7,8 @@
             <div ng-controller="SupColaboradoresCtrl">
                 <indicadores-databox label="Chamados Abertos Por Colaborador"
                                      class="col-xs-12 col-md-12 col-lg-12">
-                    <div id="dashboard-resolvidas-chart-realtime" class="chart chart-xl no-margin"></div>
+                    <indicadores-chart chart-id="dashboard-colaboradores" chart-class="chart chart-xl no-margin"
+                                       type="column" source="dadosChamadosPorColaborador"></indicadores-chart>
 
                     <div>
                         <br/>

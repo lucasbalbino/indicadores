@@ -4,8 +4,8 @@
     app.controller('SupImplantacoesPorCategoriaCtrl', SupImplantacoesPorCategoriaCtrl);
 
     /** @ngInject */
-    function SupImplantacoesPorCategoriaCtrl($rootScope, SuporteImplantacoesService) {
-        var dadosImplantacoesPorCategoria = [];
+    function SupImplantacoesPorCategoriaCtrl($scope, $rootScope, SuporteImplantacoesService) {
+        $scope.dadosImplantacoesPorCategoria = [];
         var mes = moment($rootScope.mes);
 
         implantacoesPorCategoria();
@@ -16,37 +16,9 @@
 
             SuporteImplantacoesService.getImplantacoesPorCategoria(dataInicial, dataFinal).then(
                 function (response) {
-                    dadosImplantacoesPorCategoria = response.data;
-                    graficoImplantacoesPorCategoria().init();
+                    $scope.dadosImplantacoesPorCategoria = response.data;
                 }
             );
-        }
-
-        function graficoImplantacoesPorCategoria() {
-            return {
-                init: function () {
-					AmCharts.makeChart( "implantacoes-por-categoria-chart", {
-						"type": "pie",
-						"theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-						"dataProvider": dadosImplantacoesPorCategoria,
-						"valueField": "value",
-						"titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-						"responsive": {
-							"enabled": true
-						},
-						"balloon":{
-						   "fixedPosition":true
-						},
-						"export": {
-							"enabled": true
-						}
-					});
-                }
-            };
         }
     }
 })();

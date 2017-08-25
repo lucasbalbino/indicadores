@@ -4,7 +4,7 @@
     app.controller('FinClientesEvolucaoReceitaClienteCtrl', FinClientesEvolucaoReceitaClienteCtrl);
 
     /** @ngInject */
-    function FinClientesEvolucaoReceitaClienteCtrl($rootScope, FinanceiroClientesService) {
+    function FinClientesEvolucaoReceitaClienteCtrl($scope, $rootScope, FinanceiroClientesService) {
         var dadosReceita = [];
 
         if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
@@ -27,7 +27,7 @@
                         }
 
                         if (dadosReceita.length !== 0) {
-                            graficoReceitaPorMes().init();
+                            $scope.dadosReceita = dadosReceita;
                         }
                     }
                 );
