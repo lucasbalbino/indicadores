@@ -48,6 +48,14 @@
                                 "enabled": true
                             }
                         };
+
+                        if(scope.options.currency) {
+                            delete chartOptions.labelText;
+                            chartOptions.labelFunction = function(data) {
+                                return data.title + ": " + currency(data.value.toFixed(2)) + '\n(' + data.percents.toFixed(2) +"%)";
+                            };
+                        }
+
                     } else if (scope.type === "column") {
                         chartOptions = {
                             "type": "serial",
@@ -84,29 +92,46 @@
 
                                 for (var i = 0; i < scope.options.graphs.length; i++) {
                                     var balloonText = "[[value]]";
-                                    if (scope.options.balloonText) {
-                                        balloonText = scope.options.balloonText;
+                                    if (scope.options.graphs[i].balloonText) {
+                                        balloonText = scope.options.graphs[i].balloonText;
                                     }
 
                                     chartOptions.graphs.push({
+                                        "type": "column",
+                                        "valueAxis": "columns",
                                         "balloonText": balloonText,
                                         "labelText": "[[value]]",
                                         "fillAlphas": 0.8,
                                         "lineAlpha": 0.2,
-                                        "type": "column",
                                         "valueField": scope.options.graphs[i].valueField,
                                         "title": scope.options.graphs[i].title,
                                         "showAllValueLabels": scope.options.showAllValueLabels
                                     });
 
 
+                                    if (scope.options.graphs[i].valueAxis) {
+                                        chartOptions.graphs[i].valueAxis = scope.options.graphs[i].valueAxis;
+                                        delete chartOptions.graphs[i].type;
+                                        delete chartOptions.graphs[i].fillAlphas;
+                                        delete chartOptions.graphs[i].lineAlpha;
+                                    }
+
+
                                     if(scope.options.currency) {
                                         if (scope.options.graphs[i].balloonFunction) {
                                             delete chartOptions.graphs[i].balloonText;
-                                            chartOptions.graphs[i].balloonFunction = balloonFunction;
+                                            if (scope.options.graphs[i].balloonFunction === "percentage") {
+                                                chartOptions.graphs[i].balloonFunction = labelFunctionPercentage;
+                                            } else {
+                                                chartOptions.graphs[i].balloonFunction = balloonFunction;
+                                            }
                                         }
                                         if (scope.options.graphs[i].labelFunction) {
-                                            chartOptions.graphs[i].labelFunction = labelFunction;
+                                            if (scope.options.graphs[i].labelFunction === "percentage") {
+                                                chartOptions.graphs[i].labelFunction = labelFunctionPercentage;
+                                            } else {
+                                                chartOptions.graphs[i].labelFunction = labelFunction;
+                                            }
                                         }
                                     }
                                 }
@@ -121,6 +146,9 @@
                                 chartOptions.valueAxes = scope.options.valueAxes;
                             }
                         }
+
+
+
                     } else if (scope.type === "bar") {
                         chartOptions = {
                             "type": "serial",
@@ -252,6 +280,10 @@
 
                     function labelFunction(graphDataItem, graph) {
                         return currency(graphDataItem.dataContext[graphDataItem.graph.valueField]);
+                    }
+
+                    function labelFunctionPercentage (graphDataItem, graph) {
+                        return graphDataItem.dataContext[graphDataItem.graph.valueField] + '%';
                     }
 
                     function addTotal(chart) {

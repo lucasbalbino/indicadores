@@ -5,14 +5,16 @@
     <div ng-controller="FinFaturamentoMensalPorTipoCtrl">
         <indicadores-databox label="Faturamento Setup x Mensalidade"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="faturamento-por-tipo" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="faturamento-por-tipo" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosReceitaMensal" options="chartOptions"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="FinFaturamentoMensalPorResponsavelCtrl">
         <indicadores-databox label="Faturamento por Responsável"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="faturamento-por-responsavel" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="faturamento-por-responsavel" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosReceitaMensal" options="chartOptions"></indicadores-chart>
         </indicadores-databox>
     </div>
 
