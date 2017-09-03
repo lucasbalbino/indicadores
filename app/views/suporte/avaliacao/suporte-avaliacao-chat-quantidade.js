@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChatQuantidadeCtrl($scope, $rootScope, SuporteAvaliacaoService) {
-        $scope.dadosChatQuantidade = [];
         var mes = moment($rootScope.mes);
 
         chatQuantidade();

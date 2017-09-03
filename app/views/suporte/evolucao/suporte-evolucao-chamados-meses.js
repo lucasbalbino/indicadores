@@ -8,12 +8,10 @@
         var QTD_MESES = 13;
 
         var dadosTemp = [];
-        $scope.dadosChamadosPorTipo = [];
         var gridChamadosPorTipo = [];
 
         $scope.chartOptions = {
             total: true,
-            balloonText: "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
             graphs: [
                 {
                     title: "Incidentes",
@@ -35,7 +33,8 @@
             categoryField: "mes",
             valueAxes: [{
                 "stackType": "regular"
-            }]
+            }],
+            legend: {}
         };
 
         carregaChamadosPorTipo(function () {

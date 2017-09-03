@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupImplantacoesPorCategoriaCtrl($scope, $rootScope, SuporteImplantacoesService) {
-        $scope.dadosImplantacoesPorCategoria = [];
         var mes = moment($rootScope.mes);
 
         implantacoesPorCategoria();

@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChamadosPorPrioridadeCtrl($scope, $rootScope, SuporteChamadosService) {
-        $scope.dadosChamadosPorPrioridade = [];
         var mes = moment($rootScope.mes);
 
         chamadosPorPrioridade();

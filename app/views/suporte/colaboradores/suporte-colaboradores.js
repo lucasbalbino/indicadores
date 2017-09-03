@@ -9,7 +9,6 @@
         chamadosPorColaborador();
 
         function chamadosPorColaborador() {
-            $scope.dadosChamadosPorColaborador = [];
 
             var mes = moment($rootScope.mes);
 

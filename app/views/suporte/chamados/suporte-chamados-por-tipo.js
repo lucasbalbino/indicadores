@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChamadosPorTipoCtrl($scope, $rootScope, SuporteChamadosService) {
-        $scope.dadosChamadosPorTipo = [];
         var mes = moment($rootScope.mes);
 
         chamadosPorTipo();

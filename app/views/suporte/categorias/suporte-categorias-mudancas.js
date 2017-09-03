@@ -5,10 +5,14 @@
 
     /** @ngInject */
     function SupCategoriasMudancasCtrl($scope, $rootScope, SuporteCategoriasService) {
-        $scope.dadosChamadosPorCategoria = [];
         var TIPO_MUDANCAS = 39;
 
         var mes = moment($rootScope.mes);
+
+        $scope.chartOptions = {
+            value: "quantidade",
+            label: "categoria"
+        };
 
         chamadosPorCategoria();
 

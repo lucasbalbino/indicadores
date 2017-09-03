@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChamadosPorOrigemCtrl($scope, $rootScope, SuporteChamadosService) {
-        $scope.dadosChamadosPorOrigem = [];
         var mes = moment($rootScope.mes);
 
         chamadosPorOrigem();

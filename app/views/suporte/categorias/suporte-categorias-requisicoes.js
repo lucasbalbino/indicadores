@@ -5,10 +5,14 @@
 
     /** @ngInject */
     function SupCategoriasRequisicoesCtrl($scope, $rootScope, SuporteCategoriasService) {
-        $scope.dadosChamadosPorCategoria = [];
         var TIPO_REQUISICOES = 33;
 
         var mes = moment($rootScope.mes);
+
+        $scope.chartOptions = {
+            value: "quantidade",
+            label: "categoria"
+        };
 
         chamadosPorCategoria();
 

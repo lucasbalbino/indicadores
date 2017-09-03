@@ -7,10 +7,28 @@
     function SupEvolucaoAbertosEncerradosCtrl($scope, $rootScope, SuporteEvolucaoService) {
         var gridChamadosAbertosEncerrados;
 
+        $scope.chartOptions = {
+            categoryAxis: {
+                "minorTickLength": 1,
+                "minHorizontalGap": 1,
+                "labelFunction": "DD"
+            },
+            label: "data",
+            graphs: [{
+                "title": "Abertos",
+                "valueField": "abertos",
+                "balloonText": "[[value]] aberto(s)"
+            }, {
+                "title": "Encerrados",
+                "valueField": "encerrados",
+                "balloonText": "[[value]] encerrado(s)"
+            }],
+            date: true
+        };
+
         chamadosAbertosEncerrados();
 
         function chamadosAbertosEncerrados() {
-            $scope.dadosChamadosAbertosEncerrados = [];
             gridChamadosAbertosEncerrados = [];
 
             var mes = moment($rootScope.mes);
@@ -40,15 +58,19 @@
             var datasMes = mes.range('month');
 
             var k = 0;
-            datasMes.by('days', function(m) {
-                if(k < dados.length && m.isSame(moment(dados[k].data, "DD/MM/YYYY"), 'day')) {
+            datasMes.by('days', function (m) {
+                if (k < dados.length && m.isSame(moment(dados[k].data, "DD/MM/YYYY"), 'day')) {
                     var data = moment(dados[k].data, "DD/MM/YYYY").valueOf();
                     $scope.totalAbertos += parseInt(dados[k].abertos);
                     $scope.totalEncerrados += parseInt(dados[k].encerrados);
                     dadosChamadosAbertosEncerrados.push(dados[k]);
                     k++;
                 } else {
-                    dadosChamadosAbertosEncerrados.push({"data": m.format("DD/MM/YYYY"),"encerrados":0,"abertos":0});
+                    dadosChamadosAbertosEncerrados.push({
+                        "data": m.format("DD/MM/YYYY"),
+                        "encerrados": 0,
+                        "abertos": 0
+                    });
                 }
             });
 

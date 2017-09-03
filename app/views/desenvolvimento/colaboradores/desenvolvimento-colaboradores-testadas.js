@@ -8,8 +8,6 @@
 
     /** @ngInject */
     function DevColaboradoresTestadasCtrl($scope, $rootScope, DesenvolvimentoColaboradoresService) {
-        $scope.atividadesTestadasPorColaborador = [];
-
         var watcher = $rootScope.$watch('versao', function () {
             if ($rootScope.versao === undefined) {
                 return;

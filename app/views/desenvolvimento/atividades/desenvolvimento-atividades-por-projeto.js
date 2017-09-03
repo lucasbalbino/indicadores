@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function DevAtividadesPorProjetoCtrl($scope, $rootScope, DesenvolvimentoAtividadesService) {
-        $scope.dadosAtividadesPorProjeto = [];
 
         var watcher = $rootScope.$watch('versao', function () {
             if ($rootScope.versao === undefined) {

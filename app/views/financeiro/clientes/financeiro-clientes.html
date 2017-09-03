@@ -66,7 +66,8 @@
             <div ng-controller="FinClientesEvolucaoReceitaClienteCtrl">
                 <indicadores-databox label="Gráfico de Evolução na Receita do Cliente"
                                      class="col-md-12 col-sm-12 col-xs-12">
-                            <div id="evolucao-receita-cliente" class="chart chart-xxl no-margin"></div>
+                    <indicadores-chart chart-id="evolucao-receita-cliente" chart-class="chart chart-xxl no-margin"
+                                       type="line" source="dadosReceita" options="chartOptions"></indicadores-chart>
                 </indicadores-databox>
             </div>
         </div>

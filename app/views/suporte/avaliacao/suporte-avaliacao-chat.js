@@ -6,7 +6,6 @@
     /** @ngInject */
     function SupAvaliacaoChatCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var gridAvaliacaoChat = [];
-        $scope.dadosAvaliacaoChat = [];
 
         var mes = moment($rootScope.mes);
 

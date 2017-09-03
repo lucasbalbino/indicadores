@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupAquisicoesPorCategoriaCtrl($scope, $rootScope, SuporteImplantacoesService) {
-        $scope.dadosAquisicoesPorCategoria = [];
         var mes = moment($rootScope.mes);
 
         aquisicoesPorCategoria();

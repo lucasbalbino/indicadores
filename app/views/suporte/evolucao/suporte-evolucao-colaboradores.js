@@ -18,11 +18,13 @@
             graphs: [
                 {
                     valueField: "qntEmAtendimento",
-                    title: "Em Atendimento"
+                    title: "Em Atendimento",
+                    balloonText: "[[value]] chamado(s) em atendimento"
                 },
                 {
                     valueField: "qntEncerrados",
-                    title: "Encerrados"
+                    title: "Encerrados",
+                    balloonText: "[[value]] chamado(s) encerrados"
                 }
             ],
             legend: {}
@@ -36,8 +38,6 @@
         }, false);
 
         function chamadosPorColaborador() {
-            $scope.dadosChamadosPorColaborador = [];
-
             var dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
             var dataFinal = moment($rootScope.date.endDate);
             dataFinal = dataFinal.add(1, 'days').format('DD/MM/YYYY');

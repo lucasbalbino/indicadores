@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function DevAtividadesPorTipoCtrl($scope, $rootScope, DesenvolvimentoAtividadesService) {
-        $scope.dadosAtividadesPorTipo = [];
 
         var watcher = $rootScope.$watch('versao', function () {
             if ($rootScope.versao === undefined) {

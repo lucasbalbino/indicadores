@@ -4,12 +4,16 @@
     app.controller('DevEvolucaoAtividadesPorSituacaoCtrl', DevEvolucaoAtividadesPorSituacaoCtrl);
 
     /** @ngInject */
-    function DevEvolucaoAtividadesPorSituacaoCtrl($scope, $rootScope, $timeout, DesenvolvimentoEvolucaoService) {
+    function DevEvolucaoAtividadesPorSituacaoCtrl($scope, $rootScope, DesenvolvimentoEvolucaoService) {
         var gridAtividadesPorSituacao = [];
 
-        $timeout(function () {
+        var watcher = $rootScope.$watch('versao', function () {
+            if ($rootScope.versao === undefined) {
+                return;
+            }
+            watcher();
             atividadesPorSituacao();
-        }, 1500);
+        });
 
         function atividadesPorSituacao() {
             gridAtividadesPorSituacao = [];
@@ -25,6 +29,7 @@
                         $scope.dadosAtividadesPorSituacao = dadosAtividadesPorSituacao;
                     } else {
                         $("#sprint-encerrada").removeClass("hidden");
+                        $("#load-atividades-por-situacao-chart").hide();
                     }
                 }, function (response) {
                     console.log("JSON do Gráfico Atividades Por Situacao incorreto");

@@ -5,10 +5,14 @@
 
     /** @ngInject */
     function SupCategoriasIncidentesCtrl($scope, $rootScope, SuporteCategoriasService) {
-        $scope.dadosChamadosPorCategoria = [];
         var TIPO_INCIDENTES = 32;
 
         var mes = moment($rootScope.mes);
+
+        $scope.chartOptions = {
+            value: "quantidade",
+            label: "categoria"
+        };
 
         chamadosPorCategoria();
 
@@ -21,14 +25,6 @@
                     $scope.dadosChamadosPorCategoria = response.data;
                 }
             );
-        }
-
-        function graficoChamadosPorCategoria() {
-            return {
-                init: function () {
-
-                }
-            };
         }
     }
 })();

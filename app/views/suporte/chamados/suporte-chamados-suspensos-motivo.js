@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChamadosSuspensosMotivoCtrl($scope, $rootScope, SuporteChamadosService) {
-        $scope.dadosChamadosSuspensos = [];
         var mes = moment($rootScope.mes);
 
         chamadosSuspensosMotivo();

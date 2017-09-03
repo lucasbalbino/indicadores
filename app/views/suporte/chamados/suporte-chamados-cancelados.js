@@ -5,7 +5,6 @@
 
     /** @ngInject */
     function SupChamadosCanceladosCtrl($scope, $rootScope, SuporteChamadosService) {
-        $scope.dadosChamadosCancelados = [];
         var mes = moment($rootScope.mes);
 
         chamadosCancelados();

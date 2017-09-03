@@ -50,7 +50,8 @@
         <indicadores-databox label="Gráfico de Evolução na Receita do Responsável"
                              class="col-md-12 col-sm-12 col-xs-12">
             <indicadores-dropdown label="Receita" item="receita" itens="receitas" acao="alteraForma(id)"></indicadores-dropdown>
-            <div id="evolucao-receita-responsavel" class="chart chart-xxxl no-margin"></div>
+            <indicadores-chart chart-id="evolucao-receita-responsavel" chart-class="chart chart-xxxl no-margin"
+                               type="line" source="dadosReceita" options="chartOptions" reloadable="true"></indicadores-chart>
         </indicadores-databox>
     </div>
 
