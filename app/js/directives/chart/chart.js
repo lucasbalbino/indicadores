@@ -5,7 +5,7 @@
         .directive('indicadoresChart', function ($rootScope) {
             return {
                 template: '<indicadores-loading id="load-{{chartId}}" ng-if="!loaded"></indicadores-loading>' +
-                          '<div id="{{chartId}}" class="{{chartClass}}"></div>',
+                          '<div id="{{chartId}}" class="{{chartClass}}" ng-show="loaded"></div>',
                 restrict: "E",
                 scope: {
                     chartId: '@',
@@ -306,6 +306,34 @@
                             };
                         }
                     }
+
+
+                    else if(scope.type === "map") {
+                        chartOptions = {
+                            "type": scope.type,
+                            "fontFamily": "'Open Sans', 'Segoe UI'",
+                            "pathToImages": "ammap/images/",
+                            "dataProvider": {
+                                "areas": scope.source,
+                                "map": "brazilLow",
+                                "getAreasFromMap": true
+                            },
+                            "valueLegend": {
+                                "right": 10,
+                                "showAsGradient": true
+                            },
+                            "showObjectsAfterZoom": false,
+                            "colorSteps": 20,
+                            "areasSettings": {
+                                "balloonText": "[[title]] - [[value]] chamados - [[percent]]%",
+                                "color": "#ecf0f1",
+                                "colorSolid": $rootScope.colors[0],
+                                "selectedColor": $rootScope.colors[3],
+                                "autoZoom": true
+                            }
+                        };
+                    }
+
 
 
                     // console.log(chartOptions);

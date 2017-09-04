@@ -43,7 +43,8 @@
     <div ng-controller="SupChamadosPorEstadoCtrl">
         <indicadores-databox label="Total de Chamados Por Estado"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="chamados-por-estado-map" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-estado-map" chart-class="chart chart-xl no-margin"
+                               type="map" source="dadosChamadosPorEstado"></indicadores-chart>
         </indicadores-databox>
     </div>
 
