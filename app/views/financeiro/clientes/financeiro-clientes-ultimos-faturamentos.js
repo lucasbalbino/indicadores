@@ -8,10 +8,6 @@
 
         var mes = moment($rootScope.mes);
 
-        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
-            $rootScope.idCliente = 0;
-        }
-
         $scope.query = FinanceiroClientesService.getUltimosFaturamentoPorClienteTable($rootScope.idCliente);
 
         $scope.columns = [

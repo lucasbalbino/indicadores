@@ -9,17 +9,18 @@
                         <div class="col-md-11 col-sm-11 col-xs-11">
                             <div class="input-group">
 
-                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(0)" allow-clear
+                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(null)"
+                                           allow-clear
                                            ng-model="cliente.selected" theme="bootstrap">
                                     <ui-select-match id="select-match" placeholder="Selecione ou pesquise o cliente...">
                                         {{$select.selected.nome}}
                                     </ui-select-match>
-                                    <ui-select-choices repeat="item in clientes | filter: $select.search">
+                                    <ui-select-choices repeat="item in $root.clientes | filter: $select.search">
                                         <div ng-bind-html="item.nome | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                                 <span class="input-group-btn">
-                                    <button ng-click="alteraCliente(0)" class="btn btn-default">
+                                    <button ng-click="alteraCliente(null)" class="btn btn-default">
                                         <span class="fa fa-times"></span>
                                     </button>
                                 </span>
@@ -32,72 +33,76 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div ng-if="$root.idCliente !== null && $root.idCliente !== undefined">
 
-    <div class="col-md-4 col-sm-12 col-xs-12">
-        <div class="row">
+    <div class="row">
 
-            <div ng-controller="ComClientesFichaTecnicaCtrl">
-                <indicadores-databox label="Ficha Técnica" class="col-md-12 col-sm-12 col-xs-12">
-                    <div id="registration-form">
-                        <form role="form">
-                            <div class="form-title">
-                                {{dadosCliente.nome}}
-                                <span ng-show="dadosCliente.vip" class="label label-success">VIP</span>
-                                <span ng-show="dadosCliente.inativo" class="label label-danger">INATIVO</span>
-                            </div>
-                            <div class="form-group">
-                                <p><strong>CNPJ: </strong>{{dadosCliente.cnpj}}<br></p>
-                                <p><strong>Telefone: </strong>{{dadosCliente.telefone}}</p>
-                                <p><strong>E-mail: </strong>{{dadosCliente.email}}</p>
-                                <p><strong>Parceiro: </strong>{{dadosCliente.parceiro}}</p>
-                            </div>
-                            <div class="form-group">
-                                <p><strong>Gerente de Contas: </strong>{{dadosCliente.gerente}}</p>
-                                <p><strong>Modalidade: </strong>{{dadosCliente.modalidade}}</p>
-                                <p><strong>Soluções: </strong>{{dadosCliente.solucoes}}</p>
-                                <p><strong>Integração: </strong>{{dadosCliente.integracao}}</p>
-                            </div>
-                            <div class="form-group">
-                                <p><strong>Versão: </strong>{{dadosCliente.versao}}</p>
-                            </div>
-                            <a ng-href="{{dadosCliente.link}}" target="_blank" class="btn btn-default">
-                                <i class="fa fa-plus"></i> Mais Informações
-                            </a>
-                        </form>
-                    </div>
-                </indicadores-databox>
-            </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+            <div class="row">
 
-        </div>
-    </div>
-    <div class="col-md-8 col-sm-12 col-xs-12">
-        <div class="row">
-
-            <div ng-controller="ComClientesChamadosPorTipoCtrl">
-                <indicadores-databox label="Gráfico dos Chamados Encerrados nos Últimos 6 Meses"
-                                     class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <indicadores-chart chart-id="dashboard-chamados-por-tipo"
-                                               chart-class="chart chart-xl no-margin"
-                                               type="column" source="dadosChamadosPorTipo"
-                                               options="chartOptions"></indicadores-chart>
+                <div ng-controller="ComClientesFichaTecnicaCtrl">
+                    <indicadores-databox label="Ficha Técnica" class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="registration-form">
+                            <form role="form">
+                                <div class="form-title">
+                                    {{dadosCliente.nome}}
+                                    <span ng-show="dadosCliente.vip" class="label label-success">VIP</span>
+                                    <span ng-show="dadosCliente.inativo" class="label label-danger">INATIVO</span>
+                                </div>
+                                <div class="form-group">
+                                    <p><strong>CNPJ: </strong>{{dadosCliente.cnpj}}<br></p>
+                                    <p><strong>Telefone: </strong>{{dadosCliente.telefone}}</p>
+                                    <p><strong>E-mail: </strong>{{dadosCliente.email}}</p>
+                                    <p><strong>Parceiro: </strong>{{dadosCliente.parceiro}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <p><strong>Gerente de Contas: </strong>{{dadosCliente.gerente}}</p>
+                                    <p><strong>Modalidade: </strong>{{dadosCliente.modalidade}}</p>
+                                    <p><strong>Soluções: </strong>{{dadosCliente.solucoes}}</p>
+                                    <p><strong>Integração: </strong>{{dadosCliente.integracao}}</p>
+                                </div>
+                                <div class="form-group">
+                                    <p><strong>Versão: </strong>{{dadosCliente.versao}}</p>
+                                </div>
+                                <a ng-href="{{dadosCliente.link}}" target="_blank" class="btn btn-default">
+                                    <i class="fa fa-plus"></i> Mais Informações
+                                </a>
+                            </form>
                         </div>
-                    </div>
-                </indicadores-databox>
-            </div>
+                    </indicadores-databox>
+                </div>
 
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <div class="row">
+
+                <div ng-controller="ComClientesChamadosPorTipoCtrl">
+                    <indicadores-databox label="Gráfico dos Chamados Encerrados nos Últimos 6 Meses"
+                                         class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <indicadores-chart chart-id="dashboard-chamados-por-tipo"
+                                                   chart-class="chart chart-xl no-margin"
+                                                   type="column" source="dadosChamadosPorTipo"
+                                                   options="chartOptions"></indicadores-chart>
+                            </div>
+                        </div>
+                    </indicadores-databox>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
+    <div class="row">
 
-    <div ng-controller="ComClientesUltimosChamadosCtrl">
-        <indicadores-databox label="Relação dos Últimos Chamados" class="col-md-12 col-sm-12 col-xs-12">
-            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
-                                   type="full" order="order"></indicadores-datatable>
-        </indicadores-databox>
+        <div ng-controller="ComClientesUltimosChamadosCtrl">
+            <indicadores-databox label="Relação dos Últimos Chamados" class="col-md-12 col-sm-12 col-xs-12">
+                <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                       type="full" order="order"></indicadores-datatable>
+            </indicadores-databox>
+        </div>
+
     </div>
 
 </div>

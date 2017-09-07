@@ -64,7 +64,10 @@
             <div class="row">
                 <div class="container">
                     <div class="col-md-4 col-sm-4 col-xs-12">
-                        Chamados em <b>{{mesAtual.nome}}</b>: {{mesAtual.total}}
+                        Ano Anterior <b>{{anoAnterior.nome}}</b>: {{anoAnterior.total}}
+                        <span class="badge badge-{{anoAnterior.porcentagem.color}}">
+							<i class="fa {{anoAnterior.porcentagem.icon}}"></i> {{anoAnterior.porcentagem.value}}%
+						</span>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         Mês Anterior <b>{{mesAnterior.nome}}</b>: {{mesAnterior.total}}
@@ -73,10 +76,7 @@
 						</span>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12">
-                        Ano Anterior <b>{{anoAnterior.nome}}</b>: {{anoAnterior.total}}
-                        <span class="badge badge-{{anoAnterior.porcentagem.color}}">
-							<i class="fa {{anoAnterior.porcentagem.icon}}"></i> {{anoAnterior.porcentagem.value}}%
-						</span>
+                        Chamados em <b>{{mesAtual.nome}}</b>: {{mesAtual.total}}
                     </div>
                 </div>
 

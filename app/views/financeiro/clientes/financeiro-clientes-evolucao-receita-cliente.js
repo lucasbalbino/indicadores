@@ -5,11 +5,6 @@
 
     /** @ngInject */
     function FinClientesEvolucaoReceitaClienteCtrl($scope, $rootScope, FinanceiroClientesService) {
-        var dadosReceita = [];
-
-        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
-            $rootScope.idCliente = 0;
-        }
 
         $scope.chartOptions = {
             currency: true,
@@ -31,6 +26,8 @@
         receitaPorMes();
 
         function receitaPorMes() {
+            var dadosReceita = [];
+
             if ($rootScope.idCliente) {
                 FinanceiroClientesService.getEvolucaoReceitaCliente($rootScope.idCliente).then(
                     function (response) {

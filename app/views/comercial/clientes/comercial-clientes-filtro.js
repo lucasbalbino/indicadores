@@ -43,23 +43,37 @@
             $rootScope.idCliente = $scope.cliente.selected;
         };
 
-        $scope.clientes = [];
+        if (!$rootScope.clientes) {
+            $rootScope.clientes = [];
+        }
 
         $scope.cliente = {};
 
-        ComercialClientesService.getClientes().then(
-            function (response) {
-                var dados = response.data;
-                for (var i = 0; i < dados.length; i++) {
-                    $scope.clientes.push({id: dados[i][0], nome: dados[i][1]});
+        if ($rootScope.idCliente && $rootScope.clientes) {
+            $scope.cliente.selected = $rootScope.clientes[indexSelecionado()];
+        }
+
+        if ($rootScope.clientes.length === 0) {
+            ComercialClientesService.getClientes().then(
+                function (response) {
+                    var dados = response.data;
+                    for (var i = 0; i < dados.length; i++) {
+                        $rootScope.clientes.push({id: dados[i][0], nome: dados[i][1]});
+                    }
                 }
-            }
-        );
+            );
+        }
 
         $scope.alteraCliente = function (id) {
             $rootScope.idCliente = id;
             $state.reload();
         };
+
+        function indexSelecionado() {
+            return $rootScope.clientes.map(function (e) {
+                return e.id;
+            }).indexOf($rootScope.idCliente);
+        }
 
     });
 

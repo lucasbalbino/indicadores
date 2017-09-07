@@ -6,10 +6,6 @@
     /** @ngInject */
     function FinClientesFichaTecnicaCtrl($scope, $rootScope, FinanceiroClientesService) {
 
-        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
-            $rootScope.idCliente = 0;
-        }
-
         $scope.dadosCliente = {};
 
         dadosCliente();

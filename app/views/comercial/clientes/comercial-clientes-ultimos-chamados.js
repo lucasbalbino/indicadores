@@ -5,9 +5,6 @@
 
     /** @ngInject */
     function ComClientesUltimosChamadosCtrl($scope, $rootScope, ComercialClientesService) {
-        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
-            $rootScope.idCliente = 0;
-        }
 
         $scope.query = ComercialClientesService.getUltimosChamadosTable($rootScope.idCliente);
 

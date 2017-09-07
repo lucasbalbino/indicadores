@@ -109,14 +109,6 @@ angular.module('app')
                             }
                         }
                     }, 500);
-
-                    // Remove 'JS Chart by AmCharts'
-                    var intervalo = setInterval(function () {
-                        if ($(".amcharts-chart-div > a").text()) {
-                            $(".amcharts-chart-div > a").text('');
-                            clearInterval(intervalo);
-                        }
-                    }, 1000);
                 });
 
             $rootScope.delay = 300000; // 5 minutos

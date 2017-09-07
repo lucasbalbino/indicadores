@@ -10,10 +10,6 @@
         var dadosTemp = [];
         var gridChamadosPorTipo = [];
 
-        if ($rootScope.idCliente === null || $rootScope.idCliente === undefined) {
-            $rootScope.idCliente = 0;
-        }
-
         $scope.chartOptions = {
             total: true,
             balloonText: "<b>[[title]]</b><br><span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>",
