@@ -1,115 +1,124 @@
 ﻿<div ng-controller="SupEvolucaoNumerosCtrl">
-	<div class="row">
+    <div class="row">
 
-		<indicadores-stats-sup label="AGUARDANDO ATENDIMENTO" color="themesecondary"
-							   value="qtdAguardandoAtendimento"></indicadores-stats-sup>
+        <indicadores-stats-sup label="AGUARDANDO ATENDIMENTO" color="themesecondary"
+                               value="qtdAguardandoAtendimento"></indicadores-stats-sup>
 
-		<indicadores-stats-sup label="EM ATENDIMENTO" color="themeprimary"
-							   value="qtdEmAtendimento"></indicadores-stats-sup>
+        <indicadores-stats-sup label="EM ATENDIMENTO" color="themeprimary"
+                               value="qtdEmAtendimento"></indicadores-stats-sup>
 
-		<indicadores-stats-sup label="ABERTOS COM ITERAÇÃO" color="themefourthcolor"
-							   value="qtdAbertosComIteracao"></indicadores-stats-sup>
+        <indicadores-stats-sup label="ABERTOS COM ITERAÇÃO" color="themefourthcolor"
+                               value="qtdAbertosComIteracao"></indicadores-stats-sup>
 
-		<indicadores-stats-sup label="PARA ENCERRAR HOJE" color="themethirdcolor"
-							   value="qtdParaEncerraHoje"></indicadores-stats-sup>
+        <indicadores-stats-sup label="PARA ENCERRAR HOJE" color="themethirdcolor"
+                               value="qtdParaEncerraHoje"></indicadores-stats-sup>
 
-		<indicadores-stats-sup label="ATRASADOS" color="themesecondary"
-							   value="qtdAtrasados"></indicadores-stats-sup>
+        <indicadores-stats-sup label="ATRASADOS" color="themesecondary"
+                               value="qtdAtrasados"></indicadores-stats-sup>
 
-		<indicadores-stats-sup label="SUSPENSOS" color="themefifthcolor"
-							   value="qtdSuspensos"></indicadores-stats-sup>
+        <indicadores-stats-sup label="SUSPENSOS" color="themefifthcolor"
+                               value="qtdSuspensos"></indicadores-stats-sup>
 
-	</div>
+    </div>
 </div>
 <div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
 
-			<div ng-controller="SupEvolucaoColaboradoresCtrl">
-				<indicadores-databox label="Chamados por Colaborador (Encerrados e Em Atendimento)"
-									 class="col-md-12 col-sm-12 col-xs-12">
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12 select-date" ng-controller="DateRangePickerCtrl">
-							<label class="control-label">Data</label>
-							<input date-range-picker class="form-control date-picker" type="text" ng-model="$root.date" options="opts" ng-change="console.log('aqui')"/>
-						</div>
+            <div ng-controller="SupEvolucaoColaboradoresCtrl">
+                <indicadores-databox label="Chamados por Colaborador (Encerrados e Em Atendimento)"
+                                     class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 select-date" ng-controller="DateRangePickerCtrl">
+                            <label class="control-label">Data</label>
+                            <input date-range-picker class="form-control date-picker" type="text" ng-model="$root.date"
+                                   options="opts" ng-change="console.log('aqui')"/>
+                        </div>
 
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div id="dashboard-em-atendimento" class="chart chart-xl no-margin"></div>
-						</div>
-					</div>
-					<div>
-						<br/>
-						* Não inclui chamados internos.
-						<br/>
-						* Não inclui chamados atendidos no plantão.
-					</div>
-				</indicadores-databox>
-			</div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <indicadores-chart chart-id="dashboard-em-atendimento"
+                                               chart-class="chart chart-xl no-margin"
+                                               type="column" source="dadosChamadosPorColaborador"
+                                               options="chartOptions"></indicadores-chart>
+                        </div>
+                    </div>
+                    <div>
+                        <br/>
+                        * Não inclui chamados internos.
+                        <br/>
+                        * Não inclui chamados atendidos no plantão.
+                    </div>
+                </indicadores-databox>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 <div data-ng-include=" 'modules/mes/views/mes.html' "></div>
 
 <div class="row">
 
-	<div ng-controller="SupEvolucaoChamadosMesesCtrl">
-		<indicadores-databox label="Evolução dos Chamados" class="col-md-12 col-sm-12 col-xs-12">
-			<div class="row">
-				<div class="container">
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						Chamados em <b>{{mesAtual.nome}}</b>: {{mesAtual.total}}
-					</div>
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						Mês Anterior <b>{{mesAnterior.nome}}</b>: {{mesAnterior.total}}
-						<span class="badge badge-{{mesAnterior.porcentagem.color}}">
-							<i class="fa {{mesAnterior.porcentagem.icon}}"></i> {{mesAnterior.porcentagem.value}}%
-						</span>
-					</div>
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						Ano Anterior <b>{{anoAnterior.nome}}</b>: {{anoAnterior.total}}
-						<span class="badge badge-{{anoAnterior.porcentagem.color}}">
+    <div ng-controller="SupEvolucaoChamadosMesesCtrl">
+        <indicadores-databox label="Evolução dos Chamados" class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        Ano Anterior <b>{{anoAnterior.nome}}</b>: {{anoAnterior.total}}
+                        <span class="badge badge-{{anoAnterior.porcentagem.color}}">
 							<i class="fa {{anoAnterior.porcentagem.icon}}"></i> {{anoAnterior.porcentagem.value}}%
 						</span>
-					</div>
-				</div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        Mês Anterior <b>{{mesAnterior.nome}}</b>: {{mesAnterior.total}}
+                        <span class="badge badge-{{mesAnterior.porcentagem.color}}">
+							<i class="fa {{mesAnterior.porcentagem.icon}}"></i> {{mesAnterior.porcentagem.value}}%
+						</span>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        Chamados em <b>{{mesAtual.nome}}</b>: {{mesAtual.total}}
+                    </div>
+                </div>
 
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div id="dashboard-evolucao-chamados" class="chart chart-xl no-margin"></div>
-				</div>
-			</div>
-		</indicadores-databox>
-	</div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <indicadores-chart chart-id="dashboard-evolucao-chamados"
+                                       chart-class="chart chart-xl no-margin"
+                                       type="column" source="dadosChamadosPorTipo"
+                                       options="chartOptions"></indicadores-chart>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
 
 </div>
 
 <div class="row">
 
-	<div ng-controller="SupEvolucaoAbertosEncerradosCtrl">
-		<indicadores-databox label="Abertos x Encerrados" class="col-md-12 col-sm-12 col-xs-12">
-			<div class="row">
-				<div class="container">
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						Total de Chamados Abertos:
-						<b>{{totalAbertos}}</b>
-					</div>
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						Total de Chamados Encerrados:
-						<b>{{totalEncerrados}}</b>
-					</div>
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						% Encerrados:
-						<b>{{((totalEncerrados/totalAbertos)*100).toFixed(2)}}%</b>
-					</div>
-				</div>
+    <div ng-controller="SupEvolucaoAbertosEncerradosCtrl">
+        <indicadores-databox label="Abertos x Encerrados" class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="container">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        Total de Chamados Abertos:
+                        <b>{{totalAbertos}}</b>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        Total de Chamados Encerrados:
+                        <b>{{totalEncerrados}}</b>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        % Encerrados:
+                        <b>{{((totalEncerrados/totalAbertos)*100).toFixed(2)}}%</b>
+                    </div>
+                </div>
 
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div id="dashboard-abertos-encerrados" class="chart chart-xl no-margin"></div>
-				</div>
-			</div>
-		</indicadores-databox>
-	</div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <indicadores-chart chart-id="dashboard-abertos-encerrados" chart-class="chart chart-xl no-margin"
+                                       type="line" source="dadosChamadosAbertosEncerrados"
+                                       options="chartOptions"></indicadores-chart>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
 
 </div>

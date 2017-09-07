@@ -5,20 +5,20 @@
     <div ng-controller="DevColaboradoresDesenvolvidasCtrl">
         <indicadores-databox label="Atividades Desenvolvidas Por Colaborador"
                              class="col-md-12 col-sm-12 col-xs-12">
-            <div id="resolvidas-por-colaborador-chart" class="chart chart-lg no-margin"></div>
+            <indicadores-chart chart-id="resolvidas-por-colaborador-chart" chart-class="chart chart-xl no-margin"
+                               type="column" source="atividadesResolvidasPorColaborador"></indicadores-chart>
         </indicadores-databox>
     </div>
 
 </div>
 <div class="row">
 
-    <div ng-if="!($root.projeto == 'Noov')">
-        <div ng-controller="DevColaboradoresTestadasCtrl">
-            <indicadores-databox label="Atividades Testadas Por Colaborador"
-                                 class="col-md-12 col-sm-12 col-xs-12">
-                <div id="testadas-por-colaborador-chart" class="chart chart-lg no-margin"></div>
-            </indicadores-databox>
-        </div>
+    <div ng-controller="DevColaboradoresTestadasCtrl">
+        <indicadores-databox label="Atividades Testadas Por Colaborador"
+                             class="col-md-12 col-sm-12 col-xs-12">
+            <indicadores-chart chart-id="testadas-por-colaborador-chart" chart-class="chart chart-xl no-margin"
+                               type="column" source="atividadesTestadasPorColaborador"></indicadores-chart>
+        </indicadores-databox>
     </div>
 
 </div>

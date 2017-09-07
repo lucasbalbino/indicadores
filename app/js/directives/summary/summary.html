@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-xs-12 col-md-12 col-lg-12">
+        <h2>
+            <span ng-if="emoji">
+                <span class="{{emoji.color}}"><i class="fa {{emoji.icon}}"></i></span>
+            </span>
+
+            <ng-transclude></ng-transclude>
+
+            <span class="badge badge-{{percentage.color}}">
+                <i class="fa {{percentage.icon}}"></i>
+                {{percentage.value}}% em relação ao mês anterior ({{value}}%)
+            </span>
+        </h2>
+    </div>
+</div>

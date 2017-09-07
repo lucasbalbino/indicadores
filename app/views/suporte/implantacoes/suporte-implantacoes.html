@@ -4,21 +4,9 @@
 
     <div ng-controller="SupImplantacoesResumoCtrl">
         <indicadores-databox label="Resumo" class="col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <h2>{{implantacoes.valor}} implantações encerradas em {{implantacoes.mes}}
-                        <span class="badge badge-{{implantacoes.porcentagem.color}}">
-                            <i class="fa {{implantacoes.porcentagem.icon}}"></i> {{implantacoes.porcentagem.value}}% em relação ao mês anterior ({{implantacoes.mesAnteriorValor}} implantações)                        </span>
-                    </h2>
-                </div>
-                <!--<div class="row col-xs-12 col-md-6 col-lg-6">
-                    <h2>{{dado.valor}} cancelamentos em {{root.mes}}
-                        <span class="badge badge-{{dado.porcentagem.color}}">
-                            <i class="fa {{dado.porcentagem.icon}}"></i> {{dado.porcentagem.value}}% em relação ao mês anterior
-                        </span>
-                    </h2>
-                </div>-->
-            </div>
+            <indicadores-summary percentage="implantacoes.porcentagem" value="implantacoes.mesAnteriorValor">
+                {{implantacoes.valor}} implantações encerradas em {{implantacoes.mes}}
+            </indicadores-summary>
         </indicadores-databox>
     </div>
 
@@ -29,14 +17,16 @@
     <div ng-controller="SupAquisicoesPorCategoriaCtrl">
         <indicadores-databox label="Aquisições por Categoria"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="aquisicoes-por-categoria-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="aquisicoes-por-categoria-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosAquisicoesPorCategoria"></indicadores-chart>
         </indicadores-databox>
     </div>
 
     <div ng-controller="SupImplantacoesPorCategoriaCtrl">
         <indicadores-databox label="Implantações por Categoria"
                              class="col-md-6 col-sm-12 col-xs-12">
-            <div id="implantacoes-por-categoria-chart" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="implantacoes-por-categoria-chart" chart-class="chart chart-xl no-margin"
+                               type="pie" source="dadosImplantacoesPorCategoria"></indicadores-chart>
         </indicadores-databox>
     </div>
 

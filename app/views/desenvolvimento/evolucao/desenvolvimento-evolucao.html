@@ -1,80 +1,86 @@
 ﻿<div data-ng-include=" 'modules/versao/views/versao.html' "></div>
 
 <div class="row">
-	<div class="col-md-9 col-sm-12 col-xs-12">
-		<div class="row">
+    <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="row">
 
-			<div ng-controller="DevEvolucaoAtividadesPorSituacaoCtrl">
-				<indicadores-databox label="Backlog da Sprint"
-									 class="col-md-12 col-sm-12 col-xs-12">
-					<div class="box-progress">
-						<div ng-controller="DevEvolucaoNumerosCtrl">
-							<div class="progress progress-xs bg-whitesmoke">
-								<div class="progress-bar" role="progressbar"
-									 aria-valuenow="{{porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal)}}"
-									 aria-valuemin="0" aria-valuemax="100"
-									 ng-style="{ 'width' : porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal) + '%' }">
-								</div>
-							</div>
-						</div>
-					</div>
-					<br><br>
-
-					<div id="atividades-por-situacao-chart" class="chart chart-lg no-margin"></div>
-				</indicadores-databox>
-			</div>
+            <div ng-controller="DevEvolucaoAtividadesPorSituacaoCtrl">
+                <indicadores-databox label="Backlog da Sprint"
+                                     class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="box-progress">
+                        <div ng-controller="DevEvolucaoNumerosCtrl">
+                            <div class="progress progress-xs bg-whitesmoke">
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="{{porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal)}}"
+                                     aria-valuemin="0" aria-valuemax="100"
+                                     ng-style="{ 'width' : porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal) + '%' }">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div>
+                        <div id="sprint-encerrada" class="hidden">Sprint Encerrada</div>
+                        <indicadores-chart chart-id="atividades-por-situacao-chart"
+                                           chart-class="chart chart-xl no-margin"
+                                           type="column" source="dadosAtividadesPorSituacao"></indicadores-chart>
+                    </div>
+                </indicadores-databox>
+            </div>
         </div>
-	</div>
+    </div>
 
-	<div ng-controller="DevEvolucaoNumerosCtrl">
+    <div ng-controller="DevEvolucaoNumerosCtrl">
 
-		<indicadores-stats-dev label="Atividades Abertas" color="themesecondary" icon="fa-tasks"
-							   qtd="qtdAbertas" porcent="porcentagem(qtdAbertas, qtdTotal)"></indicadores-stats-dev>
+        <indicadores-stats-dev label="Atividades Abertas" color="themesecondary" icon="fa-tasks"
+                               qtd="qtdAbertas" porcent="porcentagem(qtdAbertas, qtdTotal)"></indicadores-stats-dev>
 
-		<indicadores-stats-dev label="Atividades Liberadas ou Encerradas" color="themefourthcolor" icon="fa-thumbs-up"
-							   qtd="qtdEncerradasLiberadas" porcent="porcentagem(qtdEncerradasLiberadas, qtdTotal)"></indicadores-stats-dev>
+        <indicadores-stats-dev label="Atividades Liberadas ou Encerradas" color="themefourthcolor" icon="fa-thumbs-up"
+                               qtd="qtdEncerradasLiberadas"
+                               porcent="porcentagem(qtdEncerradasLiberadas, qtdTotal)"></indicadores-stats-dev>
 
-		<indicadores-stats-dev label="Atividades Rejeitadas" color="themethirdcolor" icon="fa-trash"
-							   qtd="qtdRejeitadas" porcent="porcentagem(qtdRejeitadas, qtdTotal)"></indicadores-stats-dev>
+        <indicadores-stats-dev label="Atividades Rejeitadas" color="themethirdcolor" icon="fa-trash"
+                               qtd="qtdRejeitadas"
+                               porcent="porcentagem(qtdRejeitadas, qtdTotal)"></indicadores-stats-dev>
 
-		<indicadores-stats-dev label="Total de Atividades Executadas" color="themeprimary" icon="fa-check-square-o"
-							   qtd="qtdEncerradasLiberadas+qtdRejeitadas" porcent="porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal)"></indicadores-stats-dev>
+        <indicadores-stats-dev label="Total de Atividades Executadas" color="themeprimary" icon="fa-check-square-o"
+                               qtd="qtdEncerradasLiberadas+qtdRejeitadas"
+                               porcent="porcentagem(qtdEncerradasLiberadas+qtdRejeitadas, qtdTotal)"></indicadores-stats-dev>
 
-	</div>
+    </div>
 
 </div>
 
 <div class="row">
 
-	<div ng-if="!($root.projeto == 'Noov')">
-		<div ng-controller="DevEvolucaoBacklogCtrl">
-			<indicadores-databox label="Evolução do Backlog" class="col-md-12 col-sm-12 col-xs-12">
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<div id="evolucao-backlog-chart" class="chart chart-xl"></div>
-					</div>
-				</div>
-			</indicadores-databox>
-		</div>
-	</div>
+    <div ng-controller="DevEvolucaoBacklogCtrl">
+        <indicadores-databox label="Evolução do Backlog" class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <indicadores-chart chart-id="evolucao-backlog-chart" chart-class="chart chart-xl" type="line"
+                                       source="dadosEvolucaoBacklog" options="chartOptions"></indicadores-chart>
+                </div>
+            </div>
+        </indicadores-databox>
+    </div>
 
 </div>
 <div class="row">
 
-	<div ng-controller="DevEvolucaoAbertasEncerradasCtrl">
-		<div ng-if="loaded">
-			<indicadores-databox label="Abertas x Encerradas" class="col-md-12 col-sm-12 col-xs-12">
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12 select-date" ng-controller="DateRangePickerCtrl">
-						<label class="control-label">Data</label>
-						<input date-range-picker class="form-control date-picker" type="text"
-							   ng-model="$root.date" options="opts" ng-change="recarregar()"/>
-					</div>
-					<indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs" has-footer="true" type="lite"
-										   class="col-md-12 col-sm-12 col-xs-12"></indicadores-datatable>
-				</div>
-			</indicadores-databox>
-		</div>
-	</div>
+    <div ng-controller="DevEvolucaoAbertasEncerradasCtrl">
+        <div ng-if="loaded">
+            <indicadores-databox label="Abertas x Encerradas" class="col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 select-date" ng-controller="DateRangePickerCtrl">
+                        <label class="control-label">Data</label>
+                        <input date-range-picker class="form-control date-picker" type="text"
+                               ng-model="$root.date" options="opts" ng-change="recarregar()"/>
+                    </div>
+                    <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs" has-footer="true"
+                                           type="lite" class="col-md-12 col-sm-12 col-xs-12"></indicadores-datatable>
+                </div>
+            </indicadores-databox>
+        </div>
+    </div>
 
 </div>

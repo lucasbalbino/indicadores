@@ -4,16 +4,21 @@
     app.controller('FinFaturamentoMensalPorResponsavelCtrl', FinFaturamentoMensalPorResponsavelCtrl);
 
     /** @ngInject */
-    function FinFaturamentoMensalPorResponsavelCtrl($rootScope, FinanceiroFaturamentoService) {
+    function FinFaturamentoMensalPorResponsavelCtrl($scope, $rootScope, FinanceiroFaturamentoService) {
         var QTD_RESPONSAVEL = 10;
 
-        var dadosReceitaMensal = [];
         var gridReceitaMensal = [];
         var mes = moment($rootScope.mes);
+
+        $scope.chartOptions = {
+            currency: true
+        };
 
         faturamentoResponsavel();
 
         function faturamentoResponsavel() {
+            var dadosReceitaMensal = [];
+
             var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
             var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
 
@@ -22,10 +27,14 @@
                     gridReceitaMensal = response.data;
 
                     for (var i = 0; i < QTD_RESPONSAVEL; i++) {
-                        dadosReceitaMensal.push(gridReceitaMensal[i]);
+                        dadosReceitaMensal.push({
+                            value: gridReceitaMensal[i].total,
+                            label: gridReceitaMensal[i].responsavel
+                        });
                     }
 
-                    graficoReceitaSetupMensalidade().init();
+                    $scope.dadosReceitaMensal = dadosReceitaMensal;
+                    // graficoReceitaSetupMensalidade().init();
                 }
             );
         }

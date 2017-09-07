@@ -4,14 +4,19 @@
     app.controller('FinFaturamentoMensalPorTipoCtrl', FinFaturamentoMensalPorTipoCtrl);
 
     /** @ngInject */
-    function FinFaturamentoMensalPorTipoCtrl($rootScope, FinanceiroFaturamentoService) {
-        var dadosReceitaMensal = [];
+    function FinFaturamentoMensalPorTipoCtrl($scope, $rootScope, FinanceiroFaturamentoService) {
         var gridReceitaMensal = [];
         var mes = moment($rootScope.mes);
+
+        $scope.chartOptions = {
+            currency: true
+        };
 
         faturamentoSetupMensalidade();
 
         function faturamentoSetupMensalidade() {
+            var dadosReceitaMensal = [];
+
             var dataInicial = mes.startOf('month').format('DD/MM/YYYY');
             var dataFinal = mes.endOf('month').format('DD/MM/YYYY');
 
@@ -30,39 +35,9 @@
                         });
                     }
 
-                    graficoReceitaSetupMensalidade().init();
+                    $scope.dadosReceitaMensal = dadosReceitaMensal;
                 }
             );
-        }
-
-        function graficoReceitaSetupMensalidade() {
-            return {
-                init: function () {
-                    AmCharts.makeChart( "faturamento-por-tipo", {
-                        "type": "pie",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "dataProvider": dadosReceitaMensal,
-                        "valueField": "value",
-                        "titleField": "label",
-                        "labelFunction": function(data) {
-                            return data.title + ": " + currency(data.value.toFixed(2)) + '\n(' + data.percents.toFixed(2) +"%)";
-                        },
-                        "fontSize": 12,
-                        "startDuration": 1,
-                        "responsive": {
-                            "enabled": true
-                        },
-                        "balloon":{
-                            "fixedPosition":true
-                        },
-                        "export": {
-                            "enabled": true
-                        }
-                    });
-                }
-            };
         }
     }
 })();

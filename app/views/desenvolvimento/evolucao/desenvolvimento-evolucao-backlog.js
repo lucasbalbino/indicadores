@@ -4,99 +4,35 @@
     app.controller('DevEvolucaoBacklogCtrl', DevEvolucaoBacklogCtrl);
 
     /** @ngInject */
-    function DevEvolucaoBacklogCtrl($rootScope, $timeout, DesenvolvimentoEvolucaoService) {
-        var dadosEvolucaoBacklog = [];
+    function DevEvolucaoBacklogCtrl($scope, $rootScope, DesenvolvimentoEvolucaoService) {
 
-        $timeout(function () {
+        $scope.chartOptions = {
+            label: "dataFinal",
+            graphs: [{
+                "title": "Atividades",
+                "valueField": "quantidade",
+                "balloonText": "Versão: <b>[[versao]]</b><br>[[value]] atividades no backlog"
+            }],
+            zoom: true,
+            date: true
+        };
+
+        var watcher = $rootScope.$watch('versao', function () {
+            if ($rootScope.versao === undefined) {
+                return;
+            }
+            watcher();
             evolucaoBacklog();
-        }, 1500);
+        });
 
         function evolucaoBacklog() {
-            dadosEvolucaoBacklog = [];
-
             DesenvolvimentoEvolucaoService.getEvolucaoBacklogDesenvolvimento().then(
                 function (response) {
-                    dadosEvolucaoBacklog = response.data;
-                    graficoEvolucaoBacklog().init();
+                    $scope.dadosEvolucaoBacklog = response.data;
                 }, function (response) {
                     console.log("JSON do gráfico evolucaoBacklog incorreto");
                 }
             );
-        }
-
-        function graficoEvolucaoBacklog() {
-            return {
-                init: function () {
-                    var chart = AmCharts.makeChart("evolucao-backlog-chart", {
-                        "type": "serial",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "zoomOutText": "Mostrar Tudo",
-                        "dataProvider": dadosEvolucaoBacklog,
-                        "marginRight": 40,
-                        "marginLeft": 40,
-                        "autoMarginOffset": 20,
-                        "dataDateFormat": "DD-MM-YYYY",
-                        "valueAxes": [{
-                            "axisAlpha": 0,
-                            "position": "left"
-                        }],
-                        "balloon": {
-                            "borderThickness": 1,
-                            "shadowAlpha": 0
-                        },
-                        "graphs": [{
-                            "valueField": "quantidade",
-                            "labelText": "[[value]]",
-                            "balloonText": "Versão: <b>[[versao]]</b><br>[[value]] atividades no backlog"
-                        }],
-                        "chartScrollbar": {
-                            "oppositeAxis": false,
-                            "offset": 30,
-                            "backgroundAlpha": 0,
-                            "selectedBackgroundAlpha": 0.1,
-                            "selectedBackgroundColor": "#888888",
-                            "graphFillAlpha": 0,
-                            "graphLineAlpha": 0.5,
-                            "selectedGraphFillAlpha": 0,
-                            "selectedGraphLineAlpha": 1,
-                            "autoGridCount": true,
-                            "color": "#AAAAAA",
-                            "labelFunction": function (valueText, date, categoryAxis) {
-                                return moment(date).locale('pt-br').format("DD/MMM");
-                            }
-                        },
-                        "chartCursor": {
-                            "bulletSize": 5,
-                            "cursorAlpha": 1,
-                            "cursorColor": "#258cbb",
-                            "valueLineAlpha": 0.2,
-                            "categoryBalloonDateFormat": "DD/MM/YYYY"
-                        },
-                        "categoryField": "dataFinal",
-                        "categoryAxis": {
-                            "parseDates": true,
-                            "dashLength": 1,
-                            "minorGridEnabled": true,
-                            "labelFunction": function (valueText, date, categoryAxis) {
-                                return moment(date).locale('pt-br').format("DD/MMM");
-                            }
-                        },
-                        "export": {
-                            "enabled": true
-                        }
-                    });
-
-                    chart.addListener("rendered", zoomChart);
-
-                    zoomChart();
-
-                    function zoomChart() {
-                        chart.zoomToIndexes(chart.dataProvider.length - 12, chart.dataProvider.length - 1);
-                    }
-                }
-            };
         }
     }
 })();

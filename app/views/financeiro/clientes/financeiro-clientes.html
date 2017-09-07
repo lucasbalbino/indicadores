@@ -9,14 +9,18 @@
                         <div class="col-md-11 col-sm-11 col-xs-11">
                             <div class="input-group">
 
-                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(0)" allow-clear ng-model="cliente.selected" theme="bootstrap">
-                                    <ui-select-match id="select-match" placeholder="Selecione ou pesquise o cliente...">{{$select.selected.cliente}}</ui-select-match>
-                                    <ui-select-choices repeat="item in clientes | filter: $select.search">
+                                <ui-select on-select="alteraCliente($item.id)" on-remove="alteraCliente(null)"
+                                           allow-clear
+                                           ng-model="cliente.selected" theme="bootstrap">
+                                    <ui-select-match id="select-match" placeholder="Selecione ou pesquise o cliente...">
+                                        {{$select.selected.cliente}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in $root.clientes | filter: $select.search">
                                         <div ng-bind-html="item.cliente | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
                                 <span class="input-group-btn">
-                                    <button ng-click="alteraCliente(0)" class="btn btn-default">
+                                    <button ng-click="alteraCliente(null)" class="btn btn-default">
                                         <span class="fa fa-times"></span>
                                     </button>
                                 </span>
@@ -29,56 +33,65 @@
         </div>
     </div>
 </div>
-<div class="row">
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="row">
+<div ng-if="$root.idCliente !== null && $root.idCliente !== undefined">
 
-            <div ng-controller="FinClientesFichaTecnicaCtrl">
-                <indicadores-databox label="Ficha Técnica" class="col-md-12 col-sm-12 col-xs-12">
-                    <div id="registration-form">
-                        <form role="form">
-                            <div class="form-title">
-                                {{dadosCliente.nome}}
-                            </div>
-                            <div class="form-group">
-                                <p><strong>CNPJ: </strong>{{dadosCliente.cnpj}} - <strong>IE: </strong>{{dadosCliente.ie}}</p>
+    <div class="row">
 
-                                <p><strong>Endereço: </strong>{{dadosCliente.endereco}} - {{dadosCliente.municipio}}/{{dadosCliente.uf}}</p>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
 
-                                <p><strong>Telefone: </strong>{{dadosCliente.telefone}} - <strong>E-mail: </strong>{{dadosCliente.email}}</p>
+                <div ng-controller="FinClientesFichaTecnicaCtrl">
+                    <indicadores-databox label="Ficha Técnica" class="col-md-12 col-sm-12 col-xs-12">
+                        <div id="registration-form">
+                            <form role="form">
+                                <div class="form-title">
+                                    {{dadosCliente.nome}}
+                                </div>
+                                <div class="form-group">
+                                    <p><strong>CNPJ: </strong>{{dadosCliente.cnpj}} - <strong>IE: </strong>{{dadosCliente.ie}}
+                                    </p>
 
-                                <p><strong>Data de Cadastro: </strong>{{dadosCliente.dataCadastro}}</p>
-                            </div>
-                        </form>
-                    </div>
-                </indicadores-databox>
-            </div>
+                                    <p><strong>Endereço: </strong>{{dadosCliente.endereco}} -
+                                        {{dadosCliente.municipio}}/{{dadosCliente.uf}}</p>
 
-        </div>
-    </div>
-</div>
-<div class="row">
+                                    <p><strong>Telefone: </strong>{{dadosCliente.telefone}} - <strong>E-mail: </strong>{{dadosCliente.email}}
+                                    </p>
 
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="row">
+                                    <p><strong>Data de Cadastro: </strong>{{dadosCliente.dataCadastro}}</p>
+                                </div>
+                            </form>
+                        </div>
+                    </indicadores-databox>
+                </div>
 
-            <div ng-controller="FinClientesEvolucaoReceitaClienteCtrl">
-                <indicadores-databox label="Gráfico de Evolução na Receita do Cliente"
-                                     class="col-md-12 col-sm-12 col-xs-12">
-                            <div id="evolucao-receita-cliente" class="chart chart-xxl no-margin"></div>
-                </indicadores-databox>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
+    <div class="row">
 
-    <div ng-controller="FinClientesUltimosFaturamentosCtrl">
-        <indicadores-databox label="Relação de Últimos Faturamentos" class="col-md-12 col-sm-12 col-xs-12">
-            <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
-                                   type="full" order="order"></indicadores-datatable>
-        </indicadores-databox>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+
+                <div ng-controller="FinClientesEvolucaoReceitaClienteCtrl">
+                    <indicadores-databox label="Gráfico de Evolução na Receita do Cliente"
+                                         class="col-md-12 col-sm-12 col-xs-12">
+                        <indicadores-chart chart-id="evolucao-receita-cliente" chart-class="chart chart-xxl no-margin"
+                                           type="line" source="dadosReceita" options="chartOptions"></indicadores-chart>
+                    </indicadores-databox>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div ng-controller="FinClientesUltimosFaturamentosCtrl">
+            <indicadores-databox label="Relação de Últimos Faturamentos" class="col-md-12 col-sm-12 col-xs-12">
+                <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                       type="full" order="order"></indicadores-datatable>
+            </indicadores-databox>
+        </div>
+
     </div>
 
 </div>

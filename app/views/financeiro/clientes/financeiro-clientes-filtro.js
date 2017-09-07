@@ -43,20 +43,34 @@
             $rootScope.idCliente = $scope.cliente.selected;
         };
 
-        $scope.clientes = [];
+        if (!$rootScope.clientes) {
+            $rootScope.clientes = [];
+        }
 
         $scope.cliente = {};
 
-        FinanceiroClientesService.getFaturamentoListaClientes().then(
-            function (response) {
-                $scope.clientes = response.data;
-            }
-        );
+        if ($rootScope.idCliente && $rootScope.clientes) {
+            $scope.cliente.selected = $rootScope.clientes[indexSelecionado()];
+        }
+
+        if ($rootScope.clientes.length === 0) {
+            FinanceiroClientesService.getFaturamentoListaClientes().then(
+                function (response) {
+                    $rootScope.clientes = response.data;
+                }
+            );
+        }
 
         $scope.alteraCliente = function (id) {
             $rootScope.idCliente = id;
             $state.reload();
         };
+
+        function indexSelecionado() {
+            return $rootScope.clientes.map(function (e) {
+                return e.id;
+            }).indexOf($rootScope.idCliente);
+        }
 
     });
 

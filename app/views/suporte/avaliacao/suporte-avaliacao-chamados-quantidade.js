@@ -1,11 +1,10 @@
-( function() {
+(function () {
     'use strict';
 
     app.controller('SupAvaliacaoQuantidadeCtrl', SupAvaliacaoQuantidadeCtrl);
 
     /** @ngInject */
-    function SupAvaliacaoQuantidadeCtrl($rootScope, SuporteAvaliacaoService) {
-        var dadosAvaliacaoQuantidade = [];
+    function SupAvaliacaoQuantidadeCtrl($scope, $rootScope, SuporteAvaliacaoService) {
         var mes = moment($rootScope.mes);
 
         avaliacaoQuantidade();
@@ -16,37 +15,9 @@
 
             SuporteAvaliacaoService.getAvaliacaoChamadosQuantidade(dataInicial, dataFinal).then(
                 function (response) {
-                    dadosAvaliacaoQuantidade = response.data;
-                    graficoAvaliacaoQuantidade().init();
+                    $scope.dadosAvaliacaoQuantidade = response.data;
                 }
             );
-        }
-
-        function graficoAvaliacaoQuantidade() {
-            return {
-                init: function () {
-					AmCharts.makeChart( "avaliacao-quantidade-chart", {
-						"type": "pie",
-						"theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-						"dataProvider": dadosAvaliacaoQuantidade,
-						"valueField": "value",
-						"titleField": "label",
-                        "labelText": "[[title]]: [[value]] ([[percents]]%)",
-                        "fontSize": 12,
-						"responsive": {
-							"enabled": true
-						},
-						"balloon":{
-						   "fixedPosition":true
-						},
-						"export": {
-							"enabled": true
-						}
-					});
-                }
-            };
         }
     }
 })();

@@ -4,15 +4,19 @@
     app.controller('DevEvolucaoNumerosCtrl', DevEvolucaoNumerosCtrl);
 
     /** @ngInject */
-    function DevEvolucaoNumerosCtrl($scope, $rootScope, $timeout, DesenvolvimentoEvolucaoService) {
+    function DevEvolucaoNumerosCtrl($scope, $rootScope, DesenvolvimentoEvolucaoService) {
         $scope.qtdEncerradasLiberadas = 0;
         $scope.qtdRejeitadas = 0;
         $scope.qtdAbertas = 0;
         $scope.qtdTotal = 0;
 
-        $timeout(function() {
+        var watcher = $rootScope.$watch('versao', function () {
+            if ($rootScope.versao === undefined) {
+                return;
+            }
+            watcher();
             numerosAtividadesPorSituacao();
-        }, 1500);
+        });
 
         function numerosAtividadesPorSituacao() {
             DesenvolvimentoEvolucaoService.getAtividadesPorSituacao($rootScope.versao).then(

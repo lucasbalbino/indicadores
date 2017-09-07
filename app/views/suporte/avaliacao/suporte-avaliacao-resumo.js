@@ -81,16 +81,22 @@
 
         function setEmojiColor() {
             if ($scope.avaliacoes.valor >= 97) {
-                $scope.avaliacoes.emoji = "fa fa-smile-o";
-                $scope.avaliacoes.emojiColor = "success";
+                $scope.avaliacoes.emoji = {
+                    icon: "fa-smile-o",
+                    color: "success"
+                };
             }
             else if ($scope.avaliacoes.valor > 95 && $scope.avaliacoes.valor < 97) {
-                $scope.avaliacoes.emoji = "fa fa-meh-o";
-                $scope.avaliacoes.emojiColor = "warning";
+                $scope.avaliacoes.emoji = {
+                    icon: "fa-meh-o",
+                    color: "warning"
+                };
             }
             else {
-                $scope.avaliacoes.emoji = "fa fa-frown-o";
-                $scope.avaliacoes.emojiColor = "danger";
+                $scope.avaliacoes.emoji = {
+                    icon: "fa-frown-o",
+                    color: "danger"
+                };
             }
 
         }

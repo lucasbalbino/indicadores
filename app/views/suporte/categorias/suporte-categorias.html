@@ -7,7 +7,8 @@
     <div ng-controller="SupCategoriasIncidentesCtrl">
         <indicadores-databox label="Incidentes com Maior Quantidade de Chamados"
                              class="col-md-12 col-sm-12 col-xs-12">
-            <div id="chamados-por-categoria-incidentes" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-categoria-incidentes" chart-class="chart chart-xl no-margin"
+                               type="bar" source="dadosChamadosPorCategoria" options="chartOptions"></indicadores-chart>
         </indicadores-databox>
     </div>
 </div>
@@ -19,7 +20,8 @@
     <div ng-controller="SupCategoriasRequisicoesCtrl">
         <indicadores-databox label="Requisições com Maior Quantidade de Chamados"
                              class="col-md-12 col-sm-12 col-xs-12">
-            <div id="chamados-por-categoria-requisicoes" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-categoria-requisicoes" chart-class="chart chart-xl no-margin"
+                               type="bar" source="dadosChamadosPorCategoria" options="chartOptions"></indicadores-chart>
         </indicadores-databox>
     </div>
 
@@ -32,7 +34,8 @@
     <div ng-controller="SupCategoriasMudancasCtrl">
         <indicadores-databox label="Mudanças com Maior Quantidade de Chamados"
                              class="col-md-12 col-sm-12 col-xs-12">
-            <div id="chamados-por-categoria-mudancas" class="chart chart-xl no-margin"></div>
+            <indicadores-chart chart-id="chamados-por-categoria-mudancas" chart-class="chart chart-xl no-margin"
+                               type="bar" source="dadosChamadosPorCategoria" options="chartOptions"></indicadores-chart>
         </indicadores-databox>
     </div>
 

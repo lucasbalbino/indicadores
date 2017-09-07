@@ -6,17 +6,16 @@
     /** @ngInject */
     function FinFaturamentoEvolucaoResponsavelCtrl($scope, $rootScope, FinanceiroFaturamentoService) {
         var gridReceita = [];
-        var dadosReceita = [];
 
         $scope.receitas = ['Total', 'Mensalidade', 'Setup'];
         $scope.receita = $scope.receitas[0];
 
         $scope.alteraForma = function (id) {
+            $scope.dadosReceita = null;
             $scope.receita = id;
 
             if (gridReceita.length !== 0) {
-                $scope.chart.clear();
-                graficoReceitaPorMes($scope.receita.toLowerCase()).init();
+                $scope.dadosReceita = trataDadosReceitaPorMes(id.toLowerCase());
             }
         };
 
@@ -34,16 +33,13 @@
                         gridReceita[i].mes = moment(gridReceita[i].mes, 'YYYY-MM').locale('pt-br').format("MMM/YYYY")
                     }
 
-
-                    if (gridReceita.length !== 0) {
-                        graficoReceitaPorMes(id).init();
-                    }
+                    $scope.dadosReceita = trataDadosReceitaPorMes(id);
                 }
             );
         }
 
         function trataDadosReceitaPorMes(id) {
-            dadosReceita = [];
+            var dadosReceita = [];
             $scope.meses = [];
             $scope.responsaveis = [];
             for (var i = 0; i < gridReceita.length; i++) {
@@ -82,66 +78,17 @@
 
                 }
 
+                $scope.chartOptions = {
+                    currency: true,
+                    label: "mes",
+                    zoom: true,
+                    graphs: setaColunasGerentes(id)
+                };
+
                 dadosReceita.push(dado);
             }
 
             return dadosReceita;
-        }
-
-        function graficoReceitaPorMes(id) {
-            return {
-                init: function () {
-                    $scope.chart = AmCharts.makeChart("evolucao-receita-responsavel", {
-                        "type": "serial",
-                        "theme": "light",
-                        "colors": $rootScope.colors,
-                        "fontFamily": "'Open Sans', 'Segoe UI'",
-                        "zoomOutText": "Mostrar Tudo",
-                        "dataProvider": trataDadosReceitaPorMes(id),
-                        "valueAxes": [{
-                            "labelFunction": function (valueText, date, valueAxis) {
-                                return currency(valueText.toFixed(2));
-                            }
-                        }],
-                        "graphs": setaColunasGerentes(id),
-                        "chartScrollbar": {
-                            "oppositeAxis": false,
-                            "offset": 65,
-                            "backgroundAlpha": 0,
-                            "selectedBackgroundAlpha": 0.1,
-                            "selectedBackgroundColor": "#888888",
-                            "graphFillAlpha": 0,
-                            "graphLineAlpha": 0.5,
-                            "selectedGraphFillAlpha": 0,
-                            "selectedGraphLineAlpha": 1,
-                            "autoGridCount": true,
-                            "color": "#AAAAAA"
-                        },
-                        "chartCursor": {
-                            "categoryBalloonEnabled": true,
-                            "cursorAlpha": 0,
-                            "zoomable": true
-                        },
-                        "categoryAxis": {
-                            "autoWrap": true
-                        },
-                        "startDuration": 0,
-                        "categoryField": "mes",
-                        "legend": {},
-                        "export": {
-                            "enabled": true
-                        }
-                    });
-
-                    $scope.chart.addListener("rendered", zoomChart);
-
-                    zoomChart();
-
-                    function zoomChart() {
-                        $scope.chart.zoomToIndexes($scope.chart.dataProvider.length - 6, $scope.chart.dataProvider.length - 1);
-                    }
-                }
-            };
         }
 
         function setaColunasGerentes(id) {
@@ -149,19 +96,11 @@
             for (var j = 0; j < $scope.responsaveis.length; j++) {
                 var resp = $scope.responsaveis[j];
                 graph.push({
-                    "balloonFunction": function (graphDataItem) {
-                        var k = graphDataItem.graph.valueField.substring(id.length);
-                        return "<b>" + $scope.responsaveis[k] + "</b><br><span style='font-size:14px'>" +
-                            graphDataItem.dataContext.mes + ": <b>" +
-                            currency(graphDataItem.dataContext[graphDataItem.graph.valueField]) + "</b></span>";
-                    },
+                    "balloonFunction": true,
                     "labelText": "[[value]]",
                     "title": resp,
                     "valueField": id + j,
-                    "labelFunction": function (graphDataItem) {
-                        return currency(graphDataItem.dataContext[graphDataItem.graph.valueField]);
-
-                    }
+                    "labelFunction": true
                 });
             }
             return graph;
