@@ -17,7 +17,6 @@
                     length: '@?'
                 },
                 controller: function ($scope, $rootScope, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
-
                     $scope.dtOptions = DTOptionsBuilder.fromFnPromise($scope.ajax)
                         .withLanguage({
                             "sEmptyTable": "Nenhum registro encontrado",
@@ -44,28 +43,30 @@
                             "loadingRecords": "Carregando..."
                         })
                         .withButtons([
-                            { extend: 'pdf', text: '<i class="fa fa-file-pdf-o" title="Exportar para PDF"></i>' },
-                            { extend: 'excel', text: '<i class="fa fa-file-excel-o" title="Exportar para Excel"></i>' },
-                            { extend: 'csv', text: '<i class="fa fa-file-text-o" title="Exportar para CSV"></i>' },
-                            { extend: 'print', text: '<i class="fa fa-print" title="Imprimir"></i>' },
-                            { extend: 'copy', text: '<i class="fa fa-files-o" title="Copiar"></i>' }
+                            {extend: 'pdf', text: '<i class="fa fa-file-pdf-o" title="Exportar para PDF"></i>'},
+                            {extend: 'excel', text: '<i class="fa fa-file-excel-o" title="Exportar para Excel"></i>'},
+                            {extend: 'csv', text: '<i class="fa fa-file-text-o" title="Exportar para CSV"></i>'},
+                            {extend: 'print', text: '<i class="fa fa-print" title="Imprimir"></i>'},
+                            {extend: 'copy', text: '<i class="fa fa-files-o" title="Copiar"></i>'}
                         ]);
 
                     if (!$scope.type) {
                         $scope.type = "lite";
                     }
 
-                    if ($scope.type == "lite") {
+                    if ($scope.type === "lite") {
                         $scope.dtOptions.withDOM("fBt");
-                    } else if ($scope.type == "full") {
-                        $scope.dtOptions.withDOM("fBt<'row DTTTFooter'<'col-sm-7'il><'col-sm-5'p>>")
+                    } else if ($scope.type === "full") {
+                        $scope.dtOptions.withDOM("fBt<'row DTTTFooter'<'col-sm-7'il><'col-sm-5'p>>");
                     }
 
-                    if ($scope.order)
+                    if ($scope.order) {
                         $scope.dtOptions.withOption("order", $scope.order);
+                    }
 
-                    if (!$scope.length)
+                    if (!$scope.length) {
                         $scope.length = 10;
+                    }
 
                     $scope.dtOptions.withDisplayLength($scope.length);
 
@@ -73,10 +74,12 @@
 
                     for (var i = 0; i < $scope.columns.length; i++) {
                         var temp = DTColumnBuilder.newColumn($scope.columns[i].id, $scope.columns[i].titulo);
-                        if ($scope.columns[i].class != undefined)
+                        if ($scope.columns[i].class !== undefined) {
                             temp = temp.withClass($scope.columns[i].class);
-                        if ($scope.columns[i].size != undefined)
+                        }
+                        if ($scope.columns[i].size !== undefined) {
                             temp = temp.withOption('width', $scope.columns[i].size);
+                        }
 
                         $scope.dtColumns.push(temp);
                     }
@@ -84,18 +87,20 @@
                     $scope.dtColumnDefs = [];
 
                     if ($scope.columnsDefs) {
-                        for (var i = 0; i < $scope.columnsDefs.length; i++) {
-                            if ($scope.columnsDefs[i].type)
+                        for (var j = 0; j < $scope.columnsDefs.length; j++) {
+                            if ($scope.columnsDefs[j].type) {
                                 $scope.dtColumnDefs.push(DTColumnDefBuilder
-                                        .newColumnDef($scope.columnsDefs[i].targets)
-                                        .renderWith($scope.columnsDefs[i].render)
-                                        .withOption("type", $scope.columnsDefs[i].type)
+                                    .newColumnDef($scope.columnsDefs[j].targets)
+                                    .renderWith($scope.columnsDefs[j].render)
+                                    .withOption("type", $scope.columnsDefs[j].type)
                                 );
-                            else
+                            }
+                            else {
                                 $scope.dtColumnDefs.push(DTColumnDefBuilder
-                                        .newColumnDef($scope.columnsDefs[i].targets)
-                                        .renderWith($scope.columnsDefs[i].render)
+                                    .newColumnDef($scope.columnsDefs[j].targets)
+                                    .renderWith($scope.columnsDefs[j].render)
                                 );
+                            }
                         }
                     }
 
@@ -104,9 +109,11 @@
                         $scope.dtInstance = instance;
                     };
 
-                    $rootScope.reloadDataTable = function (newData) {
-                        $scope.dtInstance.rerender();
-                        $scope.dtInstance.changeData($scope.ajax);
+                    $rootScope.reloadDataTable = function (newPromise) {
+                        if($scope.dtInstance.rerender) {
+                            $scope.dtInstance.rerender();
+                            $scope.dtInstance.changeData(newPromise);
+                        }
                     };
 
                     if ($scope.hasFooter) {
@@ -116,26 +123,31 @@
                             // Remove the formatting to get integer data for summation
                             var intVal = function (i) {
                                 return typeof i === 'string' ?
-                                i.replace(/[\%,]/g, '') * 1 :
+                                    i.replace(/[\%,]/g, '') * 1 :
                                     typeof i === 'number' ?
                                         i : 0;
                             };
+
+                            function intValues(a, b) {
+                                return intVal(a) + intVal(b);
+                            }
 
                             $(api.column(0).footer()).html('<strong>TOTAL</strong>');
 
                             for (var i = 0; i < $scope.columns.length; i++) {
                                 if ($scope.columns[i].total) {
-                                    var temp = api.column(i).data().reduce(function (a, b) {
-                                        return intVal(a) + intVal(b);
-                                    }, 0);
+                                    var temp = api.column(i).data().reduce(intValues, 0);
 
-                                    if (temp.toString().indexOf('.') != -1)
+                                    if (temp.toString().indexOf('.') !== -1) {
                                         temp = temp.toFixed(2);
+                                    }
 
-                                    if ($scope.columns[i].totalTipo == 'real')
+                                    if ($scope.columns[i].totalTipo === 'real') {
                                         temp = currency(temp);
-                                    else if ($scope.columns[i].totalTipo == 'porcentagem')
+                                    }
+                                    else if ($scope.columns[i].totalTipo === 'porcentagem') {
                                         temp = temp + '%';
+                                    }
 
                                     $(api.column(i).footer()).html('<strong>' + temp + '</strong>');
                                 }
@@ -145,7 +157,7 @@
 
                     $rootScope.dataTableIsLoaded = true;
                 }
-            }
+            };
         });
 
 })();

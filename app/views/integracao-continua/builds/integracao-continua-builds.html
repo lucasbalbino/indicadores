@@ -1,7 +1,8 @@
 <div class="row">
 
     <div ng-controller="CiBuildsUltimosStatusCtrl">
-        <indicadores-databox label="Status dos Builds" function="statusUltimosBuilds()" class="col-md-12 col-sm-12 col-xs-12">
+        <indicadores-databox label="Status dos Builds" function="statusUltimosBuilds()"
+                             class="col-md-12 col-sm-12 col-xs-12">
             <div class="row">
                 <indicadores-stats-ci ng-repeat="label in dados" label="label"></indicadores-stats-ci>
             </div>
@@ -9,19 +10,19 @@
     </div>
 
     <div ng-controller="CiBuildsAnaliseCtrl">
-        <indicadores-databox-time class="col-md-12 col-sm-12 col-xs-12">
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12 select-report" ng-controller="DateRangePickerCtrl">
-                    <label class="control-label">Relatório de Geração de Builds</label>
-                    <input date-range-picker class="form-control date-picker" type="text"
-                           ng-model="$root.date" options="opts" ng-change="recarregar()"/>
+            <indicadores-databox-time class="col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 select-report" ng-controller="DateRangePickerCtrl">
+                        <label class="control-label">Relatório de Geração de Builds</label>
+                        <input date-range-picker class="form-control date-picker" type="text"
+                               ng-model="$root.date" options="opts"/>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
+                                               type="lite" length="100"></indicadores-datatable>
+                    </div>
                 </div>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs"
-                                           type="lite"></indicadores-datatable>
-                </div>
-            </div>
-        </indicadores-databox-time>
+            </indicadores-databox-time>
     </div>
 
 </div>

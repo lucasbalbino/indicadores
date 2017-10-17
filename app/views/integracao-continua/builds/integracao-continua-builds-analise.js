@@ -6,7 +6,7 @@
     /** @ngInject */
     function CiBuildsAnaliseCtrl($rootScope, $scope, IntegracaoContinuaBuildsService) {
 
-        if($rootScope.date === undefined) {
+        if ($rootScope.date === undefined) {
             $rootScope.date = {
                 startDate: moment().startOf('month'),
                 endDate: moment().endOf('month')
@@ -31,27 +31,41 @@
         $scope.columnsDefs = [
             {
                 "targets": 1,
-                "render": function(data) { return '<div class="success">' + data + '</div>'; }
-            },{
+                "render": function (data) {
+                    return '<div class="success">' + data + '</div>';
+                }
+            }, {
                 "targets": 2,
-                "render": function(data) { return '<div class="danger">' + data + '</div>'; }
-            },{
+                "render": function (data) {
+                    return '<div class="danger">' + data + '</div>';
+                }
+            }, {
                 "targets": 3,
-                "render": function(data) { return '<div class="warning">' + data + '</div>'; }
-            },{
+                "render": function (data) {
+                    return '<div class="warning">' + data + '</div>';
+                }
+            }, {
                 "targets": 4,
-                "render": function(data) { return '<div class="carbon">' + data + '</div>'; }
-            },{
+                "render": function (data) {
+                    return '<div class="carbon">' + data + '</div>';
+                }
+            }, {
                 "targets": 5,
-                "render": function(data) { return '<strong>' + data + '</strong>'; }
+                "render": function (data) {
+                    return '<strong>' + data + '</strong>';
+                }
             }
         ];
 
-        $scope.$watch('date', function (newDate) {
-            if ($rootScope.reloadDataTable && $scope.query) {
-                $rootScope.date = newDate;
-                $scope.query.data.dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
-                $scope.query.data.dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
+        $rootScope.$watch('date', function (newDate) {
+            $rootScope.date = newDate;
+
+            dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
+            dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
+
+            $scope.query = IntegracaoContinuaBuildsService.getRelatorioEntreAsDatasTable(dataInicial, dataFinal);
+
+            if($rootScope.reloadDataTable) {
                 $rootScope.reloadDataTable($scope.query);
             }
         }, false);

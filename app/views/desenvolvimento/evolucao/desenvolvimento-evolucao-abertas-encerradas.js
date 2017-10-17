@@ -4,8 +4,7 @@
     app.controller('DevEvolucaoAbertasEncerradasCtrl', DevEvolucaoAbertasEncerradasCtrl);
 
     /** @ngInject */
-    function DevEvolucaoAbertasEncerradasCtrl($scope, $rootScope, $timeout, DesenvolvimentoEvolucaoService) {
-        $scope.loaded = false;
+    function DevEvolucaoAbertasEncerradasCtrl($scope, $rootScope, DesenvolvimentoEvolucaoService) {
 
         if ($rootScope.date === undefined) {
             $rootScope.date = {
@@ -14,14 +13,30 @@
             };
         }
 
-        $timeout(function () {
+        var watcher = $rootScope.$watch('versao', function () {
+            if ($rootScope.versao === undefined) {
+                return;
+            }
+            watcher();
+
             var dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
             var dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
 
             $scope.query = DesenvolvimentoEvolucaoService.getRelacaoAtividadesAbertasEncerradasTable($rootScope.versao, dataInicial, dataFinal);
 
-            $scope.loaded = true;
-        }, 1500);
+            $rootScope.$watch('date', function (newDate) {
+                $rootScope.date = newDate;
+
+                dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
+                dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
+
+                $scope.query = DesenvolvimentoEvolucaoService.getRelacaoAtividadesAbertasEncerradasTable($rootScope.versao, dataInicial, dataFinal);
+
+                if($rootScope.reloadDataTable) {
+                    $rootScope.reloadDataTable($scope.query);
+                }
+            }, false);
+        });
 
         $scope.columns = [
             {id: 'tipo', titulo: 'Tipo', size: '55%'},
@@ -42,15 +57,6 @@
                 }
             }
         ];
-
-        $scope.$watch('date', function (newDate) {
-            if ($rootScope.reloadDataTable && $scope.query) {
-                $rootScope.date = newDate;
-                $scope.query.data.dataInicial = $rootScope.date.startDate.format('DD/MM/YYYY');
-                $scope.query.data.dataFinal = $rootScope.date.endDate.format('DD/MM/YYYY');
-                $rootScope.reloadDataTable($scope.query);
-            }
-        }, false);
 
     }
 })();

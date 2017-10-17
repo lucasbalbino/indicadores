@@ -68,13 +68,13 @@
 <div class="row">
 
     <div ng-controller="DevEvolucaoAbertasEncerradasCtrl">
-        <div ng-if="loaded">
+        <div ng-if="query">
             <indicadores-databox label="Abertas x Encerradas" class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12 select-date" ng-controller="DateRangePickerCtrl">
                         <label class="control-label">Data</label>
                         <input date-range-picker class="form-control date-picker" type="text"
-                               ng-model="$root.date" options="opts" ng-change="recarregar()"/>
+                               ng-model="$root.date" options="opts"/>
                     </div>
                     <indicadores-datatable ajax="query" columns="columns" columns-defs="columnsDefs" has-footer="true"
                                            type="lite" class="col-md-12 col-sm-12 col-xs-12"></indicadores-datatable>

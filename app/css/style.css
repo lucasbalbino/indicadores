@@ -20401,6 +20401,8 @@ div.dataTables_wrapper div.dataTables_filter input {
     display: inline-block;
     width: 100%;
     padding-left: 30px;
+    height: 27px;
+    font-size: 11px;
 }
 
 div.dt-buttons {
@@ -20463,7 +20465,7 @@ div.dataTables_wrapper div.dataTables_length label {
 
 div.dataTables_wrapper div.dataTables_length select {
     font-size: 11px;
-    width: 65px;
+    width: 70px;
     display: inline-block;
 }
 
@@ -20481,11 +20483,24 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-    padding: 0;
+    padding: 5px;
+    font-size: 11px;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    color: #8e44ad !important;
     border: 0;
+    background: transparent;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border: 1px solid #f7f7f7;
+    border-radius: 0;
+    background: #666666;
+    color: #ffffff !important;
 }
 
 .dt-loading h3 {
